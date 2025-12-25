@@ -27,12 +27,14 @@ func main() {
 	// Build the submenu for Sith choices.
 	sithItems := []data.MenuItem{redSaber, purpleSaber, crimsonSaber}
 	sithMenu := data.Menu{
+		Title:       "Choose your lightsaber:",
 		MenuItems:   sithItems,
 		BorderColor: termbox.ColorWhite, // menu border color
 	}
 
 	// Build the submenu for Jedi choices.
 	jediMenu := data.Menu{
+		Title:       "Choose your lightsaber:",
 		MenuItems:   []data.MenuItem{blueSaber, greenSaber, yellowSaber},
 		BorderColor: termbox.ColorWhite,
 	}
@@ -41,6 +43,7 @@ func main() {
 	items := []data.MenuItem{}
 	items = append(items, jediItem, sithItem)
 	mainmenu := data.Menu{
+		Title:       "Choose your faction:",
 		MenuItems:   items,
 		BorderColor: termbox.ColorWhite,
 	}
