@@ -74,7 +74,7 @@ type selectedItem struct {
 	selected   bool
 }
 
-func GetUserInput(x int, y int, menu data.Menu) int {
+func GetUserInput(x int, y int, menu data.Menu) data.MenuItem {
 	sitem := selectedItem{
 		itemNumber: 0,
 		selected:   false,
@@ -83,13 +83,7 @@ func GetUserInput(x int, y int, menu data.Menu) int {
 	for {
 		sitem = drawMenu(x, y, menu, sitem)
 		if sitem.selected {
-			return sitem.itemNumber
+			return menu.MenuItems[sitem.itemNumber]
 		}
 	}
-}
-
-func selectMenuItem(menu data.Menu, selectedItem int) {
-	termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
-	termbox.Flush()
-
 }

@@ -43,14 +43,14 @@ func main() {
 
 	userSelection := app.GetUserInput(10, 10, mainmenu)
 
-	if userSelection == 0 {
+	if userSelection.Name == jediItem.Name {
 		userSelection = app.GetUserInput(10, 20, jediMenu)
 	} else {
 		userSelection = app.GetUserInput(10, 20, sithMenu)
 	}
 
-	if userSelection == 0 {
-
+	if userSelection.Name == blueSaber.Name {
+		println("You chose Blue Saber!")
 	}
 
 	app.Flush()
