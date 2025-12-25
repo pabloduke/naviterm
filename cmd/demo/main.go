@@ -8,12 +8,30 @@ import (
 )
 
 func main() {
-	item1 := data.MenuItem{Name: "JEDI", Color: termbox.ColorBlue}
-	item2 := data.MenuItem{Name: "SITH", Color: termbox.ColorBlue}
+	jediItem := data.MenuItem{Name: "JEDI", Color: termbox.ColorBlue}
+	sithItem := data.MenuItem{Name: "SITH", Color: termbox.ColorBlue}
+
+	redSaber := data.MenuItem{Name: "Red Saber", Color: termbox.ColorRed}
+	blueSaber := data.MenuItem{Name: "Blue Saber", Color: termbox.ColorBlue}
+	greenSaber := data.MenuItem{Name: "Green Saber", Color: termbox.ColorGreen}
+	yellowSaber := data.MenuItem{Name: "Yellow Saber", Color: termbox.ColorYellow}
+	purpleSaber := data.MenuItem{Name: "Purple Saber", Color: termbox.ColorMagenta}
+	crimsonSaber := data.MenuItem{Name: "Crimson Saber", Color: termbox.ColorRed}
+
+	sithItems := []data.MenuItem{redSaber, purpleSaber, crimsonSaber}
+	sithMenu := data.Menu{
+		MenuItems:   sithItems,
+		BorderColor: termbox.ColorWhite,
+	}
+
+	jediMenu := data.Menu{
+		MenuItems:   []data.MenuItem{blueSaber, greenSaber, yellowSaber},
+		BorderColor: termbox.ColorWhite,
+	}
 
 	items := []data.MenuItem{}
 
-	items = append(items, item1, item2)
+	items = append(items, jediItem, sithItem)
 
 	mainmenu := data.Menu{
 		MenuItems:   items,
@@ -23,9 +41,18 @@ func main() {
 	app.Init()
 	defer app.Close()
 
-	app.DrawMenu(10, 10, mainmenu)
+	userSelection := app.GetUserInput(10, 10, mainmenu)
+
+	if userSelection == 0 {
+		userSelection = app.GetUserInput(10, 20, jediMenu)
+	} else {
+		userSelection = app.GetUserInput(10, 20, sithMenu)
+	}
+
+	if userSelection == 0 {
+
+	}
 
 	app.Flush()
-	termbox.PollEvent()
-
+	app.PollEvent()
 }
