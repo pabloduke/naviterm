@@ -81,28 +81,21 @@ type selectedItem struct {
 	selected   bool
 }
 
-func GetUserInput(x int, y int, menu data.Menu) []data.MenuItem {
-	selections := []data.MenuItem{}
+func GetUserInput(x int, y int, menu data.Menu) data.MenuItem {
 	sitem := selectedItem{
 		itemNumber: 0,
 		selected:   false,
 	}
 
-	selections = append(selections, getUserInputFromMenu(x, y, menu, sitem))
+	renderBorder(x, y, menu)
+	renderTitle(x, y, menu)
 
-	for _, submenu := range menu.SubMenus {
-		selections = append(
-			selections,
-			getUserInputFromMenu(
-				x,
-				y+len(menu.MenuItems)+5,
-				submenu,
-				sitem,
-			),
-		)
+	for {
+		sitem = drawMenu(x, y, menu, sitem)
+		if sitem.selected {
+			return menu.MenuItems[sitem.itemNumber]
+		}
 	}
-
-	return selections
 }
 
 func getUserInputFromMenu(x int, y int, menu data.Menu, sitem selectedItem) data.MenuItem {

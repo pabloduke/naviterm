@@ -29,9 +29,6 @@ func SithSaberMenu() data.Menu {
 		BorderColor: termbox.ColorWhite, // menu border color
 		Vpad:        1,
 		Hpad:        4,
-		SubMenus: []data.Menu{
-			HomeworldMenu(),
-		},
 	}
 }
 
@@ -43,9 +40,6 @@ func JediSaberMenu() data.Menu {
 		BorderColor: termbox.ColorWhite,
 		Vpad:        1,
 		Hpad:        4,
-		SubMenus: []data.Menu{
-			HomeworldMenu(),
-		},
 	}
 }
 

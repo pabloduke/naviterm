@@ -9,7 +9,6 @@ type Menu struct {
 	BorderColor termbox.Attribute
 	Vpad        int
 	Hpad        int
-	SubMenus    []Menu
 }
 
 type MenuItem struct {
