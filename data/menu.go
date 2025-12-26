@@ -1,12 +1,12 @@
 package data
 
-import "github.com/nsf/termbox-go"
+import "naviterm/data/color"
 
 type Menu struct {
 	Title       string
-	TitleColor  termbox.Attribute
+	TitleColor  color.NaviTermColor
 	MenuItems   []MenuItem
-	BorderColor termbox.Attribute
+	BorderColor color.NaviTermColor
 	Vpad        int
 	Hpad        int
 	IsNumbered  bool
@@ -15,5 +15,5 @@ type Menu struct {
 
 type MenuItem struct {
 	Name  string
-	Color termbox.Attribute
+	Color color.NaviTermColor
 }

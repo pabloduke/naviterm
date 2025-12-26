@@ -2,9 +2,8 @@ package menuitems
 
 import (
 	"naviterm/data"
-
-	"github.com/nsf/termbox-go"
+	"naviterm/data/color"
 )
 
-var Jedi = data.MenuItem{Name: "JEDI", Color: termbox.ColorBlue}
-var Sith = data.MenuItem{Name: "SITH", Color: termbox.ColorRed}
+var Jedi = data.MenuItem{Name: "JEDI", Color: color.BLUE}
+var Sith = data.MenuItem{Name: "SITH", Color: color.RED}

@@ -2,6 +2,7 @@ package app
 
 import (
 	data2 "naviterm/data"
+	"naviterm/data/color"
 	"strconv"
 
 	"github.com/nsf/termbox-go"
@@ -76,7 +77,7 @@ func drawMenuItemNumbered(x int, y int, i int, sitem selectedItem, item data2.Me
 	if i == sitem.itemNumber {
 		drawText(x, y+i, strconv.Itoa(i+1)+prefix+item.Name, termbox.ColorBlack, termbox.ColorWhite)
 	} else {
-		drawText(x, y+i, strconv.Itoa(i+1)+prefix+item.Name, item.Color, termbox.ColorDefault)
+		drawText(x, y+i, strconv.Itoa(i+1)+prefix+item.Name, termbox.Attribute(item.Color.Attr()), termbox.ColorDefault)
 	}
 }
 
@@ -84,7 +85,7 @@ func drawMenuItem(x int, y int, i int, sitem selectedItem, item data2.MenuItem, 
 	if i == sitem.itemNumber {
 		drawText(x, y+i, prefix+item.Name, termbox.ColorBlack, termbox.ColorWhite)
 	} else {
-		drawText(x, y+i, prefix+item.Name, item.Color, termbox.ColorDefault)
+		drawText(x, y+i, prefix+item.Name, termbox.Attribute(item.Color.Attr()), termbox.ColorDefault)
 	}
 }
 
@@ -128,11 +129,11 @@ func GetUserInput(x int, y int, menu data2.Menu) data2.MenuItem {
 
 // Sets defaults for menu values not passed in by user
 func defaultMenu(menu data2.Menu) data2.Menu {
-	if menu.TitleColor == 0 {
-		menu.TitleColor = termbox.ColorWhite
+	if termbox.Attribute(menu.TitleColor.Attr()) == 0 {
+		menu.TitleColor = color.WHITE
 	}
-	if menu.BorderColor == 0 {
-		menu.BorderColor = termbox.ColorWhite
+	if termbox.Attribute(menu.BorderColor.Attr()) == 0 {
+		menu.BorderColor = color.WHITE
 	}
 
 	if menu.Title == "" {
@@ -144,8 +145,8 @@ func defaultMenu(menu data2.Menu) data2.Menu {
 	}
 
 	for i := 0; i < len(menu.MenuItems); i++ {
-		if menu.MenuItems[i].Color == 0 {
-			menu.MenuItems[i].Color = termbox.ColorWhite
+		if termbox.Attribute(menu.MenuItems[i].Color.Attr()) == 0 {
+			menu.MenuItems[i].Color = color.WHITE
 		}
 
 		if menu.MenuItems[i].Name == "" {
@@ -161,30 +162,29 @@ func renderBorder(x int, y int, menu data2.Menu) {
 	//Determine longest name
 	longestName := len(menu.Title)
 	longestName = determineLongestName(longestName, menu)
-
 	//Draw border from X Coor  past long menu name length (wheter item or title)
 	for ix := 0 - menu.Hpad; ix <= longestName+menu.Hpad; ix++ {
 		//top
-		drawText(ix+x, y-menu.Vpad, data2.Hbar, menu.BorderColor, termbox.ColorDefault)
+		drawText(ix+x, y-menu.Vpad, data2.Hbar, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
 
 		//bottom
-		drawText(ix+x, y+len(menu.MenuItems)+menu.Vpad, data2.Hbar, menu.BorderColor, termbox.ColorDefault)
+		drawText(ix+x, y+len(menu.MenuItems)+menu.Vpad, data2.Hbar, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
 	}
 
 	//Draw border on left and right
 	for jy := 0 - menu.Vpad; jy <= len(menu.MenuItems)+menu.Vpad; jy++ {
 		//left
-		drawText(x-menu.Hpad, jy+y, data2.Vbar, menu.BorderColor, termbox.ColorDefault)
+		drawText(x-menu.Hpad, jy+y, data2.Vbar, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
 
 		//right
-		drawText(longestName+menu.Hpad+x, jy+y, data2.Vbar, menu.BorderColor, termbox.ColorDefault)
+		drawText(longestName+menu.Hpad+x, jy+y, data2.Vbar, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
 	}
 
 	//Draw Corners
-	drawText(x-menu.Hpad, y-menu.Vpad, data2.TopLeft, menu.BorderColor, termbox.ColorDefault)
-	drawText(x+menu.Hpad+longestName, y-menu.Vpad, data2.TopRight, menu.BorderColor, termbox.ColorDefault)
-	drawText(x+menu.Hpad+longestName, y+len(menu.MenuItems)+menu.Vpad, data2.BottomRight, menu.BorderColor, termbox.ColorDefault)
-	drawText(x-menu.Hpad, y+len(menu.MenuItems)+menu.Vpad, data2.BottomLeft, menu.BorderColor, termbox.ColorDefault)
+	drawText(x-menu.Hpad, y-menu.Vpad, data2.TopLeft, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
+	drawText(x+menu.Hpad+longestName, y-menu.Vpad, data2.TopRight, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
+	drawText(x+menu.Hpad+longestName, y+len(menu.MenuItems)+menu.Vpad, data2.BottomRight, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
+	drawText(x-menu.Hpad, y+len(menu.MenuItems)+menu.Vpad, data2.BottomLeft, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
 }
 
 func determineLongestName(longestName int, menu data2.Menu) int {
@@ -203,7 +203,7 @@ func determineLongestName(longestName int, menu data2.Menu) int {
 }
 
 func renderTitle(x int, y int, menu data2.Menu) {
-	drawText(x, y-menu.Vpad, menu.Title, menu.TitleColor, termbox.ColorDefault)
+	drawText(x, y-menu.Vpad, menu.Title, termbox.Attribute(menu.TitleColor.Attr()), termbox.ColorDefault)
 }
 
 func GetTextInput(x int, y int, prompt string) string {

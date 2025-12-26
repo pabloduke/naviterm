@@ -2,20 +2,19 @@ package forceuser
 
 import (
 	"naviterm/data"
+	"naviterm/data/color"
 	menuitems2 "naviterm/demo/menus/menuitems"
-
-	"github.com/nsf/termbox-go"
 )
 
 func FactionSelectMenu() data.Menu {
 	return data.Menu{
 		Title:      "Choose your faction:",
-		TitleColor: termbox.ColorMagenta,
+		TitleColor: color.MAGENTA,
 		MenuItems: []data.MenuItem{
 			menuitems2.Jedi,
 			menuitems2.Sith,
 		},
-		BorderColor: termbox.ColorWhite, // menu border color
+		BorderColor: color.WHITE, // menu border color
 		Vpad:        1,
 		Hpad:        4,
 		IsNumbered:  true,
@@ -25,9 +24,9 @@ func FactionSelectMenu() data.Menu {
 func SithSaberMenu() data.Menu {
 	return data.Menu{
 		Title:       "Choose your lightsaber:",
-		TitleColor:  termbox.ColorMagenta,
+		TitleColor:  color.MAGENTA,
 		MenuItems:   menuitems2.GetSithSabers(),
-		BorderColor: termbox.ColorRed, // menu border color
+		BorderColor: color.RED, // menu border color
 		Vpad:        1,
 		Hpad:        4,
 		IsNumbered:  true,
@@ -38,9 +37,9 @@ func SithSaberMenu() data.Menu {
 func JediSaberMenu() data.Menu {
 	return data.Menu{
 		Title:       "Choose your lightsaber:",
-		TitleColor:  termbox.ColorMagenta,
+		TitleColor:  color.MAGENTA,
 		MenuItems:   menuitems2.GetJediSabers(),
-		BorderColor: termbox.ColorBlue,
+		BorderColor: color.BLUE,
 		Vpad:        1,
 		Hpad:        4,
 		IsNumbered:  true,
@@ -51,8 +50,8 @@ func JediSaberMenu() data.Menu {
 func HomeworldMenu() data.Menu {
 	return data.Menu{
 		Title:       "Choose Your Homeworld:",
-		TitleColor:  termbox.ColorMagenta,
-		BorderColor: termbox.ColorGreen,
+		TitleColor:  color.MAGENTA,
+		BorderColor: color.GREEN,
 		Vpad:        1,
 		Hpad:        4,
 		MenuItems:   menuitems2.GetHomeworlds(),

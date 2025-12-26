@@ -2,16 +2,15 @@ package menuitems
 
 import (
 	"naviterm/data"
-
-	"github.com/nsf/termbox-go"
+	"naviterm/data/color"
 )
 
-var RedSaber = data.MenuItem{Name: "Red Saber", Color: termbox.ColorRed}
-var BlueSaber = data.MenuItem{Name: "Blue Saber", Color: termbox.ColorBlue}
-var GreenSaber = data.MenuItem{Name: "Green Saber", Color: termbox.ColorGreen}
-var YellowSaber = data.MenuItem{Name: "Yellow Saber", Color: termbox.ColorYellow}
-var PurpleSaber = data.MenuItem{Name: "Purple Saber", Color: termbox.ColorMagenta}
-var CrimsonSaber = data.MenuItem{Name: "Crimson Saber", Color: termbox.ColorRed}
+var RedSaber = data.MenuItem{Name: "Red Saber", Color: color.RED}
+var BlueSaber = data.MenuItem{Name: "Blue Saber", Color: color.BLUE}
+var GreenSaber = data.MenuItem{Name: "Green Saber", Color: color.GREEN}
+var YellowSaber = data.MenuItem{Name: "Yellow Saber", Color: color.YELLOW}
+var PurpleSaber = data.MenuItem{Name: "Purple Saber", Color: color.MAGENTA}
+var CrimsonSaber = data.MenuItem{Name: "Crimson Saber", Color: color.RED}
 
 func GetJediSabers() []data.MenuItem {
 	return []data.MenuItem{BlueSaber, GreenSaber, YellowSaber, PurpleSaber}
