@@ -79,6 +79,7 @@ func GetUserInput(x int, y int, menu data.Menu) data.MenuItem {
 	}
 
 	renderBorder(x, y, menu)
+	renderTitle(x, y, menu)
 
 	for {
 		sitem = drawMenu(x, y, menu, sitem)
@@ -114,4 +115,8 @@ func renderBorder(x int, y int, menu data.Menu) {
 		//right
 		drawText(longestName+menu.Hpad+x, jy+y, "*", menu.BorderColor, termbox.ColorDefault)
 	}
+}
+
+func renderTitle(x int, y int, menu data.Menu) {
+	drawText(x, y-menu.Vpad, menu.Title, menu.TitleColor, termbox.ColorDefault)
 }
