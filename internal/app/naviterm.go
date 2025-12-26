@@ -89,20 +89,29 @@ func GetUserInput(x int, y int, menu data.Menu) data.MenuItem {
 }
 
 func renderBorder(x int, y int, menu data.Menu) {
-	longestName := 0
+	//Determine longest name
+	longestName := len(menu.Title)
 	for i := 0; i < len(menu.MenuItems); i++ {
 		if len(menu.MenuItems[i].Name) > longestName {
 			longestName = len(menu.MenuItems[i].Name)
 		}
 	}
 
-	for ix := 0; ix < longestName+4; ix++ {
-		drawText(ix+x, y-1, "*", menu.BorderColor, termbox.ColorDefault)
-		drawText(ix+x, y+len(menu.MenuItems), "*", menu.BorderColor, termbox.ColorDefault)
+	//Draw border from X Coor  past long menu name length (wheter item or title)
+	for ix := 0 - menu.Hpad; ix <= longestName+menu.Hpad; ix++ {
+		//top
+		drawText(ix+x, y-menu.Vpad, "*", menu.BorderColor, termbox.ColorDefault)
+
+		//bottom
+		drawText(ix+x, y+len(menu.MenuItems)+menu.Vpad, "*", menu.BorderColor, termbox.ColorDefault)
 	}
 
-	for jy := y - 1; jy < len(menu.MenuItems)+1+y; jy++ {
-		drawText(x-1, jy, "*", menu.BorderColor, termbox.ColorDefault)
-		drawText(longestName+4+x, jy, "*", menu.BorderColor, termbox.ColorDefault)
+	//Draw border on left and right
+	for jy := 0 - menu.Vpad; jy <= len(menu.MenuItems)+menu.Vpad; jy++ {
+		//left
+		drawText(x-menu.Hpad, jy+y, "*", menu.BorderColor, termbox.ColorDefault)
+
+		//right
+		drawText(longestName+menu.Hpad+x, jy+y, "*", menu.BorderColor, termbox.ColorDefault)
 	}
 }

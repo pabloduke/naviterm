@@ -30,6 +30,8 @@ func main() {
 		Title:       "Choose your lightsaber:",
 		MenuItems:   sithItems,
 		BorderColor: termbox.ColorWhite, // menu border color
+		Vpad:        1,
+		Hpad:        4,
 	}
 
 	// Build the submenu for Jedi choices.
@@ -37,6 +39,8 @@ func main() {
 		Title:       "Choose your lightsaber:",
 		MenuItems:   []data.MenuItem{blueSaber, greenSaber, yellowSaber},
 		BorderColor: termbox.ColorWhite,
+		Vpad:        1,
+		Hpad:        4,
 	}
 
 	// Build the main menu from the two top-level options.
@@ -46,6 +50,8 @@ func main() {
 		Title:       "Choose your faction:",
 		MenuItems:   items,
 		BorderColor: termbox.ColorWhite,
+		Vpad:        1,
+		Hpad:        4,
 	}
 
 	// Initialize termbox and app-level state; ensure cleanup on exit.

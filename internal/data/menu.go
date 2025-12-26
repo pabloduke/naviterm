@@ -6,6 +6,8 @@ type Menu struct {
 	Title       string
 	MenuItems   []MenuItem
 	BorderColor termbox.Attribute
+	Vpad        int
+	Hpad        int
 }
 
 type MenuItem struct {
