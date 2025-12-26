@@ -28,17 +28,19 @@ func PrintText(x int, y int, text string) {
 	Flush()
 }
 
-func drawMenu(x int, y int, menu data.Menu, sitem selectedItem) selectedItem {
+func drawMenu(x int, y int, menu data.Menu, sitem selectedItem) {
 	for i, item := range menu.MenuItems {
 		if menu.IsNumbered {
-			drawMenuItemNumbered(x, y, i, sitem, item)
+			drawMenuItemNumbered(x, y, i, sitem, item, menu.Prefix)
 		} else {
-			drawMenuItem(x, y, i, sitem, item)
+			drawMenuItem(x, y, i, sitem, item, menu.Prefix)
 		}
 	}
 
 	Flush()
+}
 
+func getUserInput(menu data.Menu, sitem selectedItem) selectedItem {
 	for {
 		event := termbox.PollEvent()
 
@@ -70,19 +72,19 @@ func drawMenu(x int, y int, menu data.Menu, sitem selectedItem) selectedItem {
 	}
 }
 
-func drawMenuItemNumbered(x int, y int, i int, sitem selectedItem, item data.MenuItem) {
+func drawMenuItemNumbered(x int, y int, i int, sitem selectedItem, item data.MenuItem, prefix string) {
 	if i == sitem.itemNumber {
-		drawText(x, y+i, strconv.Itoa(i+1)+"). "+item.Name, termbox.ColorBlack, termbox.ColorWhite)
+		drawText(x, y+i, strconv.Itoa(i+1)+prefix+item.Name, termbox.ColorBlack, termbox.ColorWhite)
 	} else {
-		drawText(x, y+i, strconv.Itoa(i+1)+"). "+item.Name, item.Color, termbox.ColorDefault)
+		drawText(x, y+i, strconv.Itoa(i+1)+prefix+item.Name, item.Color, termbox.ColorDefault)
 	}
 }
 
-func drawMenuItem(x int, y int, i int, sitem selectedItem, item data.MenuItem) {
+func drawMenuItem(x int, y int, i int, sitem selectedItem, item data.MenuItem, prefix string) {
 	if i == sitem.itemNumber {
-		drawText(x, y+i, item.Name, termbox.ColorBlack, termbox.ColorWhite)
+		drawText(x, y+i, prefix+item.Name, termbox.ColorBlack, termbox.ColorWhite)
 	} else {
-		drawText(x, y+i, item.Name, item.Color, termbox.ColorDefault)
+		drawText(x, y+i, prefix+item.Name, item.Color, termbox.ColorDefault)
 	}
 }
 
@@ -106,6 +108,7 @@ type selectedItem struct {
 }
 
 func GetUserInput(x int, y int, menu data.Menu) data.MenuItem {
+	menu = defaultMenu(menu)
 	sitem := selectedItem{
 		itemNumber: 0,
 		selected:   false,
@@ -115,13 +118,15 @@ func GetUserInput(x int, y int, menu data.Menu) data.MenuItem {
 	renderTitle(x, y, menu)
 
 	for {
-		sitem = drawMenu(x, y, menu, sitem)
+		drawMenu(x, y, menu, sitem)
+		sitem = getUserInput(menu, sitem)
 		if sitem.selected {
 			return menu.MenuItems[sitem.itemNumber]
 		}
 	}
 }
 
+// Sets defaults for menu values not passed in by user
 func defaultMenu(menu data.Menu) data.Menu {
 	if menu.TitleColor == 0 {
 		menu.TitleColor = termbox.ColorWhite
@@ -132,6 +137,10 @@ func defaultMenu(menu data.Menu) data.Menu {
 
 	if menu.Title == "" {
 		menu.Title = "Menu"
+	}
+
+	if menu.Prefix == "" && menu.IsNumbered {
+		menu.Prefix = ".) "
 	}
 
 	for i := 0; i < len(menu.MenuItems); i++ {
@@ -147,26 +156,11 @@ func defaultMenu(menu data.Menu) data.Menu {
 	return menu
 }
 
-func getUserInputFromMenu(x int, y int, menu data.Menu, sitem selectedItem) data.MenuItem {
-	renderBorder(x, y, menu)
-	renderTitle(x, y, menu)
-
-	for {
-		sitem = drawMenu(x, y, menu, sitem)
-		if sitem.selected {
-			return menu.MenuItems[sitem.itemNumber]
-		}
-	}
-}
-
+// TODO: Render single and double borders
 func renderBorder(x int, y int, menu data.Menu) {
 	//Determine longest name
 	longestName := len(menu.Title)
-	for i := 0; i < len(menu.MenuItems); i++ {
-		if len(menu.MenuItems[i].Name) > longestName {
-			longestName = len(menu.MenuItems[i].Name)
-		}
-	}
+	longestName = determineLongestName(longestName, menu)
 
 	//Draw border from X Coor  past long menu name length (wheter item or title)
 	for ix := 0 - menu.Hpad; ix <= longestName+menu.Hpad; ix++ {
@@ -191,6 +185,21 @@ func renderBorder(x int, y int, menu data.Menu) {
 	drawText(x+menu.Hpad+longestName, y-menu.Vpad, data.TopRight, menu.BorderColor, termbox.ColorDefault)
 	drawText(x+menu.Hpad+longestName, y+len(menu.MenuItems)+menu.Vpad, data.BottomRight, menu.BorderColor, termbox.ColorDefault)
 	drawText(x-menu.Hpad, y+len(menu.MenuItems)+menu.Vpad, data.BottomLeft, menu.BorderColor, termbox.ColorDefault)
+}
+
+func determineLongestName(longestName int, menu data.Menu) int {
+	var currentName int
+	for i := 0; i < len(menu.MenuItems); i++ {
+		if i+1 > 9 {
+			currentName = len(menu.MenuItems[i].Name) + len(menu.Prefix) + 1
+		} else {
+			currentName = len(menu.MenuItems[i].Name) + len(menu.Prefix) + 2
+		}
+
+		longestName = max(longestName, currentName)
+	}
+
+	return longestName
 }
 
 func renderTitle(x int, y int, menu data.Menu) {

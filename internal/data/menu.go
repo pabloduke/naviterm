@@ -10,6 +10,7 @@ type Menu struct {
 	Vpad        int
 	Hpad        int
 	IsNumbered  bool
+	Prefix      string
 }
 
 type MenuItem struct {

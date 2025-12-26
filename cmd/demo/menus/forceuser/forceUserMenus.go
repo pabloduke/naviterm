@@ -9,7 +9,7 @@ import (
 
 func FactionSelectMenu() data.Menu {
 	return data.Menu{
-		Title:      "Choose your faction:",
+		//Title:      "Choose your faction:",
 		TitleColor: termbox.ColorMagenta,
 		MenuItems: []data.MenuItem{
 			menuitems.JediItem,
@@ -19,6 +19,7 @@ func FactionSelectMenu() data.Menu {
 		Vpad:        1,
 		Hpad:        4,
 		IsNumbered:  false,
+		Prefix:      "-->",
 	}
 }
 
@@ -31,6 +32,7 @@ func SithSaberMenu() data.Menu {
 		Vpad:        1,
 		Hpad:        4,
 		IsNumbered:  true,
+		Prefix:      "!",
 	}
 }
 
@@ -43,6 +45,7 @@ func JediSaberMenu() data.Menu {
 		Vpad:        1,
 		Hpad:        4,
 		IsNumbered:  true,
+		Prefix:      "! ",
 	}
 }
 
