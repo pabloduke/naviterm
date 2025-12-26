@@ -1,7 +1,7 @@
 package app
 
 import (
-	"naviterm/internal/data"
+	data2 "naviterm/data"
 	"strconv"
 
 	"github.com/nsf/termbox-go"
@@ -28,7 +28,7 @@ func PrintText(x int, y int, text string) {
 	Flush()
 }
 
-func drawMenu(x int, y int, menu data.Menu, sitem selectedItem) {
+func drawMenu(x int, y int, menu data2.Menu, sitem selectedItem) {
 	for i, item := range menu.MenuItems {
 		if menu.IsNumbered {
 			drawMenuItemNumbered(x, y, i, sitem, item, menu.Prefix)
@@ -40,7 +40,7 @@ func drawMenu(x int, y int, menu data.Menu, sitem selectedItem) {
 	Flush()
 }
 
-func getUserInput(menu data.Menu, sitem selectedItem) selectedItem {
+func getUserInput(menu data2.Menu, sitem selectedItem) selectedItem {
 	for {
 		event := termbox.PollEvent()
 
@@ -72,7 +72,7 @@ func getUserInput(menu data.Menu, sitem selectedItem) selectedItem {
 	}
 }
 
-func drawMenuItemNumbered(x int, y int, i int, sitem selectedItem, item data.MenuItem, prefix string) {
+func drawMenuItemNumbered(x int, y int, i int, sitem selectedItem, item data2.MenuItem, prefix string) {
 	if i == sitem.itemNumber {
 		drawText(x, y+i, strconv.Itoa(i+1)+prefix+item.Name, termbox.ColorBlack, termbox.ColorWhite)
 	} else {
@@ -80,7 +80,7 @@ func drawMenuItemNumbered(x int, y int, i int, sitem selectedItem, item data.Men
 	}
 }
 
-func drawMenuItem(x int, y int, i int, sitem selectedItem, item data.MenuItem, prefix string) {
+func drawMenuItem(x int, y int, i int, sitem selectedItem, item data2.MenuItem, prefix string) {
 	if i == sitem.itemNumber {
 		drawText(x, y+i, prefix+item.Name, termbox.ColorBlack, termbox.ColorWhite)
 	} else {
@@ -107,7 +107,7 @@ type selectedItem struct {
 	selected   bool
 }
 
-func GetUserInput(x int, y int, menu data.Menu) data.MenuItem {
+func GetUserInput(x int, y int, menu data2.Menu) data2.MenuItem {
 	menu = defaultMenu(menu)
 	sitem := selectedItem{
 		itemNumber: 0,
@@ -127,7 +127,7 @@ func GetUserInput(x int, y int, menu data.Menu) data.MenuItem {
 }
 
 // Sets defaults for menu values not passed in by user
-func defaultMenu(menu data.Menu) data.Menu {
+func defaultMenu(menu data2.Menu) data2.Menu {
 	if menu.TitleColor == 0 {
 		menu.TitleColor = termbox.ColorWhite
 	}
@@ -157,7 +157,7 @@ func defaultMenu(menu data.Menu) data.Menu {
 }
 
 // TODO: Render single and double borders
-func renderBorder(x int, y int, menu data.Menu) {
+func renderBorder(x int, y int, menu data2.Menu) {
 	//Determine longest name
 	longestName := len(menu.Title)
 	longestName = determineLongestName(longestName, menu)
@@ -165,29 +165,29 @@ func renderBorder(x int, y int, menu data.Menu) {
 	//Draw border from X Coor  past long menu name length (wheter item or title)
 	for ix := 0 - menu.Hpad; ix <= longestName+menu.Hpad; ix++ {
 		//top
-		drawText(ix+x, y-menu.Vpad, data.Hbar, menu.BorderColor, termbox.ColorDefault)
+		drawText(ix+x, y-menu.Vpad, data2.Hbar, menu.BorderColor, termbox.ColorDefault)
 
 		//bottom
-		drawText(ix+x, y+len(menu.MenuItems)+menu.Vpad, data.Hbar, menu.BorderColor, termbox.ColorDefault)
+		drawText(ix+x, y+len(menu.MenuItems)+menu.Vpad, data2.Hbar, menu.BorderColor, termbox.ColorDefault)
 	}
 
 	//Draw border on left and right
 	for jy := 0 - menu.Vpad; jy <= len(menu.MenuItems)+menu.Vpad; jy++ {
 		//left
-		drawText(x-menu.Hpad, jy+y, data.Vbar, menu.BorderColor, termbox.ColorDefault)
+		drawText(x-menu.Hpad, jy+y, data2.Vbar, menu.BorderColor, termbox.ColorDefault)
 
 		//right
-		drawText(longestName+menu.Hpad+x, jy+y, data.Vbar, menu.BorderColor, termbox.ColorDefault)
+		drawText(longestName+menu.Hpad+x, jy+y, data2.Vbar, menu.BorderColor, termbox.ColorDefault)
 	}
 
 	//Draw Corners
-	drawText(x-menu.Hpad, y-menu.Vpad, data.TopLeft, menu.BorderColor, termbox.ColorDefault)
-	drawText(x+menu.Hpad+longestName, y-menu.Vpad, data.TopRight, menu.BorderColor, termbox.ColorDefault)
-	drawText(x+menu.Hpad+longestName, y+len(menu.MenuItems)+menu.Vpad, data.BottomRight, menu.BorderColor, termbox.ColorDefault)
-	drawText(x-menu.Hpad, y+len(menu.MenuItems)+menu.Vpad, data.BottomLeft, menu.BorderColor, termbox.ColorDefault)
+	drawText(x-menu.Hpad, y-menu.Vpad, data2.TopLeft, menu.BorderColor, termbox.ColorDefault)
+	drawText(x+menu.Hpad+longestName, y-menu.Vpad, data2.TopRight, menu.BorderColor, termbox.ColorDefault)
+	drawText(x+menu.Hpad+longestName, y+len(menu.MenuItems)+menu.Vpad, data2.BottomRight, menu.BorderColor, termbox.ColorDefault)
+	drawText(x-menu.Hpad, y+len(menu.MenuItems)+menu.Vpad, data2.BottomLeft, menu.BorderColor, termbox.ColorDefault)
 }
 
-func determineLongestName(longestName int, menu data.Menu) int {
+func determineLongestName(longestName int, menu data2.Menu) int {
 	var currentName int
 	for i := 0; i < len(menu.MenuItems); i++ {
 		if i+1 > 9 {
@@ -202,7 +202,7 @@ func determineLongestName(longestName int, menu data.Menu) int {
 	return longestName
 }
 
-func renderTitle(x int, y int, menu data.Menu) {
+func renderTitle(x int, y int, menu data2.Menu) {
 	drawText(x, y-menu.Vpad, menu.Title, menu.TitleColor, termbox.ColorDefault)
 }
 

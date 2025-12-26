@@ -2,7 +2,7 @@ package forceuser
 
 import (
 	"naviterm/cmd/demo/menus/menuitems"
-	"naviterm/internal/data"
+	"naviterm/data"
 
 	"github.com/nsf/termbox-go"
 )

@@ -1,7 +1,7 @@
 package menuitems
 
 import (
-	"naviterm/internal/data"
+	"naviterm/data"
 
 	"github.com/nsf/termbox-go"
 )
