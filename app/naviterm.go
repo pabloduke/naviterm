@@ -8,6 +8,12 @@ import (
 	"github.com/nsf/termbox-go"
 )
 
+var cursor = "█"
+
+func SetCursor(c string) {
+	cursor = c
+}
+
 func Init() {
 	err := termbox.Init()
 	if err != nil {
@@ -207,7 +213,7 @@ func renderTitle(x int, y int, menu data2.Menu) {
 }
 
 func GetTextInput(x int, y int, prompt string) string {
-	drawText(x, y, prompt+"|", termbox.ColorWhite, termbox.ColorDefault)
+	drawText(x, y, prompt+cursor, termbox.ColorWhite, termbox.ColorDefault)
 	Flush()
 	input := ""
 	for {
@@ -232,7 +238,7 @@ func GetTextInput(x int, y int, prompt string) string {
 		}
 
 		drawText(x+len(prompt), y, getBlankLine(), termbox.ColorWhite, termbox.ColorDefault)
-		drawText(x+len(prompt), y, input+"|", termbox.ColorWhite, termbox.ColorDefault)
+		drawText(x+len(prompt), y, input+cursor, termbox.ColorWhite, termbox.ColorDefault)
 		Flush()
 	}
 }
