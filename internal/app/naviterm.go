@@ -31,7 +31,7 @@ func PrintText(x int, y int, text string) {
 func drawMenu(x int, y int, menu data.Menu, sitem selectedItem) selectedItem {
 	for i, item := range menu.MenuItems {
 		if i == sitem.itemNumber {
-			drawText(x, y+i, strconv.Itoa(i+1)+"). "+item.Name, item.Color, termbox.ColorWhite)
+			drawText(x, y+i, strconv.Itoa(i+1)+"). "+item.Name, termbox.ColorBlack, termbox.ColorWhite)
 		} else {
 			drawText(x, y+i, strconv.Itoa(i+1)+"). "+item.Name, item.Color, termbox.ColorDefault)
 		}

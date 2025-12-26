@@ -26,7 +26,7 @@ func SithSaberMenu() data.Menu {
 		Title:       "Choose your lightsaber:",
 		TitleColor:  termbox.ColorMagenta,
 		MenuItems:   menuitems.GetSithSabers(),
-		BorderColor: termbox.ColorWhite, // menu border color
+		BorderColor: termbox.ColorRed, // menu border color
 		Vpad:        1,
 		Hpad:        4,
 	}
@@ -37,7 +37,7 @@ func JediSaberMenu() data.Menu {
 		Title:       "Choose your lightsaber:",
 		TitleColor:  termbox.ColorMagenta,
 		MenuItems:   menuitems.GetJediSabers(),
-		BorderColor: termbox.ColorWhite,
+		BorderColor: termbox.ColorBlue,
 		Vpad:        1,
 		Hpad:        4,
 	}
