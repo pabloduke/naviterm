@@ -18,8 +18,7 @@ func FactionSelectMenu() data.Menu {
 		BorderColor: termbox.ColorWhite, // menu border color
 		Vpad:        1,
 		Hpad:        4,
-		IsNumbered:  false,
-		Prefix:      "-->",
+		IsNumbered:  true,
 	}
 }
 

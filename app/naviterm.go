@@ -207,13 +207,15 @@ func renderTitle(x int, y int, menu data2.Menu) {
 }
 
 func GetTextInput(x int, y int, prompt string) string {
-	drawText(x, y, prompt, termbox.ColorWhite, termbox.ColorDefault)
+	drawText(x, y, prompt+"|", termbox.ColorWhite, termbox.ColorDefault)
 	Flush()
 	input := ""
 	for {
 		event := termbox.PollEvent()
 
 		if event.Key == termbox.KeyEnter {
+			drawText(x+len(prompt), y, getBlankLine(), termbox.ColorWhite, termbox.ColorDefault)
+			drawText(x+len(prompt), y, input, termbox.ColorWhite, termbox.ColorDefault)
 			return input
 		}
 
@@ -221,12 +223,16 @@ func GetTextInput(x int, y int, prompt string) string {
 			input += string(event.Ch)
 		}
 
-		if event.Key == termbox.KeyBackspace2 {
+		if event.Key == termbox.KeyBackspace2 || event.Key == termbox.KeyBackspace {
 			input = chopLast(input)
 		}
 
+		if event.Key == termbox.KeySpace {
+			input += " "
+		}
+
 		drawText(x+len(prompt), y, getBlankLine(), termbox.ColorWhite, termbox.ColorDefault)
-		drawText(x+len(prompt), y, input, termbox.ColorWhite, termbox.ColorDefault)
+		drawText(x+len(prompt), y, input+"|", termbox.ColorWhite, termbox.ColorDefault)
 		Flush()
 	}
 }
