@@ -1,13 +1,13 @@
-// Package main contains a tiny interactive demo showcasing how to use the
+// Package main contains a tiny interactive cmd showcasing how to use the
 // naviterm app helpers and data types to build simple terminal menus with
 // termbox-go. Run this to pick a faction (Jedi/Sith) and then a lightsaber.
 package main
 
 import (
 	"naviterm/app"
-	"naviterm/cmd/demo/menus/forceuser"
-	"naviterm/cmd/demo/menus/menuitems"
 	"naviterm/data"
+	"naviterm/demo/menus/forceuser"
+	"naviterm/demo/menus/menuitems"
 )
 
 func main() {
@@ -16,13 +16,14 @@ func main() {
 	defer app.Close()
 
 	// Show the main menu at terminal coordinates (x=10, y=10) and get a selection.
-	// Use arrow keys to move, Enter to confirm (see internal/app for details).
+	// Use arrow keys to move or enter a numbered selection (works even when numbers are not shown),
+	//Enter to confirm
 	factionSelection := app.GetUserInput(10, 10, forceuser.FactionSelectMenu())
 
 	var saberSelection data.MenuItem
 
-	// Based on the first choice, present a second menu just below (y=20).
-	if factionSelection == menuitems.JediItem {
+	// Based on the first choice, present a second menu
+	if factionSelection == menuitems.Jedi {
 		saberSelection = app.GetUserInput(40, 10, forceuser.JediSaberMenu())
 	} else {
 		saberSelection = app.GetUserInput(40, 10, forceuser.SithSaberMenu())
@@ -37,7 +38,7 @@ func main() {
 
 	userName := app.GetTextInput(10, 23, "Enter your name: ")
 
-	if factionSelection == menuitems.JediItem {
+	if factionSelection == menuitems.Jedi {
 		app.PrintText(10, 24, "Welcome, Master "+userName+"! You are a Jedi Knight!")
 	} else {
 		app.PrintText(10, 24, "Welcome, Darth "+userName+"! You are a Sith Lord!")
