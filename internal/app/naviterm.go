@@ -2,6 +2,7 @@ package app
 
 import (
 	"naviterm/internal/data"
+	"strconv"
 
 	"github.com/nsf/termbox-go"
 )
@@ -30,9 +31,9 @@ func PrintText(x int, y int, text string) {
 func drawMenu(x int, y int, menu data.Menu, sitem selectedItem) selectedItem {
 	for i, item := range menu.MenuItems {
 		if i == sitem.itemNumber {
-			drawText(x, y+i, item.Name, item.Color, termbox.ColorWhite)
+			drawText(x, y+i, strconv.Itoa(i+1)+"). "+item.Name, item.Color, termbox.ColorWhite)
 		} else {
-			drawText(x, y+i, item.Name, item.Color, termbox.ColorDefault)
+			drawText(x, y+i, strconv.Itoa(i+1)+"). "+item.Name, item.Color, termbox.ColorDefault)
 		}
 	}
 
@@ -40,6 +41,13 @@ func drawMenu(x int, y int, menu data.Menu, sitem selectedItem) selectedItem {
 
 	for {
 		event := termbox.PollEvent()
+
+		if event.Ch >= '1' && event.Ch <= '9' {
+			index := int(event.Ch - '1')
+			if index < len(menu.MenuItems) {
+				return selectedItem{itemNumber: index, selected: false}
+			}
+		}
 
 		if event.Key == termbox.KeyArrowDown {
 			if sitem.itemNumber+1 > len(menu.MenuItems)-1 {
