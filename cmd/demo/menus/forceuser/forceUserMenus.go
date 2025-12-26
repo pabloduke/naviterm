@@ -18,6 +18,7 @@ func FactionSelectMenu() data.Menu {
 		BorderColor: termbox.ColorWhite, // menu border color
 		Vpad:        1,
 		Hpad:        4,
+		IsNumbered:  false,
 	}
 }
 
@@ -29,6 +30,7 @@ func SithSaberMenu() data.Menu {
 		BorderColor: termbox.ColorRed, // menu border color
 		Vpad:        1,
 		Hpad:        4,
+		IsNumbered:  true,
 	}
 }
 
@@ -40,6 +42,7 @@ func JediSaberMenu() data.Menu {
 		BorderColor: termbox.ColorBlue,
 		Vpad:        1,
 		Hpad:        4,
+		IsNumbered:  true,
 	}
 }
 
@@ -47,9 +50,10 @@ func HomeworldMenu() data.Menu {
 	return data.Menu{
 		Title:       "Choose Your Homeworld:",
 		TitleColor:  termbox.ColorMagenta,
-		BorderColor: termbox.ColorWhite,
+		BorderColor: termbox.ColorGreen,
 		Vpad:        1,
 		Hpad:        4,
 		MenuItems:   menuitems.GetHomeworlds(),
+		IsNumbered:  true,
 	}
 }

@@ -30,10 +30,10 @@ func PrintText(x int, y int, text string) {
 
 func drawMenu(x int, y int, menu data.Menu, sitem selectedItem) selectedItem {
 	for i, item := range menu.MenuItems {
-		if i == sitem.itemNumber {
-			drawText(x, y+i, strconv.Itoa(i+1)+"). "+item.Name, termbox.ColorBlack, termbox.ColorWhite)
+		if menu.IsNumbered {
+			drawMenuItemNumbered(x, y, i, sitem, item)
 		} else {
-			drawText(x, y+i, strconv.Itoa(i+1)+"). "+item.Name, item.Color, termbox.ColorDefault)
+			drawMenuItem(x, y, i, sitem, item)
 		}
 	}
 
@@ -67,6 +67,22 @@ func drawMenu(x int, y int, menu data.Menu, sitem selectedItem) selectedItem {
 		if event.Key == termbox.KeyEnter {
 			return selectedItem{itemNumber: sitem.itemNumber, selected: true}
 		}
+	}
+}
+
+func drawMenuItemNumbered(x int, y int, i int, sitem selectedItem, item data.MenuItem) {
+	if i == sitem.itemNumber {
+		drawText(x, y+i, strconv.Itoa(i+1)+"). "+item.Name, termbox.ColorBlack, termbox.ColorWhite)
+	} else {
+		drawText(x, y+i, strconv.Itoa(i+1)+"). "+item.Name, item.Color, termbox.ColorDefault)
+	}
+}
+
+func drawMenuItem(x int, y int, i int, sitem selectedItem, item data.MenuItem) {
+	if i == sitem.itemNumber {
+		drawText(x, y+i, item.Name, termbox.ColorBlack, termbox.ColorWhite)
+	} else {
+		drawText(x, y+i, item.Name, item.Color, termbox.ColorDefault)
 	}
 }
 
@@ -104,6 +120,31 @@ func GetUserInput(x int, y int, menu data.Menu) data.MenuItem {
 			return menu.MenuItems[sitem.itemNumber]
 		}
 	}
+}
+
+func defaultMenu(menu data.Menu) data.Menu {
+	if menu.TitleColor == 0 {
+		menu.TitleColor = termbox.ColorWhite
+	}
+	if menu.BorderColor == 0 {
+		menu.BorderColor = termbox.ColorWhite
+	}
+
+	if menu.Title == "" {
+		menu.Title = "Menu"
+	}
+
+	for i := 0; i < len(menu.MenuItems); i++ {
+		if menu.MenuItems[i].Color == 0 {
+			menu.MenuItems[i].Color = termbox.ColorWhite
+		}
+
+		if menu.MenuItems[i].Name == "" {
+			menu.MenuItems[i].Name = "Item"
+		}
+	}
+
+	return menu
 }
 
 func getUserInputFromMenu(x int, y int, menu data.Menu, sitem selectedItem) data.MenuItem {

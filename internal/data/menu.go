@@ -9,6 +9,7 @@ type Menu struct {
 	BorderColor termbox.Attribute
 	Vpad        int
 	Hpad        int
+	IsNumbered  bool
 }
 
 type MenuItem struct {
