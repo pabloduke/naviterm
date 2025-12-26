@@ -67,17 +67,40 @@ func PollEvent() {
 	termbox.PollEvent()
 }
 
+func ResetColor() {
+	print("\033[0m")
+}
+
 type selectedItem struct {
 	itemNumber int
 	selected   bool
 }
 
-func GetUserInput(x int, y int, menu data.Menu) data.MenuItem {
+func GetUserInput(x int, y int, menu data.Menu) []data.MenuItem {
+	selections := []data.MenuItem{}
 	sitem := selectedItem{
 		itemNumber: 0,
 		selected:   false,
 	}
 
+	selections = append(selections, getUserInputFromMenu(x, y, menu, sitem))
+
+	for _, submenu := range menu.SubMenus {
+		selections = append(
+			selections,
+			getUserInputFromMenu(
+				x,
+				y+len(menu.MenuItems)+5,
+				submenu,
+				sitem,
+			),
+		)
+	}
+
+	return selections
+}
+
+func getUserInputFromMenu(x int, y int, menu data.Menu, sitem selectedItem) data.MenuItem {
 	renderBorder(x, y, menu)
 	renderTitle(x, y, menu)
 

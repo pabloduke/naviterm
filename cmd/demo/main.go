@@ -4,58 +4,16 @@
 package main
 
 import (
+	"naviterm/cmd/demo/menus/forceuser"
+	"naviterm/cmd/demo/menus/menuitems"
 	"naviterm/internal/app"
 	"naviterm/internal/data"
-
-	"github.com/nsf/termbox-go"
 )
 
 func main() {
-	// Top-level options (first screen): choose a faction.
-	// Each MenuItem has a display Name and a Color used when rendering.
-	jediItem := data.MenuItem{Name: "JEDI", Color: termbox.ColorBlue}
-	sithItem := data.MenuItem{Name: "SITH", Color: termbox.ColorBlue}
-
-	// Second-level options (shown after selecting faction): saber choices.
-	redSaber := data.MenuItem{Name: "Red Saber", Color: termbox.ColorRed}
-	blueSaber := data.MenuItem{Name: "Blue Saber", Color: termbox.ColorBlue}
-	greenSaber := data.MenuItem{Name: "Green Saber", Color: termbox.ColorGreen}
-	yellowSaber := data.MenuItem{Name: "Yellow Saber", Color: termbox.ColorYellow}
-	purpleSaber := data.MenuItem{Name: "Purple Saber", Color: termbox.ColorMagenta}
-	crimsonSaber := data.MenuItem{Name: "Crimson Saber", Color: termbox.ColorRed}
-
-	// Build the submenu for Sith choices.
-	sithItems := []data.MenuItem{redSaber, purpleSaber, crimsonSaber}
-	sithMenu := data.Menu{
-		Title:       "Choose your lightsaber:",
-		TitleColor:  termbox.ColorMagenta,
-		MenuItems:   sithItems,
-		BorderColor: termbox.ColorWhite, // menu border color
-		Vpad:        1,
-		Hpad:        4,
-	}
-
-	// Build the submenu for Jedi choices.
-	jediMenu := data.Menu{
-		Title:       "Choose your lightsaber:",
-		TitleColor:  termbox.ColorMagenta,
-		MenuItems:   []data.MenuItem{blueSaber, greenSaber, purpleSaber, yellowSaber},
-		BorderColor: termbox.ColorWhite,
-		Vpad:        1,
-		Hpad:        4,
-	}
-
-	// Build the main menu from the two top-level options.
-	items := []data.MenuItem{}
-	items = append(items, jediItem, sithItem)
-	mainmenu := data.Menu{
-		Title:       "Choose your faction:",
-		TitleColor:  termbox.ColorMagenta,
-		MenuItems:   items,
-		BorderColor: termbox.ColorWhite,
-		Vpad:        1,
-		Hpad:        4,
-	}
+	factionMenu := forceuser.FactionSelectMenu()
+	jediMenu := forceuser.JediSaberMenu()
+	sithMenu := forceuser.SithSaberMenu()
 
 	// Initialize termbox and app-level state; ensure cleanup on exit.
 	app.Init()
@@ -63,19 +21,21 @@ func main() {
 
 	// Show the main menu at terminal coordinates (x=10, y=10) and get a selection.
 	// Use arrow keys to move, Enter to confirm (see internal/app for details).
-	factionSelection := app.GetUserInput(10, 10, mainmenu)
+	factionSelection := app.GetUserInput(10, 10, factionMenu)
 
-	saberSelection := blueSaber
+	var saberHomeworldSelection []data.MenuItem
 
 	// Based on the first choice, present a second menu just below (y=20).
-	if factionSelection == jediItem {
-		saberSelection = app.GetUserInput(10, 20, jediMenu)
+	if factionSelection[0] == menuitems.JediItem {
+		saberHomeworldSelection = app.GetUserInput(10, 20, jediMenu)
 	} else {
-		saberSelection = app.GetUserInput(10, 20, sithMenu)
+		saberHomeworldSelection = app.GetUserInput(10, 20, sithMenu)
 	}
 
-	println("\nYou have have selected to be a " + factionSelection.Name)
-	println("You will wield a " + saberSelection.Name)
+	app.ResetColor()
+	println("\nYou have have selected to be a " + factionSelection[0].Name)
+	println("You will wield a " + saberHomeworldSelection[0].Name)
+	println("You are from " + saberHomeworldSelection[1].Name)
 
 	// Flush final frame and wait for one more event before exiting,
 	// so the user can see the final output.
