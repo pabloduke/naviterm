@@ -205,3 +205,45 @@ func determineLongestName(longestName int, menu data.Menu) int {
 func renderTitle(x int, y int, menu data.Menu) {
 	drawText(x, y-menu.Vpad, menu.Title, menu.TitleColor, termbox.ColorDefault)
 }
+
+func GetTextInput(x int, y int, prompt string) string {
+	drawText(x, y, prompt, termbox.ColorWhite, termbox.ColorDefault)
+	Flush()
+	input := ""
+	for {
+		event := termbox.PollEvent()
+
+		if event.Key == termbox.KeyEnter {
+			return input
+		}
+
+		if event.Ch != 0 {
+			input += string(event.Ch)
+		}
+
+		if event.Key == termbox.KeyBackspace2 {
+			input = chopLast(input)
+		}
+
+		drawText(x+len(prompt), y, getBlankLine(), termbox.ColorWhite, termbox.ColorDefault)
+		drawText(x+len(prompt), y, input, termbox.ColorWhite, termbox.ColorDefault)
+		Flush()
+	}
+}
+
+func getBlankLine() string {
+	blankLine := ""
+	for i := 0; i < 80; i++ {
+		blankLine += " "
+	}
+
+	return blankLine
+}
+
+func chopLast(s string) string {
+	r := []rune(s)
+	if len(r) == 0 {
+		return s
+	}
+	return string(r[:len(r)-1])
+}

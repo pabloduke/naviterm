@@ -34,7 +34,15 @@ func main() {
 	app.PrintText(10, 20, "You have have selected to be a "+factionSelection.Name)
 	app.PrintText(10, 21, "You will wield a "+saberSelection.Name)
 	app.PrintText(10, 22, "You are from "+homeworldSelection.Name)
-	app.PrintText(10, 24, "Press any key to continue...")
+
+	userName := app.GetTextInput(10, 23, "Enter your name: ")
+
+	if factionSelection == menuitems.JediItem {
+		app.PrintText(10, 24, "Welcome, Master "+userName+"! You are a Jedi Knight!")
+	} else {
+		app.PrintText(10, 24, "Welcome, Darth "+userName+"! You are a Sith Lord!")
+	}
+	app.PrintText(10, 26, "Press any key to continue...")
 
 	// Flush final frame and wait for one more event before exiting,
 	// so the user can see the final output.
