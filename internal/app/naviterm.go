@@ -114,11 +114,11 @@ func GetUserInput(x int, y int, menu data.Menu) data.MenuItem {
 		selected:   false,
 	}
 
-	renderBorder(x, y, menu)
-	renderTitle(x, y, menu)
+	renderBorder(x+menu.Hpad, y+menu.Vpad, menu)
+	renderTitle(x+menu.Hpad, y+menu.Vpad, menu)
 
 	for {
-		drawMenu(x, y, menu, sitem)
+		drawMenu(x+menu.Hpad, y+menu.Vpad, menu, sitem)
 		sitem = getUserInput(menu, sitem)
 		if sitem.selected {
 			return menu.MenuItems[sitem.itemNumber]

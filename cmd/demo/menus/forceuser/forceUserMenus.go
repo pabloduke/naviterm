@@ -7,6 +7,7 @@ import (
 	"github.com/nsf/termbox-go"
 )
 
+// No title defines will default to "Menu"
 func FactionSelectMenu() data.Menu {
 	return data.Menu{
 		//Title:      "Choose your faction:",
@@ -49,6 +50,7 @@ func JediSaberMenu() data.Menu {
 	}
 }
 
+// IsNumbered set to true without a define prefix will defult to 1.), 2.), etc...
 func HomeworldMenu() data.Menu {
 	return data.Menu{
 		Title:       "Choose Your Homeworld:",
