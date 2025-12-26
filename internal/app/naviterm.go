@@ -22,6 +22,11 @@ func Flush() {
 	termbox.Flush()
 }
 
+func PrintText(x int, y int, text string) {
+	drawText(x, y, text, termbox.ColorWhite, termbox.ColorDefault)
+	Flush()
+}
+
 func drawMenu(x int, y int, menu data.Menu, sitem selectedItem) selectedItem {
 	for i, item := range menu.MenuItems {
 		if i == sitem.itemNumber {

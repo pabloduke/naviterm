@@ -33,9 +33,9 @@ func main() {
 	}
 
 	app.ResetColor()
-	println("\nYou have have selected to be a " + factionSelection[0].Name)
-	println("You will wield a " + saberHomeworldSelection[0].Name)
-	println("You are from " + saberHomeworldSelection[1].Name)
+	app.PrintText(10, 40, "You have have selected to be a "+factionSelection[0].Name)
+	app.PrintText(10, 41, "You will wield a "+saberHomeworldSelection[0].Name)
+	app.PrintText(10, 42, "You are from "+saberHomeworldSelection[1].Name)
 
 	// Flush final frame and wait for one more event before exiting,
 	// so the user can see the final output.
