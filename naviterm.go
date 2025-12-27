@@ -67,7 +67,7 @@ func GetMenuInput(x int, y int, menu data.Menu) data.MenuItem {
 	render.DrawMenuTitle(x+menu.Hpad, y+menu.Vpad, menu)
 
 	for {
-		render.DrawMenu(x+menu.Hpad, y+menu.Vpad, menu, sitem)
+		render.DrawMenuItems(x+menu.Hpad, y+menu.Vpad, menu, sitem)
 		sitem = input.GetMenuInput(menu, sitem)
 		if sitem.Selected {
 			return menu.MenuItems[sitem.ItemNumber]
@@ -79,16 +79,12 @@ func DrawMenuAsView(x int, y int, menu data.Menu) {
 	menu = defaultMenu(menu)
 	render.DrawMenuBorder(x+menu.Hpad, y+menu.Vpad, menu)
 	render.DrawMenuTitle(x+menu.Hpad, y+menu.Vpad, menu)
-
-	for i := 0; i < len(menu.MenuItems); i++ {
-		render.DrawText(
-			x+menu.Hpad,
-			y+i+menu.Vpad,
-			menu.Prefix+menu.MenuItems[i].Name,
-			termbox.Attribute(menu.MenuItems[i].Color.Attr()),
-			termbox.ColorDefault,
-		)
-	}
+	render.DrawMenuItems(
+		x+menu.Hpad,
+		y+menu.Vpad,
+		menu,
+		types.SelectedItem{ItemNumber: 0, Selected: false},
+	)
 }
 
 // Sets defaults for menu values not passed in by user

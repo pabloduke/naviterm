@@ -20,7 +20,7 @@ func DrawText(x, y int, text string, fg termbox.Attribute, bg termbox.Attribute)
 	Flush()
 }
 
-func DrawMenu(x int, y int, menu data.Menu, sitem types.SelectedItem) {
+func DrawMenuItems(x int, y int, menu data.Menu, sitem types.SelectedItem) {
 	for i, item := range menu.MenuItems {
 		if menu.IsNumbered {
 			numberedPrefix := strconv.Itoa(i+1) + menu.Prefix
