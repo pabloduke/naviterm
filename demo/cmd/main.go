@@ -52,4 +52,8 @@ func main() {
 
 	naviterm.PrintTextWithSpinner(10, 26, "Press any key to continue...")
 
+	naviterm.DrawMenuAsView(10, 30, forceuser.HomeworldMenu())
+
+	naviterm.PrintTextWithSpinner(10, 31, "Press any key to continue...")
+
 }

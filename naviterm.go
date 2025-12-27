@@ -75,6 +75,22 @@ func GetMenuInput(x int, y int, menu data.Menu) data.MenuItem {
 	}
 }
 
+func DrawMenuAsView(x int, y int, menu data.Menu) {
+	menu = defaultMenu(menu)
+	render.DrawMenuBorder(x+menu.Hpad, y+menu.Vpad, menu)
+	render.DrawMenuTitle(x+menu.Hpad, y+menu.Vpad, menu)
+
+	for i := 0; i < len(menu.MenuItems); i++ {
+		render.DrawText(
+			x+menu.Hpad,
+			y+i+menu.Vpad,
+			menu.Prefix+menu.MenuItems[i].Name,
+			termbox.Attribute(menu.MenuItems[i].Color.Attr()),
+			termbox.ColorDefault,
+		)
+	}
+}
+
 // Sets defaults for menu values not passed in by user
 func defaultMenu(menu data.Menu) data.Menu {
 	if termbox.Attribute(menu.TitleColor.Attr()) == 0 {
