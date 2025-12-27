@@ -41,19 +41,43 @@ func DrawMenuBorder(x int, y int, menu data.Menu) {
 	//Draw border from X Coor  past long menu name length (wheter item or title)
 	for ix := 0 - menu.Hpad; ix <= longestName+menu.Hpad; ix++ {
 		//top
-		DrawText(ix+x, y-menu.Vpad, data.Hbar, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
+		DrawText(
+			ix+x,
+			y-menu.Vpad,
+			data.Hbar,
+			termbox.Attribute(menu.BorderColor.Attr()),
+			termbox.ColorDefault,
+		)
 
 		//bottom
-		DrawText(ix+x, y+len(menu.MenuItems)+menu.Vpad, data.Hbar, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
+		DrawText(
+			ix+x,
+			y+len(menu.MenuItems)+menu.Vpad,
+			data.Hbar,
+			termbox.Attribute(menu.BorderColor.Attr()),
+			termbox.ColorDefault,
+		)
 	}
 
 	//Draw border on left and right
 	for jy := 0 - menu.Vpad; jy <= len(menu.MenuItems)+menu.Vpad; jy++ {
 		//left
-		DrawText(x-menu.Hpad, jy+y, data.Vbar, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
+		DrawText(
+			x-menu.Hpad,
+			jy+y,
+			data.Vbar,
+			termbox.Attribute(menu.BorderColor.Attr()),
+			termbox.ColorDefault,
+		)
 
 		//right
-		DrawText(longestName+menu.Hpad+x, jy+y, data.Vbar, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
+		DrawText(
+			longestName+menu.Hpad+x,
+			jy+y,
+			data.Vbar,
+			termbox.Attribute(menu.BorderColor.Attr()),
+			termbox.ColorDefault,
+		)
 	}
 
 	//Draw Corners
