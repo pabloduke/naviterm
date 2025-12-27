@@ -220,7 +220,7 @@ func GetTextInput(x int, y int, prompt string) string {
 	input := ""
 	done := make(chan struct{})
 
-	go spinner(x-2, y, done) // ← goroutine starts here
+	go spinner(x-1, y, done) // ← goroutine starts here
 
 	for {
 		event := termbox.PollEvent()
@@ -279,7 +279,7 @@ func spinner(x int, y int, done chan struct{}) {
 		case <-done:
 			return
 		default:
-			sprite := fmt.Sprintf("\r%c", frames[i%len(frames)])
+			sprite := fmt.Sprintf("%c", frames[i%len(frames)])
 
 			drawText(x, y, sprite, termbox.ColorGreen, termbox.ColorDefault)
 			Flush()
