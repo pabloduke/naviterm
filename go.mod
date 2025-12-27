@@ -1,4 +1,4 @@
-module naviterm
+module github.com/pabloduke/naviterm
 
 go 1.22
 
