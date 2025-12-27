@@ -42,7 +42,15 @@ func Flush() {
 
 func PrintText(x int, y int, text string) {
 	drawText(x, y, text, termbox.ColorWhite, termbox.ColorDefault)
-	Flush()
+}
+
+func PrintTextWithSpinner(x int, y int, text string) {
+	done := make(chan struct{})
+	go spinner(x-1, y, done) // ← goroutine starts here
+	drawText(x, y, text, termbox.ColorWhite, termbox.ColorDefault)
+	termbox.PollEvent()
+	drawText(x-1, y, " ", termbox.ColorWhite, termbox.ColorDefault)
+	close(done)
 }
 
 func drawMenu(x int, y int, menu data2.Menu, sitem selectedItem) {
@@ -103,12 +111,16 @@ func drawMenuItem(x int, y int, i int, sitem selectedItem, item data2.MenuItem, 
 	} else {
 		drawText(x, y+i, prefix+item.Name, termbox.Attribute(item.Color.Attr()), termbox.ColorDefault)
 	}
+
+	Flush()
 }
 
 func drawText(x, y int, text string, fg termbox.Attribute, bg termbox.Attribute) {
 	for i, ch := range text {
 		termbox.SetCell(x+i, y, ch, fg, bg)
 	}
+
+	Flush()
 }
 
 func PollEvent() {

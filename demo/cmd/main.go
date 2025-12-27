@@ -46,10 +46,7 @@ func main() {
 	} else {
 		app.PrintText(10, 24, "Welcome, Darth "+userName+"! You are a Sith Lord!")
 	}
-	app.PrintText(10, 26, "Press any key to continue...")
 
-	// Flush final frame and wait for one more event before exiting,
-	// so the user can see the final output.
-	app.Flush()
-	app.PollEvent()
+	app.PrintTextWithSpinner(10, 26, "Press any key to continue...")
+
 }
