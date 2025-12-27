@@ -11,9 +11,17 @@ import (
 )
 
 var cursor = "█"
+var spinnerFrames = []rune{'⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'}
+var delay = 100
 
 func SetCursor(c string) {
 	cursor = c
+}
+
+func SetSpinner(frames []rune, delayMS int) {
+	spinnerFrames = frames
+	delay = delayMS
+
 }
 
 func Init() {
@@ -219,7 +227,6 @@ func GetTextInput(x int, y int, prompt string) string {
 	Flush()
 	input := ""
 	done := make(chan struct{})
-
 	go spinner(x-1, y, done) // ← goroutine starts here
 
 	for {
@@ -271,7 +278,6 @@ func chopLast(s string) string {
 }
 
 func spinner(x int, y int, done chan struct{}) {
-	frames := []rune{'⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'}
 	i := 0
 
 	for {
@@ -279,11 +285,11 @@ func spinner(x int, y int, done chan struct{}) {
 		case <-done:
 			return
 		default:
-			sprite := fmt.Sprintf("%c", frames[i%len(frames)])
+			sprite := fmt.Sprintf("%c", spinnerFrames[i%len(spinnerFrames)])
 
 			drawText(x, y, sprite, termbox.ColorGreen, termbox.ColorDefault)
 			Flush()
-			time.Sleep(100 * time.Millisecond)
+			time.Sleep(time.Duration(delay) * time.Millisecond)
 			i++
 		}
 	}

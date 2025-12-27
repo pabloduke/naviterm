@@ -15,7 +15,10 @@ func main() {
 	app.Init()
 	defer app.Close()
 
-	// Show the main menu at terminal coordinates (x=10, y=10) and get a selection.
+	/*Set a Custom Spinner, else default will be used*/
+	//app.SetSpinner([]rune{'|', '/', '-', '\\'}, 100)
+	//app.SetSpinner([]rune{'<', '^', '>', 'v'}, 100)
+
 	// Use arrow keys to move or enter a numbered selection (works even when numbers are not shown),
 	//Enter to confirm
 	factionSelection := app.GetUserInput(10, 10, forceuser.FactionSelectMenu())
