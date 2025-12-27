@@ -17,3 +17,9 @@ type MenuItem struct {
 	Name  string
 	Color color.NaviTermColor
 }
+
+type Sprite struct {
+	frames []rune
+}
+
+var spinner = Sprite{frames: []rune{'|', '/', '-', '\\'}}

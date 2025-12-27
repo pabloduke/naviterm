@@ -1,9 +1,11 @@
 package app
 
 import (
+	"fmt"
 	data2 "naviterm/data"
 	"naviterm/data/color"
 	"strconv"
+	"time"
 
 	"github.com/nsf/termbox-go"
 )
@@ -216,12 +218,18 @@ func GetTextInput(x int, y int, prompt string) string {
 	drawText(x, y, prompt+cursor, termbox.ColorWhite, termbox.ColorDefault)
 	Flush()
 	input := ""
+	done := make(chan struct{})
+
+	go spinner(x-2, y, done) // ← goroutine starts here
+
 	for {
 		event := termbox.PollEvent()
 
 		if event.Key == termbox.KeyEnter {
+			drawText(x-1, y, " ", termbox.ColorWhite, termbox.ColorDefault)
 			drawText(x+len(prompt), y, getBlankLine(), termbox.ColorWhite, termbox.ColorDefault)
 			drawText(x+len(prompt), y, input, termbox.ColorWhite, termbox.ColorDefault)
+			close(done) // signal spinner to stop
 			return input
 		}
 
@@ -240,7 +248,9 @@ func GetTextInput(x int, y int, prompt string) string {
 		drawText(x+len(prompt), y, getBlankLine(), termbox.ColorWhite, termbox.ColorDefault)
 		drawText(x+len(prompt), y, input+cursor, termbox.ColorWhite, termbox.ColorDefault)
 		Flush()
+
 	}
+
 }
 
 func getBlankLine() string {
@@ -258,4 +268,23 @@ func chopLast(s string) string {
 		return s
 	}
 	return string(r[:len(r)-1])
+}
+
+func spinner(x int, y int, done chan struct{}) {
+	frames := []rune{'⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'}
+	i := 0
+
+	for {
+		select {
+		case <-done:
+			return
+		default:
+			sprite := fmt.Sprintf("\r%c", frames[i%len(frames)])
+
+			drawText(x, y, sprite, termbox.ColorGreen, termbox.ColorDefault)
+			Flush()
+			time.Sleep(100 * time.Millisecond)
+			i++
+		}
+	}
 }
