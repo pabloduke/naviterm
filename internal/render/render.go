@@ -23,7 +23,8 @@ func DrawText(x, y int, text string, fg termbox.Attribute, bg termbox.Attribute)
 func DrawMenu(x int, y int, menu data.Menu, sitem types.SelectedItem) {
 	for i, item := range menu.MenuItems {
 		if menu.IsNumbered {
-			drawMenuItemNumbered(x, y, i, sitem, item, menu.Prefix)
+			numberedPrefix := strconv.Itoa(i+1) + menu.Prefix
+			drawMenuItem(x, y, i, sitem, item, numberedPrefix)
 		} else {
 			drawMenuItem(x, y, i, sitem, item, menu.Prefix)
 		}
@@ -60,14 +61,6 @@ func DrawMenuBorder(x int, y int, menu data.Menu) {
 	DrawText(x+menu.Hpad+longestName, y-menu.Vpad, data.TopRight, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
 	DrawText(x+menu.Hpad+longestName, y+len(menu.MenuItems)+menu.Vpad, data.BottomRight, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
 	DrawText(x-menu.Hpad, y+len(menu.MenuItems)+menu.Vpad, data.BottomLeft, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
-}
-
-func drawMenuItemNumbered(x int, y int, i int, sitem types.SelectedItem, item data.MenuItem, prefix string) {
-	if i == sitem.ItemNumber {
-		DrawText(x, y+i, strconv.Itoa(i+1)+prefix+item.Name, termbox.ColorBlack, termbox.ColorWhite)
-	} else {
-		DrawText(x, y+i, strconv.Itoa(i+1)+prefix+item.Name, termbox.Attribute(item.Color.Attr()), termbox.ColorDefault)
-	}
 }
 
 func drawMenuItem(x int, y int, i int, sitem types.SelectedItem, item data.MenuItem, prefix string) {

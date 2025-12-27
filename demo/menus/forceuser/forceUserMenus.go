@@ -17,7 +17,7 @@ func FactionSelectMenu() data.Menu {
 		BorderColor: color.WHITE,
 		Vpad:        1,
 		Hpad:        4,
-		IsNumbered:  true,
+		IsNumbered:  false,
 	}
 }
 
