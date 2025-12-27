@@ -46,7 +46,7 @@ func PrintText(x int, y int, text string) {
 
 func PrintTextWithSpinner(x int, y int, text string) {
 	done := make(chan struct{})
-	go spinner(x-1, y, done) // ← goroutine starts here
+	go spinner(x-1, y, done)
 	drawText(x, y, text, termbox.ColorWhite, termbox.ColorDefault)
 	termbox.PollEvent()
 	drawText(x-1, y, " ", termbox.ColorWhite, termbox.ColorDefault)
@@ -239,7 +239,7 @@ func GetTextInput(x int, y int, prompt string) string {
 	Flush()
 	input := ""
 	done := make(chan struct{})
-	go spinner(x-1, y, done) // ← goroutine starts here
+	go spinner(x-1, y, done)
 
 	for {
 		event := termbox.PollEvent()
@@ -248,7 +248,7 @@ func GetTextInput(x int, y int, prompt string) string {
 			drawText(x-1, y, " ", termbox.ColorWhite, termbox.ColorDefault)
 			drawText(x+len(prompt), y, getBlankLine(), termbox.ColorWhite, termbox.ColorDefault)
 			drawText(x+len(prompt), y, input, termbox.ColorWhite, termbox.ColorDefault)
-			close(done) // signal spinner to stop
+			close(done)
 			return input
 		}
 
