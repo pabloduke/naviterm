@@ -14,7 +14,7 @@ func FactionSelectMenu() data.Menu {
 			menuitems2.Jedi,
 			menuitems2.Sith,
 		},
-		BorderColor: color.WHITE, // menu border color
+		BorderColor: color.WHITE,
 		Vpad:        1,
 		Hpad:        4,
 		IsNumbered:  true,
@@ -26,7 +26,7 @@ func SithSaberMenu() data.Menu {
 		Title:       "Choose your lightsaber:",
 		TitleColor:  color.MAGENTA,
 		MenuItems:   menuitems2.GetSithSabers(),
-		BorderColor: color.RED, // menu border color
+		BorderColor: color.RED,
 		Vpad:        1,
 		Hpad:        4,
 		IsNumbered:  true,

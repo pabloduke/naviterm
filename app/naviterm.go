@@ -236,7 +236,6 @@ func renderTitle(x int, y int, menu data2.Menu) {
 
 func GetTextInput(x int, y int, prompt string) string {
 	drawText(x, y, prompt+cursor, termbox.ColorWhite, termbox.ColorDefault)
-	Flush()
 	input := ""
 	done := make(chan struct{})
 	go spinner(x-1, y, done)
@@ -266,8 +265,6 @@ func GetTextInput(x int, y int, prompt string) string {
 
 		drawText(x+len(prompt), y, getBlankLine(), termbox.ColorWhite, termbox.ColorDefault)
 		drawText(x+len(prompt), y, input+cursor, termbox.ColorWhite, termbox.ColorDefault)
-		Flush()
-
 	}
 
 }
