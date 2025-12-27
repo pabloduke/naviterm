@@ -1,6 +1,6 @@
 package data
 
-import "naviterm/data/color"
+import "github.com/pabloduke/naviterm/data/color"
 
 type Menu struct {
 	Title       string

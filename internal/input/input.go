@@ -1,13 +1,12 @@
 package input
 
 import (
-	data2 "naviterm/data"
-	"naviterm/internal/types"
-
 	"github.com/nsf/termbox-go"
+	"github.com/pabloduke/naviterm/data"
+	"github.com/pabloduke/naviterm/internal/types"
 )
 
-func GetMenuInput(menu data2.Menu, sitem types.SelectedItem) types.SelectedItem {
+func GetMenuInput(menu data.Menu, sitem types.SelectedItem) types.SelectedItem {
 	for {
 		event := termbox.PollEvent()
 

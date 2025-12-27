@@ -1,8 +1,8 @@
 package menuitems
 
 import (
-	"naviterm/data"
-	"naviterm/data/color"
+	"github.com/pabloduke/naviterm/data"
+	"github.com/pabloduke/naviterm/data/color"
 )
 
 var RedSaber = data.MenuItem{Name: "Red Saber", Color: color.RED}

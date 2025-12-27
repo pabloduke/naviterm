@@ -4,15 +4,18 @@
 package main
 
 import (
-	"naviterm"
-	"naviterm/data"
-	"naviterm/demo/menus/forceuser"
-	"naviterm/demo/menus/menuitems"
+	"github.com/pabloduke/naviterm"
+	"github.com/pabloduke/naviterm/data"
+	"github.com/pabloduke/naviterm/demo/menus/forceuser"
+	"github.com/pabloduke/naviterm/demo/menus/menuitems"
 )
 
 func main() {
 	// Initialize naviterm and app-level state; ensure cleanup on exit.
-	naviterm.Init()
+	err := naviterm.Init()
+	if err != nil {
+		return
+	}
 	defer naviterm.Close()
 
 	/*Set a Custom Spinner, else default will be used*/

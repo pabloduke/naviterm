@@ -2,15 +2,15 @@ package naviterm
 
 import (
 	"fmt"
-	data2 "naviterm/data"
-	"naviterm/data/color"
-	"naviterm/internal/input"
-	"naviterm/internal/render"
-	"naviterm/internal/terminal"
-	"naviterm/internal/types"
 	"time"
 
 	"github.com/nsf/termbox-go"
+	"github.com/pabloduke/naviterm/data"
+	"github.com/pabloduke/naviterm/data/color"
+	"github.com/pabloduke/naviterm/internal/input"
+	"github.com/pabloduke/naviterm/internal/render"
+	"github.com/pabloduke/naviterm/internal/terminal"
+	"github.com/pabloduke/naviterm/internal/types"
 )
 
 var cursor = "█"
@@ -56,7 +56,7 @@ func ResetColor() {
 	print("\033[0m")
 }
 
-func GetMenuInput(x int, y int, menu data2.Menu) data2.MenuItem {
+func GetMenuInput(x int, y int, menu data.Menu) data.MenuItem {
 	menu = defaultMenu(menu)
 	sitem := types.SelectedItem{
 		ItemNumber: 0,
@@ -76,7 +76,7 @@ func GetMenuInput(x int, y int, menu data2.Menu) data2.MenuItem {
 }
 
 // Sets defaults for menu values not passed in by user
-func defaultMenu(menu data2.Menu) data2.Menu {
+func defaultMenu(menu data.Menu) data.Menu {
 	if termbox.Attribute(menu.TitleColor.Attr()) == 0 {
 		menu.TitleColor = color.WHITE
 	}
