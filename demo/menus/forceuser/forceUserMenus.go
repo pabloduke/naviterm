@@ -1,9 +1,9 @@
 package forceuser
 
 import (
-	"naviterm/data"
-	"naviterm/data/color"
-	menuitems2 "naviterm/demo/menus/menuitems"
+	"github.com/pabloduke/naviterm/data"
+	"github.com/pabloduke/naviterm/data/color"
+	"github.com/pabloduke/naviterm/demo/menus/menuitems"
 )
 
 func FactionSelectMenu() data.Menu {
@@ -11,8 +11,8 @@ func FactionSelectMenu() data.Menu {
 		Title:      "Choose your faction:",
 		TitleColor: color.MAGENTA,
 		MenuItems: []data.MenuItem{
-			menuitems2.Jedi,
-			menuitems2.Sith,
+			menuitems.Jedi,
+			menuitems.Sith,
 		},
 		BorderColor: color.WHITE,
 		Vpad:        1,
@@ -25,7 +25,7 @@ func SithSaberMenu() data.Menu {
 	return data.Menu{
 		Title:       "Choose your lightsaber:",
 		TitleColor:  color.MAGENTA,
-		MenuItems:   menuitems2.GetSithSabers(),
+		MenuItems:   menuitems.GetSithSabers(),
 		BorderColor: color.RED,
 		Vpad:        1,
 		Hpad:        4,
@@ -38,7 +38,7 @@ func JediSaberMenu() data.Menu {
 	return data.Menu{
 		Title:       "Choose your lightsaber:",
 		TitleColor:  color.MAGENTA,
-		MenuItems:   menuitems2.GetJediSabers(),
+		MenuItems:   menuitems.GetJediSabers(),
 		BorderColor: color.BLUE,
 		Vpad:        1,
 		Hpad:        4,
@@ -54,7 +54,7 @@ func HomeworldMenu() data.Menu {
 		BorderColor: color.GREEN,
 		Vpad:        1,
 		Hpad:        4,
-		MenuItems:   menuitems2.GetHomeworlds(),
+		MenuItems:   menuitems.GetHomeworlds(),
 		IsNumbered:  true,
 		Prefix:      "●",
 	}

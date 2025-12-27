@@ -4,10 +4,10 @@
 package main
 
 import (
-	"naviterm/app"
-	"naviterm/data"
-	"naviterm/demo/menus/forceuser"
-	"naviterm/demo/menus/menuitems"
+	"github.com/pabloduke/naviterm/app"
+	"github.com/pabloduke/naviterm/data"
+	"github.com/pabloduke/naviterm/demo/menus/forceuser"
+	"github.com/pabloduke/naviterm/demo/menus/menuitems"
 )
 
 func main() {

@@ -1,8 +1,8 @@
 package menuitems
 
 import (
-	"naviterm/data"
-	"naviterm/data/color"
+	"github.com/pabloduke/naviterm/data"
+	"github.com/pabloduke/naviterm/data/color"
 )
 
 var Jedi = data.MenuItem{Name: "JEDI", Color: color.BLUE}
