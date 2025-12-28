@@ -12,9 +12,21 @@ type Menu struct {
 	IsNumbered  bool
 	Prefix      string
 	MenuItems   []MenuItem
+	MenuBorder  MenuBorder
 }
 
 type MenuItem struct {
 	Name  string
 	Color color.NaviTermColor
+}
+
+type MenuBorder struct {
+	TopLeftCorner,
+	TopRightCorner,
+	BottomLeftCorner,
+	BottomRightCorner,
+	TopBorder,
+	BottomBorder,
+	LeftBorder,
+	RightBorder string
 }

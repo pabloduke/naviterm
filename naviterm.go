@@ -3,6 +3,7 @@ package naviterm
 import (
 	"github.com/nsf/termbox-go"
 	"github.com/pabloduke/naviterm/data"
+	"github.com/pabloduke/naviterm/data/borders"
 	"github.com/pabloduke/naviterm/data/color"
 	"github.com/pabloduke/naviterm/internal/input"
 	"github.com/pabloduke/naviterm/internal/render"
@@ -90,6 +91,10 @@ func defaultMenu(menu data.Menu) data.Menu {
 	}
 	if termbox.Attribute(menu.BorderColor.Attr()) == 0 {
 		menu.BorderColor = color.WHITE
+	}
+
+	if menu.MenuBorder.TopLeftCorner == "" {
+		menu.MenuBorder = borders.RoundedBorder
 	}
 
 	if menu.MaxHeight < 1 {
