@@ -54,6 +54,8 @@ func ClearArea(x int, y int, w int, h int) {
 			render.DrawText(x+j, y+i, " ", termbox.ColorDefault, termbox.ColorDefault)
 		}
 	}
+
+	terminal.Flush()
 }
 
 func PollEvent() {
@@ -79,6 +81,8 @@ func GetMenuInput(x int, y int, menu data.Menu) data.MenuItem {
 		if sitem.Selected {
 			return menu.MenuItems[sitem.ItemNumber]
 		}
+
+		terminal.Flush()
 	}
 }
 
@@ -139,6 +143,7 @@ func GetTextInput(x int, y int, prompt string) string {
 			render.DrawText(x+len(prompt), y, getBlankLine(), termbox.ColorWhite, termbox.ColorDefault)
 			render.DrawText(x+len(prompt), y, input, termbox.ColorWhite, termbox.ColorDefault)
 			close(done)
+			terminal.Flush()
 			return input
 		}
 
@@ -156,8 +161,8 @@ func GetTextInput(x int, y int, prompt string) string {
 
 		render.DrawText(x+len(prompt), y, getBlankLine(), termbox.ColorWhite, termbox.ColorDefault)
 		render.DrawText(x+len(prompt), y, input+cursor, termbox.ColorWhite, termbox.ColorDefault)
+		terminal.Flush()
 	}
-
 }
 
 func getBlankLine() string {
@@ -189,6 +194,7 @@ func spinner(x int, y int, done chan struct{}) {
 			render.DrawText(x, y, sprite, termbox.ColorGreen, termbox.ColorDefault)
 			time.Sleep(time.Duration(delay) * time.Millisecond)
 			i++
+			terminal.Flush()
 		}
 	}
 }

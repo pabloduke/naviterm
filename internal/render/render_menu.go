@@ -3,6 +3,7 @@ package render
 import (
 	"github.com/nsf/termbox-go"
 	"github.com/pabloduke/naviterm/data"
+	"github.com/pabloduke/naviterm/internal/terminal"
 	"github.com/pabloduke/naviterm/internal/types"
 )
 
@@ -18,6 +19,8 @@ func DrawMenu(x int, y int, menu data.Menu) {
 			Selected:   false,
 		},
 	)
+
+	terminal.Flush()
 }
 
 func drawMenuTitle(x int, y int, menu data.Menu) {
