@@ -2,6 +2,7 @@ package forceuser
 
 import (
 	"github.com/pabloduke/naviterm/data"
+	"github.com/pabloduke/naviterm/data/borders"
 	"github.com/pabloduke/naviterm/data/color"
 	"github.com/pabloduke/naviterm/demo/menus/menuitems"
 )
@@ -18,6 +19,7 @@ func FactionSelectMenu() data.Menu {
 		Vpad:        1,
 		Hpad:        4,
 		IsNumbered:  false,
+		MenuBorder:  borders.HeavySquareBorder,
 	}
 }
 
@@ -31,6 +33,7 @@ func SithSaberMenu() data.Menu {
 		Hpad:        4,
 		IsNumbered:  true,
 		Prefix:      "⚔ ",
+		MenuBorder:  borders.BlockBorder,
 	}
 }
 
@@ -44,6 +47,7 @@ func JediSaberMenu() data.Menu {
 		Hpad:        4,
 		IsNumbered:  true,
 		Prefix:      "⚔ ",
+		MenuBorder:  borders.BlockBorder,
 	}
 }
 
@@ -53,10 +57,11 @@ func HomeworldMenu() data.Menu {
 		TitleColor:  color.MAGENTA,
 		BorderColor: color.GREEN,
 		MaxHeight:   5,
-		Vpad:        1,
+		Vpad:        2,
 		Hpad:        4,
 		MenuItems:   menuitems.GetHomeworlds(),
 		IsNumbered:  true,
 		Prefix:      "●",
+		MenuBorder:  borders.RoundedBorder,
 	}
 }

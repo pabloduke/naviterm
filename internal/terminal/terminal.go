@@ -1,6 +1,8 @@
 package terminal
 
-import "github.com/nsf/termbox-go"
+import (
+	"github.com/nsf/termbox-go"
+)
 
 func Init() error {
 	err := termbox.Init()
