@@ -12,8 +12,8 @@ var Togruta = data.MenuItem{Name: "Togruta", Color: color.GREEN}
 var Rodian = data.MenuItem{Name: "Rodian", Color: color.GREEN}
 var Gungan = data.MenuItem{Name: "Gungan", Color: color.GREEN}
 var Jawa = data.MenuItem{Name: "Jawa", Color: color.GREEN}
-var Wookie = data.MenuItem{Name: "Wookie", Color: color.GREEN}
+var Wookiee = data.MenuItem{Name: "Wookiee", Color: color.GREEN}
 
 func GetSpecies() []data.MenuItem {
-	return []data.MenuItem{Human, Twilek, Chiss, Togruta, Rodian, Gungan, Jawa, Wookie}
+	return []data.MenuItem{Human, Twilek, Chiss, Togruta, Rodian, Gungan, Jawa, Wookiee}
 }

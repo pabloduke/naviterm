@@ -27,5 +27,6 @@ func GetHomeworlds() []data.MenuItem {
 		Mustafar,
 		Endor,
 		Dathomir,
+		Kashyyyk,
 	}
 }
