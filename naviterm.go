@@ -1,9 +1,6 @@
 package naviterm
 
 import (
-	"fmt"
-	"time"
-
 	"github.com/nsf/termbox-go"
 	"github.com/pabloduke/naviterm/data"
 	"github.com/pabloduke/naviterm/data/color"
@@ -13,18 +10,13 @@ import (
 	"github.com/pabloduke/naviterm/internal/types"
 )
 
-var cursor = "█"
-var spinnerFrames = []rune{'⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'}
-var delay = 100
-
 func SetCursor(c string) {
-	cursor = c
+	input.Cursor = c
 }
 
 func SetSpinner(frames []rune, delayMS int) {
-	spinnerFrames = frames
-	delay = delayMS
-
+	render.SpinnerFrames = frames
+	render.Delay = delayMS
 }
 
 func Init() error {
@@ -41,7 +33,7 @@ func PrintText(x int, y int, text string) {
 
 func PrintTextWithSpinner(x int, y int, text string) {
 	done := make(chan struct{})
-	go spinner(x-1, y, done)
+	go render.Spinner(x-1, y, done)
 	render.DrawText(x, y, text, termbox.ColorWhite, termbox.ColorDefault)
 	termbox.PollEvent()
 	render.DrawText(x-1, y, " ", termbox.ColorWhite, termbox.ColorDefault)
@@ -130,72 +122,5 @@ func defaultMenu(menu data.Menu) data.Menu {
 }
 
 func GetTextInput(x int, y int, prompt string) string {
-	render.DrawText(x, y, prompt+cursor, termbox.ColorWhite, termbox.ColorDefault)
-	input := ""
-	done := make(chan struct{})
-	go spinner(x-1, y, done)
-
-	for {
-		event := termbox.PollEvent()
-
-		if event.Key == termbox.KeyEnter {
-			render.DrawText(x-1, y, " ", termbox.ColorWhite, termbox.ColorDefault)
-			render.DrawText(x+len(prompt), y, getBlankLine(), termbox.ColorWhite, termbox.ColorDefault)
-			render.DrawText(x+len(prompt), y, input, termbox.ColorWhite, termbox.ColorDefault)
-			close(done)
-			terminal.Flush()
-			return input
-		}
-
-		if event.Ch != 0 {
-			input += string(event.Ch)
-		}
-
-		if event.Key == termbox.KeyBackspace2 || event.Key == termbox.KeyBackspace {
-			input = chopLast(input)
-		}
-
-		if event.Key == termbox.KeySpace {
-			input += " "
-		}
-
-		render.DrawText(x+len(prompt), y, getBlankLine(), termbox.ColorWhite, termbox.ColorDefault)
-		render.DrawText(x+len(prompt), y, input+cursor, termbox.ColorWhite, termbox.ColorDefault)
-		terminal.Flush()
-	}
-}
-
-func getBlankLine() string {
-	width, _ := termbox.Size()
-	blankLine := ""
-	for i := 0; i < width; i++ {
-		blankLine += " "
-	}
-
-	return blankLine
-}
-
-func chopLast(s string) string {
-	r := []rune(s)
-	if len(r) == 0 {
-		return s
-	}
-	return string(r[:len(r)-1])
-}
-
-func spinner(x int, y int, done chan struct{}) {
-	i := 0
-
-	for {
-		select {
-		case <-done:
-			return
-		default:
-			sprite := fmt.Sprintf("%c", spinnerFrames[i%len(spinnerFrames)])
-			render.DrawText(x, y, sprite, termbox.ColorGreen, termbox.ColorDefault)
-			time.Sleep(time.Duration(delay) * time.Millisecond)
-			i++
-			terminal.Flush()
-		}
-	}
+	return input.GetTextInput(x, y, prompt)
 }
