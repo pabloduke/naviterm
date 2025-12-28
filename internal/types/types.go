@@ -1,6 +1,7 @@
 package types
 
-type SelectedItem struct {
-	ItemNumber int
-	Selected   bool
+type MenuCursor struct {
+	Position int
+	Offset   int
+	Selected bool
 }

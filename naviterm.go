@@ -60,18 +60,18 @@ func ResetColor() {
 
 func GetMenuInput(x int, y int, menu data.Menu) data.MenuItem {
 	menu = defaultMenu(menu)
-	sitem := types.SelectedItem{
-		ItemNumber: 0,
-		Selected:   false,
+	menuCursor := types.MenuCursor{
+		Position: 0,
+		Selected: false,
 	}
 
 	render.DrawMenu(x, y, menu)
 
 	for {
-		render.DrawMenuItems(x+menu.Hpad, y+menu.Vpad, menu, sitem)
-		sitem = input.GetMenuInput(menu, sitem)
-		if sitem.Selected {
-			return menu.MenuItems[sitem.ItemNumber]
+		render.DrawMenuItems(x+menu.Hpad, y+menu.Vpad, menu, menuCursor)
+		menuCursor = input.GetMenuInput(menu, menuCursor)
+		if menuCursor.Selected {
+			return menu.MenuItems[menuCursor.Position]
 		}
 
 		terminal.Flush()
