@@ -14,9 +14,10 @@ func DrawMenu(x int, y int, menu data.Menu) {
 		x+menu.Hpad,
 		y+menu.Vpad,
 		menu,
-		types.SelectedItem{
-			ItemNumber: -1,
-			Selected:   false,
+		types.MenuCursor{
+			Position: 0,
+			Offset:   0,
+			Selected: false,
 		},
 	)
 
