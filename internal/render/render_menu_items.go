@@ -5,6 +5,7 @@ import (
 
 	"github.com/nsf/termbox-go"
 	"github.com/pabloduke/naviterm/data"
+	"github.com/pabloduke/naviterm/internal/terminal"
 	"github.com/pabloduke/naviterm/internal/types"
 )
 
@@ -18,7 +19,7 @@ func DrawMenuItems(x int, y int, menu data.Menu, sitem types.SelectedItem) {
 		}
 	}
 
-	Flush()
+	terminal.Flush()
 }
 
 func drawMenuItem(x int, y int, i int, sitem types.SelectedItem, item data.MenuItem, prefix string) {
@@ -28,5 +29,5 @@ func drawMenuItem(x int, y int, i int, sitem types.SelectedItem, item data.MenuI
 		DrawText(x, y+i, prefix+item.Name, termbox.Attribute(item.Color.Attr()), termbox.ColorDefault)
 	}
 
-	Flush()
+	terminal.Flush()
 }

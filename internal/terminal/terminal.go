@@ -14,3 +14,7 @@ func Init() error {
 func Close() {
 	termbox.Close()
 }
+
+func Flush() {
+	termbox.Flush()
+}

@@ -92,7 +92,3 @@ func determineLongestName(longestName int, menu data.Menu) int {
 
 	return longestName
 }
-
-func Flush() {
-	termbox.Flush()
-}
