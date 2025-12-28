@@ -18,3 +18,13 @@ func Close() {
 func Flush() {
 	termbox.Flush()
 }
+
+func Width() int {
+	width, _ := termbox.Size()
+	return width
+}
+
+func Height() int {
+	_, height := termbox.Size()
+	return height
+}

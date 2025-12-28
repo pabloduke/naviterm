@@ -166,8 +166,9 @@ func GetTextInput(x int, y int, prompt string) string {
 }
 
 func getBlankLine() string {
+	width, _ := termbox.Size()
 	blankLine := ""
-	for i := 0; i < 80; i++ {
+	for i := 0; i < width; i++ {
 		blankLine += " "
 	}
 
