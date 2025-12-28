@@ -4,6 +4,7 @@ import (
 	"github.com/pabloduke/naviterm/data"
 	"github.com/pabloduke/naviterm/data/borders"
 	"github.com/pabloduke/naviterm/data/color"
+	"github.com/pabloduke/naviterm/data/symbols"
 	"github.com/pabloduke/naviterm/demo/menus/menuitems"
 )
 
@@ -63,5 +64,20 @@ func HomeworldMenu() data.Menu {
 		IsNumbered:  true,
 		Prefix:      "●",
 		MenuBorder:  borders.RoundedBorder,
+	}
+}
+
+func SpeciesMenu() data.Menu {
+	return data.Menu{
+		Title:       "Choose Your Species:",
+		TitleColor:  color.YELLOW,
+		BorderColor: color.WHITE,
+		MaxHeight:   5,
+		Vpad:        2,
+		Hpad:        4,
+		MenuItems:   menuitems.GetSpecies(),
+		IsNumbered:  true,
+		Prefix:      symbols.Lozenge,
+		MenuBorder:  borders.DoubleBorder,
 	}
 }

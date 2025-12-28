@@ -1,4 +1,4 @@
-package borders
+package symbols
 
 //Horizontal: ━ (U+2501)
 //Vertical: ┃ (U+2503)

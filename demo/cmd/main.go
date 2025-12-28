@@ -36,25 +36,26 @@ func main() {
 		saberSelection = naviterm.GetMenuInput(40, 10, forceuser.SithSaberMenu())
 	}
 
-	homeworldSelection := naviterm.GetMenuInput(75, 10, forceuser.HomeworldMenu())
+	speciesSelection := naviterm.GetMenuInput(10, 20, forceuser.SpeciesMenu())
+	homeworldSelection := naviterm.GetMenuInput(40, 20, forceuser.HomeworldMenu())
 
 	naviterm.ResetColor()
 	//naviterm.PrintText(10, 20, "You have have selected to be a "+factionSelection.Name)
 	//naviterm.PrintText(10, 21, "You will wield a "+saberSelection.Name)
 	//naviterm.PrintText(10, 22, "You are from "+homeworldSelection.Name)
 
-	userName := naviterm.GetTextInput(10, 23, "Enter your name: ")
+	userName := naviterm.GetTextInput(10, 30, "Enter your name: ")
 
 	if factionSelection == menuitems.Jedi {
-		naviterm.PrintText(10, 24, "Welcome, Master "+userName+"! You are a Jedi Knight!")
+		userName = "Master " + userName
+		naviterm.PrintText(10, 35, "Welcome, "+userName+"! You are a Jedi Knight!")
 	} else {
-		naviterm.PrintText(10, 24, "Welcome, Darth "+userName+"! You are a Sith Lord!")
+		userName = "Darth " + userName
+		naviterm.PrintText(10, 36, "Welcome, "+userName+"! You are a Sith Lord!")
 	}
 
-	naviterm.PrintTextWithSpinner(10, 26, "Press any key to continue...")
-
 	selectionsViewMenu := data.Menu{
-		Title:       userName,
+		Title:       "Your Character:",
 		TitleColor:  color.WHITE,
 		BorderColor: color.WHITE,
 		MaxHeight:   5,
@@ -62,10 +63,16 @@ func main() {
 		Hpad:        4,
 		IsNumbered:  false,
 		Prefix:      "",
-		MenuItems:   []data.MenuItem{factionSelection, saberSelection, homeworldSelection},
+		MenuItems: []data.MenuItem{
+			{Name: "Name: " + userName, Color: color.WHITE},
+			{Name: "Faction: " + factionSelection.Name, Color: color.WHITE},
+			{Name: "Saber: " + saberSelection.Name, Color: color.WHITE},
+			{Name: "Species: " + speciesSelection.Name, Color: color.WHITE},
+			{Name: "HomeWorld: " + homeworldSelection.Name, Color: color.WHITE},
+		},
 	}
-	naviterm.DrawMenuAsView(10, 30, selectionsViewMenu)
+	naviterm.DrawMenuAsView(75, 15, selectionsViewMenu)
 
-	naviterm.PrintTextWithSpinner(10, 40, "Press any key to continue...")
+	naviterm.PrintTextWithSpinner(10, 38, "Press any key to continue...")
 
 }
