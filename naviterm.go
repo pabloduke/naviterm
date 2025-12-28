@@ -48,6 +48,14 @@ func PrintTextWithSpinner(x int, y int, text string) {
 	close(done)
 }
 
+func ClearArea(x int, y int, w int, h int) {
+	for i := 0; i < h; i++ {
+		for j := 0; j < w; j++ {
+			render.DrawText(x+j, y+i, " ", termbox.ColorDefault, termbox.ColorDefault)
+		}
+	}
+}
+
 func PollEvent() {
 	termbox.PollEvent()
 }
