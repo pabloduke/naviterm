@@ -6,6 +6,7 @@ package main
 import (
 	"github.com/pabloduke/naviterm"
 	"github.com/pabloduke/naviterm/data"
+	"github.com/pabloduke/naviterm/data/color"
 	"github.com/pabloduke/naviterm/demo/menus/forceuser"
 	"github.com/pabloduke/naviterm/demo/menus/menuitems"
 )
@@ -38,9 +39,9 @@ func main() {
 	homeworldSelection := naviterm.GetMenuInput(75, 10, forceuser.HomeworldMenu())
 
 	naviterm.ResetColor()
-	naviterm.PrintText(10, 20, "You have have selected to be a "+factionSelection.Name)
-	naviterm.PrintText(10, 21, "You will wield a "+saberSelection.Name)
-	naviterm.PrintText(10, 22, "You are from "+homeworldSelection.Name)
+	//naviterm.PrintText(10, 20, "You have have selected to be a "+factionSelection.Name)
+	//naviterm.PrintText(10, 21, "You will wield a "+saberSelection.Name)
+	//naviterm.PrintText(10, 22, "You are from "+homeworldSelection.Name)
 
 	userName := naviterm.GetTextInput(10, 23, "Enter your name: ")
 
@@ -52,8 +53,19 @@ func main() {
 
 	naviterm.PrintTextWithSpinner(10, 26, "Press any key to continue...")
 
-	naviterm.DrawMenuAsView(10, 30, forceuser.HomeworldMenu())
+	selectionsViewMenu := data.Menu{
+		Title:       userName,
+		TitleColor:  color.WHITE,
+		BorderColor: color.WHITE,
+		MaxHeight:   5,
+		Vpad:        1,
+		Hpad:        4,
+		IsNumbered:  false,
+		Prefix:      "",
+		MenuItems:   []data.MenuItem{factionSelection, saberSelection, homeworldSelection},
+	}
+	naviterm.DrawMenuAsView(10, 30, selectionsViewMenu)
 
-	naviterm.PrintTextWithSpinner(10, 31, "Press any key to continue...")
+	naviterm.PrintTextWithSpinner(10, 40, "Press any key to continue...")
 
 }
