@@ -63,8 +63,7 @@ func GetMenuInput(x int, y int, menu data.Menu) data.MenuItem {
 		Selected:   false,
 	}
 
-	render.DrawMenuBorder(x+menu.Hpad, y+menu.Vpad, menu)
-	render.DrawMenuTitle(x+menu.Hpad, y+menu.Vpad, menu)
+	render.DrawMenu(x, y, menu)
 
 	for {
 		render.DrawMenuItems(x+menu.Hpad, y+menu.Vpad, menu, sitem)
@@ -77,14 +76,7 @@ func GetMenuInput(x int, y int, menu data.Menu) data.MenuItem {
 
 func DrawMenuAsView(x int, y int, menu data.Menu) {
 	menu = defaultMenu(menu)
-	render.DrawMenuBorder(x+menu.Hpad, y+menu.Vpad, menu)
-	render.DrawMenuTitle(x+menu.Hpad, y+menu.Vpad, menu)
-	render.DrawMenuItems(
-		x+menu.Hpad,
-		y+menu.Vpad,
-		menu,
-		types.SelectedItem{ItemNumber: 0, Selected: false},
-	)
+	render.DrawMenu(x, y, menu)
 }
 
 // Sets defaults for menu values not passed in by user

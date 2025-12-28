@@ -4,37 +4,28 @@ import (
 	"github.com/nsf/termbox-go"
 	"github.com/pabloduke/naviterm/data"
 	"github.com/pabloduke/naviterm/internal/types"
-
-	"strconv"
 )
 
-func DrawMenuTitle(x int, y int, menu data.Menu) {
+func DrawMenu(x int, y int, menu data.Menu) {
+	drawMenuBorder(x+menu.Hpad, y+menu.Vpad, menu)
+	drawMenuTitle(x+menu.Hpad, y+menu.Vpad, menu)
+	DrawMenuItems(
+		x+menu.Hpad,
+		y+menu.Vpad,
+		menu,
+		types.SelectedItem{
+			ItemNumber: 0,
+			Selected:   false,
+		},
+	)
+}
+
+func drawMenuTitle(x int, y int, menu data.Menu) {
 	DrawText(x, y-menu.Vpad, menu.Title, termbox.Attribute(menu.TitleColor.Attr()), termbox.ColorDefault)
 }
 
-func DrawText(x, y int, text string, fg termbox.Attribute, bg termbox.Attribute) {
-	for i, ch := range text {
-		termbox.SetCell(x+i, y, ch, fg, bg)
-	}
-
-	Flush()
-}
-
-func DrawMenuItems(x int, y int, menu data.Menu, sitem types.SelectedItem) {
-	for i, item := range menu.MenuItems {
-		if menu.IsNumbered {
-			numberedPrefix := strconv.Itoa(i+1) + menu.Prefix
-			drawMenuItem(x, y, i, sitem, item, numberedPrefix)
-		} else {
-			drawMenuItem(x, y, i, sitem, item, menu.Prefix)
-		}
-	}
-
-	Flush()
-}
-
 // TODO: Render single and double borders
-func DrawMenuBorder(x int, y int, menu data.Menu) {
+func drawMenuBorder(x int, y int, menu data.Menu) {
 	//Determine longest name
 	longestName := len(menu.Title)
 	longestName = determineLongestName(longestName, menu)
@@ -85,16 +76,6 @@ func DrawMenuBorder(x int, y int, menu data.Menu) {
 	DrawText(x+menu.Hpad+longestName, y-menu.Vpad, data.TopRight, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
 	DrawText(x+menu.Hpad+longestName, y+len(menu.MenuItems)+menu.Vpad, data.BottomRight, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
 	DrawText(x-menu.Hpad, y+len(menu.MenuItems)+menu.Vpad, data.BottomLeft, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
-}
-
-func drawMenuItem(x int, y int, i int, sitem types.SelectedItem, item data.MenuItem, prefix string) {
-	if i == sitem.ItemNumber {
-		DrawText(x, y+i, prefix+item.Name, termbox.ColorBlack, termbox.ColorWhite)
-	} else {
-		DrawText(x, y+i, prefix+item.Name, termbox.Attribute(item.Color.Attr()), termbox.ColorDefault)
-	}
-
-	Flush()
 }
 
 func determineLongestName(longestName int, menu data.Menu) int {
