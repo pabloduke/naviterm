@@ -10,10 +10,22 @@ var Corellia = data.MenuItem{Name: "Corellia", Color: color.WHITE}
 var Coruscant = data.MenuItem{Name: "Coruscant", Color: color.WHITE}
 var Ruusan = data.MenuItem{Name: "Ruusan", Color: color.WHITE}
 var Apatros = data.MenuItem{Name: "Apatros", Color: color.WHITE}
-var Earth = data.MenuItem{Name: "Earth", Color: color.WHITE}
-var Caprica = data.MenuItem{Name: "Caprica", Color: color.WHITE}
-var Vulcan = data.MenuItem{Name: "Vulcan", Color: color.WHITE}
+var Naboo = data.MenuItem{Name: "Naboo", Color: color.WHITE}
+var Mustafar = data.MenuItem{Name: "Mustafar", Color: color.WHITE}
+var Endor = data.MenuItem{Name: "Endor", Color: color.WHITE}
+var Dathomir = data.MenuItem{Name: "Dathomir", Color: color.WHITE}
+var Kashyyyk = data.MenuItem{Name: "Kashyyyk", Color: color.WHITE}
 
 func GetHomeworlds() []data.MenuItem {
-	return []data.MenuItem{Tatooine, Corellia, Coruscant, Ruusan, Apatros, Earth, Caprica, Vulcan}
+	return []data.MenuItem{
+		Tatooine,
+		Corellia,
+		Coruscant,
+		Ruusan,
+		Apatros,
+		Naboo,
+		Mustafar,
+		Endor,
+		Dathomir,
+	}
 }
