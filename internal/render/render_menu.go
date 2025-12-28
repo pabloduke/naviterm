@@ -39,7 +39,7 @@ func drawMenuBorder(x int, y int, menu data.Menu) {
 		DrawText(
 			ix+x,
 			y-menu.Vpad,
-			data.Hbar,
+			menu.MenuBorder.TopBorder,
 			termbox.Attribute(menu.BorderColor.Attr()),
 			termbox.ColorDefault,
 		)
@@ -48,7 +48,7 @@ func drawMenuBorder(x int, y int, menu data.Menu) {
 		DrawText(
 			ix+x,
 			y+menu.MaxHeight+menu.Vpad,
-			data.Hbar,
+			menu.MenuBorder.BottomBorder,
 			termbox.Attribute(menu.BorderColor.Attr()),
 			termbox.ColorDefault,
 		)
@@ -60,7 +60,7 @@ func drawMenuBorder(x int, y int, menu data.Menu) {
 		DrawText(
 			x-menu.Hpad,
 			jy+y,
-			data.Vbar,
+			menu.MenuBorder.LeftBorder,
 			termbox.Attribute(menu.BorderColor.Attr()),
 			termbox.ColorDefault,
 		)
@@ -69,17 +69,17 @@ func drawMenuBorder(x int, y int, menu data.Menu) {
 		DrawText(
 			longestName+menu.Hpad+x,
 			jy+y,
-			data.Vbar,
+			menu.MenuBorder.RightBorder,
 			termbox.Attribute(menu.BorderColor.Attr()),
 			termbox.ColorDefault,
 		)
 	}
 
 	//Draw Corners
-	DrawText(x-menu.Hpad, y-menu.Vpad, data.TopLeft, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
-	DrawText(x+menu.Hpad+longestName, y-menu.Vpad, data.TopRight, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
-	DrawText(x+menu.Hpad+longestName, y+menu.MaxHeight+menu.Vpad, data.BottomRight, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
-	DrawText(x-menu.Hpad, y+menu.MaxHeight+menu.Vpad, data.BottomLeft, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
+	DrawText(x-menu.Hpad, y-menu.Vpad, menu.MenuBorder.TopLeftCorner, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
+	DrawText(x+menu.Hpad+longestName, y-menu.Vpad, menu.MenuBorder.TopRightCorner, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
+	DrawText(x+menu.Hpad+longestName, y+menu.MaxHeight+menu.Vpad, menu.MenuBorder.BottomRightCorner, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
+	DrawText(x-menu.Hpad, y+menu.MaxHeight+menu.Vpad, menu.MenuBorder.BottomLeftCorner, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
 }
 
 func determineLongestName(longestName int, menu data.Menu) int {
