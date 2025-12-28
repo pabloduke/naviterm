@@ -88,6 +88,14 @@ func defaultMenu(menu data.Menu) data.Menu {
 		menu.BorderColor = color.WHITE
 	}
 
+	if menu.MaxHeight < 1 {
+		menu.MaxHeight = len(menu.MenuItems)
+	}
+
+	if menu.MaxHeight > len(menu.MenuItems) {
+		menu.MaxHeight = len(menu.MenuItems)
+	}
+
 	if menu.Title == "" {
 		menu.Title = "Menu"
 	}

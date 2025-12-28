@@ -11,11 +11,13 @@ import (
 
 func DrawMenuItems(x int, y int, menu data.Menu, sitem types.SelectedItem) {
 	for i, item := range menu.MenuItems {
-		if menu.IsNumbered {
-			numberedPrefix := strconv.Itoa(i+1) + menu.Prefix
-			drawMenuItem(x, y, i, sitem, item, numberedPrefix)
-		} else {
-			drawMenuItem(x, y, i, sitem, item, menu.Prefix)
+		if i <= menu.MaxHeight {
+			if menu.IsNumbered {
+				numberedPrefix := strconv.Itoa(i+1) + menu.Prefix
+				drawMenuItem(x, y, i, sitem, item, numberedPrefix)
+			} else {
+				drawMenuItem(x, y, i, sitem, item, menu.Prefix)
+			}
 		}
 	}
 

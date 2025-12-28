@@ -52,6 +52,7 @@ func HomeworldMenu() data.Menu {
 		Title:       "Choose Your Homeworld:",
 		TitleColor:  color.MAGENTA,
 		BorderColor: color.GREEN,
+		MaxHeight:   5,
 		Vpad:        1,
 		Hpad:        4,
 		MenuItems:   menuitems.GetHomeworlds(),

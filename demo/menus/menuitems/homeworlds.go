@@ -10,7 +10,10 @@ var Corellia = data.MenuItem{Name: "Corellia", Color: color.WHITE}
 var Coruscant = data.MenuItem{Name: "Coruscant", Color: color.WHITE}
 var Ruusan = data.MenuItem{Name: "Ruusan", Color: color.WHITE}
 var Apatros = data.MenuItem{Name: "Apatros", Color: color.WHITE}
+var Earth = data.MenuItem{Name: "Apatros", Color: color.WHITE}
+var Caprica = data.MenuItem{Name: "Apatros", Color: color.WHITE}
+var Vulcan = data.MenuItem{Name: "Apatros", Color: color.WHITE}
 
 func GetHomeworlds() []data.MenuItem {
-	return []data.MenuItem{Tatooine, Corellia, Coruscant, Ruusan, Apatros}
+	return []data.MenuItem{Tatooine, Corellia, Coruscant, Ruusan, Apatros, Earth, Caprica, Vulcan}
 }
