@@ -7,3 +7,5 @@ github.com/mattn/go-runewidth v0.0.19 h1:v++JhqYnZuu5jSKrk9RbgF5v4CGUjqRfBm05byF
 github.com/mattn/go-runewidth v0.0.19/go.mod h1:XBkDxAl56ILZc9knddidhrOlY5R/pDhgLpndooCuJAs=
 github.com/nsf/termbox-go v1.1.1 h1:nksUPLCb73Q++DwbYUBEglYBRPZyoXJdrj5L+TkjyZY=
 github.com/nsf/termbox-go v1.1.1/go.mod h1:T0cTdVuOwf7pHQNtfhnEbzHbcNyCEcVU4YPpouCbVxo=
+github.com/pabloduke/naviterm v0.2.0-alpha h1:gVxVXLrBDnnZRa2joD2zT8GzXo1Eo7Jjq5yUo7aJVnk=
+github.com/pabloduke/naviterm v0.2.0-alpha/go.mod h1:1sKuinnh/minKWlxPbZ01mxqNBKPHDgQeQCKe+e2RNc=
