@@ -6,9 +6,11 @@ package main
 import (
 	"github.com/pabloduke/naviterm"
 	"github.com/pabloduke/naviterm/data"
+	"github.com/pabloduke/naviterm/data/chart"
 	"github.com/pabloduke/naviterm/data/color"
 	"github.com/pabloduke/naviterm/demo/menus/forceuser"
 	"github.com/pabloduke/naviterm/demo/menus/menuitems"
+	"github.com/pabloduke/naviterm/internal/render"
 )
 
 func main() {
@@ -22,7 +24,7 @@ func main() {
 	/*Set a Custom Spinner, else default will be used*/
 	//app.SetSpinner([]rune{'|', '/', '-', '\\'}, 100)
 	//app.SetSpinner([]rune{'<', '^', '>', 'v'}, 100)
-
+	testBarChart()
 	// Use arrow keys to move or enter a numbered selection (works even when numbers are not shown),
 	//Enter to confirm
 	factionSelection := naviterm.GetMenuInput(10, 10, forceuser.FactionSelectMenu())
@@ -75,4 +77,23 @@ func main() {
 
 	naviterm.PrintTextWithSpinner(10, 38, "Press any key to continue...")
 
+}
+
+func testBarChart() {
+	bcItem := chart.BarChartItem{
+		Label: "Test",
+		Value: 10,
+		Color: color.MAGENTA,
+	}
+
+	bChart := chart.BarChart{
+		Title:  "CHART",
+		XLabel: "Amount",
+		YLabel: "ITEM NAME",
+		Items:  []chart.BarChartItem{bcItem, bcItem, bcItem},
+	}
+	naviterm.ClearArea(0, 0, 200, 200)
+	render.DrawBarChart(bChart)
+
+	naviterm.PrintTextWithSpinner(10, 40, "Press any key to exit...")
 }
