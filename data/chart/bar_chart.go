@@ -3,10 +3,11 @@ package chart
 import "github.com/pabloduke/naviterm/data/color"
 
 type BarChart struct {
-	Title  string
-	XLabel string
-	YLabel string
-	Items  []BarChartItem
+	Title   string
+	XLabel  string
+	YLabel  string
+	Spacing int
+	Items   []BarChartItem
 }
 
 type BarChartItem struct {

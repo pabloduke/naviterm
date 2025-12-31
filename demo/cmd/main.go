@@ -19,14 +19,16 @@ func main() {
 	if err != nil {
 		return
 	}
+
 	defer naviterm.Close()
 
 	/*Set a Custom Spinner, else default will be used*/
-	//app.SetSpinner([]rune{'|', '/', '-', '\\'}, 100)
+	naviterm.SetSpinner([]rune{'|', '/', '-', '\\'}, 100)
 	//app.SetSpinner([]rune{'<', '^', '>', 'v'}, 100)
 	testBarChart()
 	// Use arrow keys to move or enter a numbered selection (works even when numbers are not shown),
 	//Enter to confirm
+
 	factionSelection := naviterm.GetMenuInput(10, 10, forceuser.FactionSelectMenu())
 
 	var saberSelection data.MenuItem
@@ -76,24 +78,37 @@ func main() {
 	naviterm.DrawMenuAsView(75, 15, selectionsViewMenu)
 
 	naviterm.PrintTextWithSpinner(10, 38, "Press any key to continue...")
-
+	naviterm.ClearArea(0, 0, 200, 200)
 }
 
 func testBarChart() {
 	bcItem := chart.BarChartItem{
 		Label: "Test",
-		Value: 10,
+		Value: 3,
 		Color: color.MAGENTA,
 	}
 
+	bcItem2 := chart.BarChartItem{
+		Label: "Test",
+		Value: 10,
+		Color: color.GREEN,
+	}
+
+	bcItem3 := chart.BarChartItem{
+		Label: "Test",
+		Value: 6,
+		Color: color.BLUE,
+	}
+
 	bChart := chart.BarChart{
-		Title:  "CHART",
-		XLabel: "Amount",
-		YLabel: "ITEM NAME",
-		Items:  []chart.BarChartItem{bcItem, bcItem, bcItem},
+		Title:   "CHART",
+		XLabel:  "Amount",
+		YLabel:  "ITEM NAME",
+		Items:   []chart.BarChartItem{bcItem, bcItem2, bcItem3},
+		Spacing: 2,
 	}
 	naviterm.ClearArea(0, 0, 200, 200)
-	render.DrawBarChart(bChart)
+	render.DrawBarChart(50, 30, bChart)
 
 	naviterm.PrintTextWithSpinner(10, 40, "Press any key to exit...")
 }
