@@ -51,6 +51,10 @@ func ClearArea(x int, y int, w int, h int) {
 	terminal.Flush()
 }
 
+func ClearScreen() {
+	ClearArea(0, 0, terminal.Width(), terminal.Height())
+}
+
 func PollEvent() {
 	termbox.PollEvent()
 }

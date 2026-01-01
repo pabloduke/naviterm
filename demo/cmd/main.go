@@ -44,9 +44,6 @@ func main() {
 	homeworldSelection := naviterm.GetMenuInput(40, 20, forceuser.HomeworldMenu())
 
 	naviterm.ResetColor()
-	//naviterm.PrintText(10, 20, "You have have selected to be a "+factionSelection.Name)
-	//naviterm.PrintText(10, 21, "You will wield a "+saberSelection.Name)
-	//naviterm.PrintText(10, 22, "You are from "+homeworldSelection.Name)
 
 	userName := naviterm.GetTextInput(10, 30, "Enter your name: ")
 
@@ -107,7 +104,7 @@ func testBarChart() {
 		Items:   []chart.BarChartItem{bcItem, bcItem2, bcItem3},
 		Spacing: 2,
 	}
-	naviterm.ClearArea(0, 0, 200, 200)
+	naviterm.ClearScreen()
 	render.DrawBarChart(50, 30, bChart)
 
 	naviterm.PrintTextWithSpinner(10, 40, "Press any key to exit...")
