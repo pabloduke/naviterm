@@ -29,30 +29,30 @@ func main() {
 	// Use arrow keys to move or enter a numbered selection (works even when numbers are not shown),
 	//Enter to confirm
 
-	factionSelection := naviterm.GetMenuInput(10, 10, forceuser.FactionSelectMenu())
+	factionSelection := naviterm.GetMenuInput(10, 5, forceuser.FactionSelectMenu())
 
 	var saberSelection data.MenuItem
 
 	// Based on the first choice, present a second menu
 	if factionSelection == menuitems.Jedi {
-		saberSelection = naviterm.GetMenuInput(40, 10, forceuser.JediSaberMenu())
+		saberSelection = naviterm.GetMenuInput(40, 5, forceuser.JediSaberMenu())
 	} else {
-		saberSelection = naviterm.GetMenuInput(40, 10, forceuser.SithSaberMenu())
+		saberSelection = naviterm.GetMenuInput(40, 5, forceuser.SithSaberMenu())
 	}
 
-	speciesSelection := naviterm.GetMenuInput(10, 20, forceuser.SpeciesMenu())
-	homeworldSelection := naviterm.GetMenuInput(40, 20, forceuser.HomeworldMenu())
+	speciesSelection := naviterm.GetMenuInput(10, 15, forceuser.SpeciesMenu())
+	homeworldSelection := naviterm.GetMenuInput(40, 15, forceuser.HomeworldMenu())
 
 	naviterm.ResetColor()
 
-	userName := naviterm.GetTextInput(10, 30, "Enter your name: ")
+	userName := naviterm.GetTextInput(10, 25, "Enter your name: ")
 
 	if factionSelection == menuitems.Jedi {
 		userName = "Master " + userName
-		naviterm.PrintText(10, 35, "Welcome, "+userName+"! You are a Jedi Knight!")
+		naviterm.PrintText(10, 30, "Welcome, "+userName+"! You are a Jedi Knight!")
 	} else {
 		userName = "Darth " + userName
-		naviterm.PrintText(10, 36, "Welcome, "+userName+"! You are a Sith Lord!")
+		naviterm.PrintText(10, 30, "Welcome, "+userName+"! You are a Sith Lord!")
 	}
 
 	selectionsViewMenu := data.Menu{
@@ -72,10 +72,10 @@ func main() {
 			{Name: "HomeWorld: " + homeworldSelection.Name, Color: color.WHITE},
 		},
 	}
-	naviterm.DrawMenuAsView(75, 15, selectionsViewMenu)
+	naviterm.DrawMenuAsView(75, 10, selectionsViewMenu)
 
-	naviterm.PrintTextWithSpinner(10, 38, "Press any key to continue...")
-	naviterm.ClearArea(0, 0, 200, 200)
+	naviterm.PrintTextWithSpinner(10, 35, "Press any key to continue...")
+	naviterm.ClearArea(0, 0, naviterm.Width()-1, naviterm.Width()-1)
 }
 
 func testBarChart() {
