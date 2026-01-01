@@ -1,20 +1,17 @@
 package input_test
 
-import (
-	"github.com/nsf/termbox-go"
-	"github.com/pabloduke/naviterm/internal/terminal"
-)
+import "github.com/pabloduke/naviterm/internal/terminal"
 
 // mockEventSource simulates terminal events for testing
 type mockEventSource struct {
-	events []termbox.Event
+	events []terminal.Event
 	index  int
 }
 
-func (m *mockEventSource) PollEvent() termbox.Event {
+func (m *mockEventSource) PollEvent() terminal.Event {
 	if m.index >= len(m.events) {
 		// Return Enter key if we run out of events (safety)
-		return termbox.Event{Key: termbox.KeyEnter}
+		return terminal.Event{Key: terminal.KeyEnter}
 	}
 	event := m.events[m.index]
 	m.index++

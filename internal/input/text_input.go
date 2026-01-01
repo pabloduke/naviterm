@@ -3,7 +3,6 @@ package input
 import (
 	"strings"
 
-	"github.com/nsf/termbox-go"
 	"github.com/pabloduke/naviterm/internal/terminal"
 )
 
@@ -19,7 +18,7 @@ func GetTextInput(x int, y int, prompt string, events EventSource, renderer Rend
 	for {
 		event := events.PollEvent()
 
-		if event.Key == termbox.KeyEnter {
+		if event.Key == terminal.KeyEnter {
 			renderer.DrawText(x-1, y, " ", terminal.ColorWhite, terminal.ColorDefault)
 			renderer.DrawText(x+len(prompt), y, getBlankLine(termInfo), terminal.ColorWhite, terminal.ColorDefault)
 			renderer.DrawText(x+len(prompt), y, input, terminal.ColorWhite, terminal.ColorDefault)
@@ -32,11 +31,11 @@ func GetTextInput(x int, y int, prompt string, events EventSource, renderer Rend
 			input += string(event.Ch)
 		}
 
-		if event.Key == termbox.KeyBackspace2 || event.Key == termbox.KeyBackspace {
+		if event.Key == terminal.KeyBackspace2 || event.Key == terminal.KeyBackspace {
 			input = chopLast(input)
 		}
 
-		if event.Key == termbox.KeySpace {
+		if event.Key == terminal.KeySpace {
 			input += " "
 		}
 

@@ -1,16 +1,15 @@
 package input
 
 import (
-	"github.com/nsf/termbox-go"
 	"github.com/pabloduke/naviterm/internal/render"
 	"github.com/pabloduke/naviterm/internal/terminal"
 )
 
-// TermboxEventSource wraps termbox event polling
+// TermboxEventSource wraps terminal event polling
 type TermboxEventSource struct{}
 
-func (t *TermboxEventSource) PollEvent() termbox.Event {
-	return termbox.PollEvent()
+func (t *TermboxEventSource) PollEvent() terminal.Event {
+	return terminal.PollEvent()
 }
 
 // TerminalRenderer wraps rendering functionality

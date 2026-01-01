@@ -5,9 +5,11 @@ var screen Screen
 
 // Init initializes the terminal screen
 func Init() error {
-	// For Phase 1, default to termbox
-	// Will add backend selection in Phase 4
-	screen = NewTermboxScreen()
+	tcellScreen, err := NewTcellScreen()
+	if err != nil {
+		return err
+	}
+	screen = tcellScreen
 	return screen.Init()
 }
 

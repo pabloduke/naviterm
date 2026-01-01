@@ -3,8 +3,8 @@ package input_test
 import (
 	"testing"
 
-	"github.com/nsf/termbox-go"
 	"github.com/pabloduke/naviterm/internal/input"
+	"github.com/pabloduke/naviterm/internal/terminal"
 )
 
 // TestCursorDefault tests that the default cursor is set
@@ -20,13 +20,13 @@ func TestCursorDefault(t *testing.T) {
 func TestGetTextInput_SimpleInput(t *testing.T) {
 	// Setup mock dependencies
 	events := &mockEventSource{
-		events: []termbox.Event{
+		events: []terminal.Event{
 			{Ch: 'h'},
 			{Ch: 'e'},
 			{Ch: 'l'},
 			{Ch: 'l'},
 			{Ch: 'o'},
-			{Key: termbox.KeyEnter},
+			{Key: terminal.KeyEnter},
 		},
 	}
 	renderer := &mockRenderer{}
@@ -63,16 +63,16 @@ func TestGetTextInput_SimpleInput(t *testing.T) {
 // TestGetTextInput_WithSpaces tests input containing spaces
 func TestGetTextInput_WithSpaces(t *testing.T) {
 	events := &mockEventSource{
-		events: []termbox.Event{
+		events: []terminal.Event{
 			{Ch: 'h'},
 			{Ch: 'i'},
-			{Key: termbox.KeySpace},
+			{Key: terminal.KeySpace},
 			{Ch: 't'},
 			{Ch: 'h'},
 			{Ch: 'e'},
 			{Ch: 'r'},
 			{Ch: 'e'},
-			{Key: termbox.KeyEnter},
+			{Key: terminal.KeyEnter},
 		},
 	}
 	renderer := &mockRenderer{}
@@ -90,17 +90,17 @@ func TestGetTextInput_WithSpaces(t *testing.T) {
 // TestGetTextInput_WithBackspace tests backspace functionality
 func TestGetTextInput_WithBackspace(t *testing.T) {
 	events := &mockEventSource{
-		events: []termbox.Event{
+		events: []terminal.Event{
 			{Ch: 'h'},
 			{Ch: 'e'},
 			{Ch: 'l'},
 			{Ch: 'l'},
 			{Ch: 'l'}, // Extra 'l'
 			{Ch: 'o'},
-			{Key: termbox.KeyBackspace}, // Remove 'o'
-			{Key: termbox.KeyBackspace}, // Remove 'l'
-			{Ch: 'o'},                   // Add 'o' back
-			{Key: termbox.KeyEnter},
+			{Key: terminal.KeyBackspace}, // Remove 'o'
+			{Key: terminal.KeyBackspace}, // Remove 'l'
+			{Ch: 'o'},                    // Add 'o' back
+			{Key: terminal.KeyEnter},
 		},
 	}
 	renderer := &mockRenderer{}
@@ -118,11 +118,11 @@ func TestGetTextInput_WithBackspace(t *testing.T) {
 // TestGetTextInput_BackspaceOnEmpty tests backspace on empty input
 func TestGetTextInput_BackspaceOnEmpty(t *testing.T) {
 	events := &mockEventSource{
-		events: []termbox.Event{
-			{Key: termbox.KeyBackspace}, // Backspace on empty
-			{Key: termbox.KeyBackspace}, // Another one
+		events: []terminal.Event{
+			{Key: terminal.KeyBackspace}, // Backspace on empty
+			{Key: terminal.KeyBackspace}, // Another one
 			{Ch: 'a'},
-			{Key: termbox.KeyEnter},
+			{Key: terminal.KeyEnter},
 		},
 	}
 	renderer := &mockRenderer{}
@@ -140,8 +140,8 @@ func TestGetTextInput_BackspaceOnEmpty(t *testing.T) {
 // TestGetTextInput_EmptyInput tests pressing Enter immediately
 func TestGetTextInput_EmptyInput(t *testing.T) {
 	events := &mockEventSource{
-		events: []termbox.Event{
-			{Key: termbox.KeyEnter},
+		events: []terminal.Event{
+			{Key: terminal.KeyEnter},
 		},
 	}
 	renderer := &mockRenderer{}
@@ -159,11 +159,11 @@ func TestGetTextInput_EmptyInput(t *testing.T) {
 // TestGetTextInput_UnicodeInput tests unicode character input
 func TestGetTextInput_UnicodeInput(t *testing.T) {
 	events := &mockEventSource{
-		events: []termbox.Event{
+		events: []terminal.Event{
 			{Ch: '日'},
 			{Ch: '本'},
 			{Ch: '語'},
-			{Key: termbox.KeyEnter},
+			{Key: terminal.KeyEnter},
 		},
 	}
 	renderer := &mockRenderer{}
@@ -181,8 +181,8 @@ func TestGetTextInput_UnicodeInput(t *testing.T) {
 // TestGetTextInput_PositionParameters tests that position is passed correctly
 func TestGetTextInput_PositionParameters(t *testing.T) {
 	events := &mockEventSource{
-		events: []termbox.Event{
-			{Key: termbox.KeyEnter},
+		events: []terminal.Event{
+			{Key: terminal.KeyEnter},
 		},
 	}
 	renderer := &mockRenderer{}

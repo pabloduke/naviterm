@@ -1,13 +1,10 @@
 package input
 
-import (
-	"github.com/nsf/termbox-go"
-	"github.com/pabloduke/naviterm/internal/terminal"
-)
+import "github.com/pabloduke/naviterm/internal/terminal"
 
 // EventSource provides terminal event polling capabilities
 type EventSource interface {
-	PollEvent() termbox.Event
+	PollEvent() terminal.Event
 }
 
 // Renderer handles drawing text to the terminal
