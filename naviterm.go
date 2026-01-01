@@ -131,5 +131,6 @@ func defaultMenu(menu data.Menu) data.Menu {
 }
 
 func GetTextInput(x int, y int, prompt string) string {
-	return input.GetTextInput(x, y, prompt)
+	events, renderer, termInfo, spinner := input.NewDefaultDependencies()
+	return input.GetTextInput(x, y, prompt, events, renderer, termInfo, spinner)
 }
