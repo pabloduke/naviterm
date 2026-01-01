@@ -31,10 +31,10 @@ func drawMenuTitle(x int, y int, menu data.Menu) {
 // TODO: Render single and double borders
 func drawMenuBorder(x int, y int, menu data.Menu) {
 	//Determine longest name
-	longestName := len(menu.Title)
-	longestName = determineLongestName(longestName, menu)
+
+	width := CalculateMenuWidth(menu)
 	//Draw border from X Coor  past long menu name length (wheter item or title)
-	for ix := 0 - menu.Hpad; ix <= longestName+menu.Hpad; ix++ {
+	for ix := 0 - menu.Hpad; ix <= width; ix++ {
 		//top
 		DrawText(
 			ix+x,
@@ -67,7 +67,7 @@ func drawMenuBorder(x int, y int, menu data.Menu) {
 
 		//right
 		DrawText(
-			longestName+menu.Hpad+x,
+			x+width,
 			jy+y,
 			menu.MenuBorder.RightBorder,
 			termbox.Attribute(menu.BorderColor.Attr()),
@@ -77,22 +77,7 @@ func drawMenuBorder(x int, y int, menu data.Menu) {
 
 	//Draw Corners
 	DrawText(x-menu.Hpad, y-menu.Vpad, menu.MenuBorder.TopLeftCorner, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
-	DrawText(x+menu.Hpad+longestName, y-menu.Vpad, menu.MenuBorder.TopRightCorner, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
-	DrawText(x+menu.Hpad+longestName, y+menu.MaxHeight+menu.Vpad, menu.MenuBorder.BottomRightCorner, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
+	DrawText(x+width, y-menu.Vpad, menu.MenuBorder.TopRightCorner, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
+	DrawText(x+width, y+menu.MaxHeight+menu.Vpad, menu.MenuBorder.BottomRightCorner, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
 	DrawText(x-menu.Hpad, y+menu.MaxHeight+menu.Vpad, menu.MenuBorder.BottomLeftCorner, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
-}
-
-func determineLongestName(longestName int, menu data.Menu) int {
-	var currentName int
-	for i := 0; i < len(menu.MenuItems); i++ {
-		if i+1 > 9 {
-			currentName = len(menu.MenuItems[i].Name) + len(menu.Prefix) + 1
-		} else {
-			currentName = len(menu.MenuItems[i].Name) + len(menu.Prefix) + 2
-		}
-
-		longestName = max(longestName, currentName)
-	}
-
-	return longestName
 }

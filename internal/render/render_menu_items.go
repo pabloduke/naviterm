@@ -12,8 +12,8 @@ import (
 func DrawMenuItems(x int, y int, menu data.Menu, menuCursor types.MenuCursor) {
 	// Clear the menu content area to avoid leftover characters from longer names
 	// Determine interior width based on longest name (title or items)
-	longest := determineLongestName(len(menu.Title), menu)
-	ClearArea(x, y, longest+menu.Hpad, menu.MaxHeight+menu.Vpad)
+	width := CalculateMenuWidth(menu)
+	ClearArea(x, y, width, menu.MaxHeight+menu.Vpad)
 
 	// Determine the visible window based on offset and MaxHeight
 	start := menuCursor.Offset

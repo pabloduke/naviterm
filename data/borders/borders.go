@@ -5,7 +5,7 @@ import (
 	"github.com/pabloduke/naviterm/data/symbols"
 )
 
-var SquareBorder = data.MenuBorder{
+var SquareBorder = data.BorderStyle{
 	TopLeftCorner:     symbols.TopLeft,
 	TopRightCorner:    symbols.TopRight,
 	BottomLeftCorner:  symbols.BottomLeft,
@@ -16,7 +16,7 @@ var SquareBorder = data.MenuBorder{
 	RightBorder:       symbols.Vbar,
 }
 
-var HeavySquareBorder = data.MenuBorder{
+var HeavySquareBorder = data.BorderStyle{
 	TopLeftCorner:     symbols.HeavyTopLeft,
 	TopRightCorner:    symbols.HeavyTopRight,
 	BottomLeftCorner:  symbols.HeavyBottomLeft,
@@ -27,7 +27,7 @@ var HeavySquareBorder = data.MenuBorder{
 	RightBorder:       symbols.HeavyVbar,
 }
 
-var RoundedBorder = data.MenuBorder{
+var RoundedBorder = data.BorderStyle{
 	TopLeftCorner:     symbols.RoundedTopLeft,
 	TopRightCorner:    symbols.RoundedTopRight,
 	BottomLeftCorner:  symbols.RoundedBottomLeft,
@@ -38,7 +38,7 @@ var RoundedBorder = data.MenuBorder{
 	RightBorder:       symbols.Vbar,
 }
 
-var BlockBorder = data.MenuBorder{
+var BlockBorder = data.BorderStyle{
 	TopLeftCorner:     symbols.BlockFull,
 	TopRightCorner:    symbols.BlockFull,
 	BottomLeftCorner:  symbols.BlockFull,
@@ -49,7 +49,7 @@ var BlockBorder = data.MenuBorder{
 	RightBorder:       symbols.BlockRightHalf,
 }
 
-var DoubleBorder = data.MenuBorder{
+var DoubleBorder = data.BorderStyle{
 	TopLeftCorner:     symbols.DoubleTopLeft,
 	TopRightCorner:    symbols.DoubleTopRight,
 	BottomLeftCorner:  symbols.DoubleBottomLeft,
