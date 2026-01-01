@@ -1,4 +1,4 @@
-package input
+package input_test
 
 import "github.com/nsf/termbox-go"
 

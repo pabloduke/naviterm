@@ -1,75 +1,18 @@
-package input
+package input_test
 
 import (
 	"testing"
 
 	"github.com/nsf/termbox-go"
+	"github.com/pabloduke/naviterm/internal/input"
 )
-
-// TestChopLast tests the chopLast function which removes the last rune from a string
-func TestChopLast(t *testing.T) {
-	// Table-driven tests are a Go best practice
-	// Each test case has a name, input, and expected output
-	tests := []struct {
-		name     string
-		input    string
-		expected string
-	}{
-		{
-			name:     "removes last character from simple string",
-			input:    "hello",
-			expected: "hell",
-		},
-		{
-			name:     "removes last character from single character",
-			input:    "a",
-			expected: "",
-		},
-		{
-			name:     "empty string returns empty string",
-			input:    "",
-			expected: "",
-		},
-		{
-			name:     "handles spaces",
-			input:    "hello world",
-			expected: "hello worl",
-		},
-		{
-			name:     "handles unicode emoji",
-			input:    "hello👋",
-			expected: "hello",
-		},
-		{
-			name:     "handles unicode characters",
-			input:    "café",
-			expected: "caf",
-		},
-		{
-			name:     "handles multiple unicode characters",
-			input:    "日本語",
-			expected: "日本",
-		},
-	}
-
-	// Run each test case
-	for _, tt := range tests {
-		// t.Run creates a subtest - makes output clearer
-		t.Run(tt.name, func(t *testing.T) {
-			result := chopLast(tt.input)
-			if result != tt.expected {
-				t.Errorf("chopLast(%q) = %q; want %q", tt.input, result, tt.expected)
-			}
-		})
-	}
-}
 
 // TestCursorDefault tests that the default cursor is set
 func TestCursorDefault(t *testing.T) {
-	// Testing package-level variables
+	// Testing the exported Cursor variable
 	expected := "█"
-	if Cursor != expected {
-		t.Errorf("Cursor = %q; want %q", Cursor, expected)
+	if input.Cursor != expected {
+		t.Errorf("Cursor = %q; want %q", input.Cursor, expected)
 	}
 }
 
@@ -91,7 +34,7 @@ func TestGetTextInput_SimpleInput(t *testing.T) {
 	spinner := &mockSpinnerRunner{}
 
 	// Execute
-	result := GetTextInput(10, 5, "Name: ", events, renderer, termInfo, spinner)
+	result := input.GetTextInput(10, 5, "Name: ", events, renderer, termInfo, spinner)
 
 	// Assert
 	if result != "hello" {
@@ -136,7 +79,7 @@ func TestGetTextInput_WithSpaces(t *testing.T) {
 	termInfo := &mockTerminalInfo{width: 80}
 	spinner := &mockSpinnerRunner{}
 
-	result := GetTextInput(0, 0, "", events, renderer, termInfo, spinner)
+	result := input.GetTextInput(0, 0, "", events, renderer, termInfo, spinner)
 
 	expected := "hi there"
 	if result != expected {
@@ -164,7 +107,7 @@ func TestGetTextInput_WithBackspace(t *testing.T) {
 	termInfo := &mockTerminalInfo{width: 80}
 	spinner := &mockSpinnerRunner{}
 
-	result := GetTextInput(0, 0, "", events, renderer, termInfo, spinner)
+	result := input.GetTextInput(0, 0, "", events, renderer, termInfo, spinner)
 
 	expected := "hello"
 	if result != expected {
@@ -186,7 +129,7 @@ func TestGetTextInput_BackspaceOnEmpty(t *testing.T) {
 	termInfo := &mockTerminalInfo{width: 80}
 	spinner := &mockSpinnerRunner{}
 
-	result := GetTextInput(0, 0, "", events, renderer, termInfo, spinner)
+	result := input.GetTextInput(0, 0, "", events, renderer, termInfo, spinner)
 
 	expected := "a"
 	if result != expected {
@@ -205,7 +148,7 @@ func TestGetTextInput_EmptyInput(t *testing.T) {
 	termInfo := &mockTerminalInfo{width: 80}
 	spinner := &mockSpinnerRunner{}
 
-	result := GetTextInput(0, 0, "Prompt: ", events, renderer, termInfo, spinner)
+	result := input.GetTextInput(0, 0, "Prompt: ", events, renderer, termInfo, spinner)
 
 	expected := ""
 	if result != expected {
@@ -227,7 +170,7 @@ func TestGetTextInput_UnicodeInput(t *testing.T) {
 	termInfo := &mockTerminalInfo{width: 80}
 	spinner := &mockSpinnerRunner{}
 
-	result := GetTextInput(0, 0, "", events, renderer, termInfo, spinner)
+	result := input.GetTextInput(0, 0, "", events, renderer, termInfo, spinner)
 
 	expected := "日本語"
 	if result != expected {
@@ -249,7 +192,7 @@ func TestGetTextInput_PositionParameters(t *testing.T) {
 	x, y := 15, 20
 	prompt := "Test: "
 
-	GetTextInput(x, y, prompt, events, renderer, termInfo, spinner)
+	input.GetTextInput(x, y, prompt, events, renderer, termInfo, spinner)
 
 	// Verify spinner position (should be x-1, y)
 	if spinner.lastX != x-1 || spinner.lastY != y {
