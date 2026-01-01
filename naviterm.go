@@ -37,14 +37,23 @@ func Height() int {
 
 func PrintText(x int, y int, text string) {
 	render.DrawText(x, y, text, terminal.ColorWhite, terminal.ColorDefault)
+	terminal.Flush()
 }
 
 func PrintTextWithSpinner(x int, y int, text string) {
 	done := make(chan struct{})
 	go render.Spinner(x-1, y, done)
 	render.DrawText(x, y, text, terminal.ColorWhite, terminal.ColorDefault)
-	terminal.PollEvent()
+	terminal.Flush()
+	// Wait for an actual key press; ignore other events (including queued leftovers).
+	for {
+		ev := terminal.PollEvent()
+		if ev.Key != 0 || ev.Ch != 0 {
+			break
+		}
+	}
 	render.DrawText(x-1, y, " ", terminal.ColorWhite, terminal.ColorDefault)
+	terminal.Flush()
 	close(done)
 }
 
