@@ -27,6 +27,14 @@ func Close() {
 	terminal.Close()
 }
 
+func Width() int {
+	return terminal.Width()
+}
+
+func Height() int {
+	return terminal.Height()
+}
+
 func PrintText(x int, y int, text string) {
 	render.DrawText(x, y, text, terminal.ColorWhite, terminal.ColorDefault)
 }

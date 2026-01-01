@@ -25,7 +25,7 @@ func main() {
 	/*Set a Custom Spinner, else default will be used*/
 	naviterm.SetSpinner([]rune{'|', '/', '-', '\\'}, 100)
 	//app.SetSpinner([]rune{'<', '^', '>', 'v'}, 100)
-	testBarChart()
+	//testBarChart()
 	// Use arrow keys to move or enter a numbered selection (works even when numbers are not shown),
 	//Enter to confirm
 
@@ -105,7 +105,7 @@ func testBarChart() {
 		Spacing: 2,
 	}
 	naviterm.ClearScreen()
-	render.DrawBarChart(50, 30, bChart)
+	render.DrawBarChart(50, 20, bChart)
 
-	naviterm.PrintTextWithSpinner(10, 40, "Press any key to exit...")
+	naviterm.PrintTextWithSpinner(10, 30, "Press any key to exit...")
 }
