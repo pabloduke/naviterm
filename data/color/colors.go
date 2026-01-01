@@ -1,8 +1,10 @@
 package color
 
+import "github.com/pabloduke/naviterm/internal/terminal"
+
 // Attribute is naviterm's internal representation of a terminal color/style.
-// It intentionally does NOT expose termbox types in the public API.
-type Attribute uint16
+// Now uses terminal.Attribute which abstracts backend-specific color types.
+type Attribute = terminal.Attribute
 
 type NaviTermColor struct {
 	attr Attribute
@@ -11,17 +13,17 @@ type NaviTermColor struct {
 func (c NaviTermColor) Attr() Attribute { return c.attr }
 func (c NaviTermColor) IsZero() bool    { return c.attr == 0 }
 
-// Basic colors (values match termbox-go constants; app converts to termbox.Attribute).
+// Basic colors (values match terminal constants).
 const (
-	Default Attribute = 0
-	Black   Attribute = 1
-	Red     Attribute = 2
-	Green   Attribute = 3
-	Yellow  Attribute = 4
-	Blue    Attribute = 5
-	Magenta Attribute = 6
-	Cyan    Attribute = 7
-	White   Attribute = 8
+	Default Attribute = terminal.ColorDefault
+	Black   Attribute = terminal.ColorBlack
+	Red     Attribute = terminal.ColorRed
+	Green   Attribute = terminal.ColorGreen
+	Yellow  Attribute = terminal.ColorYellow
+	Blue    Attribute = terminal.ColorBlue
+	Magenta Attribute = terminal.ColorMagenta
+	Cyan    Attribute = terminal.ColorCyan
+	White   Attribute = terminal.ColorWhite
 )
 
 var RED = NaviTermColor{attr: Red}

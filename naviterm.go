@@ -1,7 +1,6 @@
 package naviterm
 
 import (
-	"github.com/nsf/termbox-go"
 	"github.com/pabloduke/naviterm/data"
 	"github.com/pabloduke/naviterm/data/borders"
 	"github.com/pabloduke/naviterm/data/color"
@@ -29,22 +28,22 @@ func Close() {
 }
 
 func PrintText(x int, y int, text string) {
-	render.DrawText(x, y, text, termbox.ColorWhite, termbox.ColorDefault)
+	render.DrawText(x, y, text, terminal.ColorWhite, terminal.ColorDefault)
 }
 
 func PrintTextWithSpinner(x int, y int, text string) {
 	done := make(chan struct{})
 	go render.Spinner(x-1, y, done)
-	render.DrawText(x, y, text, termbox.ColorWhite, termbox.ColorDefault)
-	termbox.PollEvent()
-	render.DrawText(x-1, y, " ", termbox.ColorWhite, termbox.ColorDefault)
+	render.DrawText(x, y, text, terminal.ColorWhite, terminal.ColorDefault)
+	terminal.PollEvent()
+	render.DrawText(x-1, y, " ", terminal.ColorWhite, terminal.ColorDefault)
 	close(done)
 }
 
 func ClearArea(x int, y int, w int, h int) {
 	for i := 0; i < h; i++ {
 		for j := 0; j < w; j++ {
-			render.DrawText(x+j, y+i, " ", termbox.ColorDefault, termbox.ColorDefault)
+			render.DrawText(x+j, y+i, " ", terminal.ColorDefault, terminal.ColorDefault)
 		}
 	}
 
@@ -56,7 +55,7 @@ func ClearScreen() {
 }
 
 func PollEvent() {
-	termbox.PollEvent()
+	terminal.PollEvent()
 }
 
 func ResetColor() {
@@ -90,10 +89,10 @@ func DrawMenuAsView(x int, y int, menu data.Menu) {
 
 // Sets defaults for menu values not passed in by user
 func defaultMenu(menu data.Menu) data.Menu {
-	if termbox.Attribute(menu.TitleColor.Attr()) == 0 {
+	if menu.TitleColor.Attr() == 0 {
 		menu.TitleColor = color.WHITE
 	}
-	if termbox.Attribute(menu.BorderColor.Attr()) == 0 {
+	if menu.BorderColor.Attr() == 0 {
 		menu.BorderColor = color.WHITE
 	}
 
@@ -118,7 +117,7 @@ func defaultMenu(menu data.Menu) data.Menu {
 	}
 
 	for i := 0; i < len(menu.MenuItems); i++ {
-		if termbox.Attribute(menu.MenuItems[i].Color.Attr()) == 0 {
+		if menu.MenuItems[i].Color.Attr() == 0 {
 			menu.MenuItems[i].Color = color.WHITE
 		}
 

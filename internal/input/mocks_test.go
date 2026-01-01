@@ -1,6 +1,9 @@
 package input_test
 
-import "github.com/nsf/termbox-go"
+import (
+	"github.com/nsf/termbox-go"
+	"github.com/pabloduke/naviterm/internal/terminal"
+)
 
 // mockEventSource simulates terminal events for testing
 type mockEventSource struct {
@@ -28,11 +31,11 @@ type drawCall struct {
 	x    int
 	y    int
 	text string
-	fg   termbox.Attribute
-	bg   termbox.Attribute
+	fg   terminal.Attribute
+	bg   terminal.Attribute
 }
 
-func (m *mockRenderer) DrawText(x, y int, text string, fg, bg termbox.Attribute) {
+func (m *mockRenderer) DrawText(x, y int, text string, fg, bg terminal.Attribute) {
 	m.drawCalls = append(m.drawCalls, drawCall{x, y, text, fg, bg})
 }
 
@@ -51,10 +54,10 @@ func (m *mockTerminalInfo) Width() int {
 
 // mockSpinnerRunner simulates spinner without actually running it
 type mockSpinnerRunner struct {
-	started   bool
-	lastX     int
-	lastY     int
-	doneChan  chan struct{}
+	started  bool
+	lastX    int
+	lastY    int
+	doneChan chan struct{}
 }
 
 func (m *mockSpinnerRunner) RunSpinner(x, y int, done chan struct{}) {

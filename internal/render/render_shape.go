@@ -1,9 +1,9 @@
 package render
 
 import (
-	"github.com/nsf/termbox-go"
 	"github.com/pabloduke/naviterm/data/color"
 	"github.com/pabloduke/naviterm/data/symbols"
+	"github.com/pabloduke/naviterm/internal/terminal"
 )
 
 func DrawRectangle(x int, y int, w int, h int, color color.NaviTermColor) {
@@ -13,8 +13,8 @@ func DrawRectangle(x int, y int, w int, h int, color color.NaviTermColor) {
 				x+width,
 				y-height,
 				symbols.BlockFull,
-				termbox.Attribute(color.Attr()),
-				termbox.ColorDefault,
+				color.Attr(),
+				terminal.ColorDefault,
 			)
 		}
 	}

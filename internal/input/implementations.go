@@ -16,7 +16,7 @@ func (t *TermboxEventSource) PollEvent() termbox.Event {
 // TerminalRenderer wraps rendering functionality
 type TerminalRenderer struct{}
 
-func (t *TerminalRenderer) DrawText(x, y int, text string, fg, bg termbox.Attribute) {
+func (t *TerminalRenderer) DrawText(x, y int, text string, fg, bg terminal.Attribute) {
 	render.DrawText(x, y, text, fg, bg)
 }
 

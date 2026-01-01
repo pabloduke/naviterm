@@ -3,7 +3,6 @@ package render
 import (
 	"strconv"
 
-	"github.com/nsf/termbox-go"
 	"github.com/pabloduke/naviterm/data"
 	"github.com/pabloduke/naviterm/internal/terminal"
 	"github.com/pabloduke/naviterm/internal/types"
@@ -41,8 +40,8 @@ func DrawMenuItems(x int, y int, menu data.Menu, menuCursor types.MenuCursor) {
 func drawMenuItem(x int, y int, i int, menuCursor types.MenuCursor, item data.MenuItem, prefix string) {
 	drawY := y + (i - menuCursor.Offset)
 	if i == menuCursor.Position {
-		DrawText(x, drawY, prefix+item.Name, termbox.ColorBlack, termbox.ColorWhite)
+		DrawText(x, drawY, prefix+item.Name, terminal.ColorBlack, terminal.ColorWhite)
 	} else {
-		DrawText(x, drawY, prefix+item.Name, termbox.Attribute(item.Color.Attr()), termbox.ColorDefault)
+		DrawText(x, drawY, prefix+item.Name, item.Color.Attr(), terminal.ColorDefault)
 	}
 }

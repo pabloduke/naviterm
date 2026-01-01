@@ -1,7 +1,6 @@
 package render
 
 import (
-	"github.com/nsf/termbox-go"
 	"github.com/pabloduke/naviterm/data"
 	"github.com/pabloduke/naviterm/internal/terminal"
 	"github.com/pabloduke/naviterm/internal/types"
@@ -25,7 +24,7 @@ func DrawMenu(x int, y int, menu data.Menu) {
 }
 
 func drawMenuTitle(x int, y int, menu data.Menu) {
-	DrawText(x, y-menu.Vpad, menu.Title, termbox.Attribute(menu.TitleColor.Attr()), termbox.ColorDefault)
+	DrawText(x, y-menu.Vpad, menu.Title, menu.TitleColor.Attr(), terminal.ColorDefault)
 }
 
 // TODO: Render single and double borders
@@ -40,8 +39,8 @@ func drawMenuBorder(x int, y int, menu data.Menu) {
 			ix+x,
 			y-menu.Vpad,
 			menu.MenuBorder.TopBorder,
-			termbox.Attribute(menu.BorderColor.Attr()),
-			termbox.ColorDefault,
+			menu.BorderColor.Attr(),
+			terminal.ColorDefault,
 		)
 
 		//bottom
@@ -49,8 +48,8 @@ func drawMenuBorder(x int, y int, menu data.Menu) {
 			ix+x,
 			y+menu.MaxHeight+menu.Vpad,
 			menu.MenuBorder.BottomBorder,
-			termbox.Attribute(menu.BorderColor.Attr()),
-			termbox.ColorDefault,
+			menu.BorderColor.Attr(),
+			terminal.ColorDefault,
 		)
 	}
 
@@ -61,8 +60,8 @@ func drawMenuBorder(x int, y int, menu data.Menu) {
 			x-menu.Hpad,
 			jy+y,
 			menu.MenuBorder.LeftBorder,
-			termbox.Attribute(menu.BorderColor.Attr()),
-			termbox.ColorDefault,
+			menu.BorderColor.Attr(),
+			terminal.ColorDefault,
 		)
 
 		//right
@@ -70,14 +69,14 @@ func drawMenuBorder(x int, y int, menu data.Menu) {
 			x+width,
 			jy+y,
 			menu.MenuBorder.RightBorder,
-			termbox.Attribute(menu.BorderColor.Attr()),
-			termbox.ColorDefault,
+			menu.BorderColor.Attr(),
+			terminal.ColorDefault,
 		)
 	}
 
 	//Draw Corners
-	DrawText(x-menu.Hpad, y-menu.Vpad, menu.MenuBorder.TopLeftCorner, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
-	DrawText(x+width, y-menu.Vpad, menu.MenuBorder.TopRightCorner, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
-	DrawText(x+width, y+menu.MaxHeight+menu.Vpad, menu.MenuBorder.BottomRightCorner, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
-	DrawText(x-menu.Hpad, y+menu.MaxHeight+menu.Vpad, menu.MenuBorder.BottomLeftCorner, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
+	DrawText(x-menu.Hpad, y-menu.Vpad, menu.MenuBorder.TopLeftCorner, menu.BorderColor.Attr(), terminal.ColorDefault)
+	DrawText(x+width, y-menu.Vpad, menu.MenuBorder.TopRightCorner, menu.BorderColor.Attr(), terminal.ColorDefault)
+	DrawText(x+width, y+menu.MaxHeight+menu.Vpad, menu.MenuBorder.BottomRightCorner, menu.BorderColor.Attr(), terminal.ColorDefault)
+	DrawText(x-menu.Hpad, y+menu.MaxHeight+menu.Vpad, menu.MenuBorder.BottomLeftCorner, menu.BorderColor.Attr(), terminal.ColorDefault)
 }
