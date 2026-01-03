@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/nsf/termbox-go"
+	"github.com/pabloduke/naviterm/api"
 	"github.com/pabloduke/naviterm/internal/terminal"
 )
 
@@ -20,7 +20,7 @@ func Spinner(x int, y int, done chan struct{}) {
 			return
 		default:
 			sprite := fmt.Sprintf("%c", SpinnerFrames[i%len(SpinnerFrames)])
-			DrawText(x, y, sprite, termbox.ColorGreen, termbox.ColorDefault)
+			DrawText(x, y, sprite, terminal.Attribute(api.ColorGreen), terminal.Attribute(api.ColorDefault))
 			time.Sleep(time.Duration(Delay) * time.Millisecond)
 			i++
 			terminal.Flush()

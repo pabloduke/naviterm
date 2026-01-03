@@ -1,9 +1,8 @@
 package menuitems
 
 import (
-	"github.com/pabloduke/naviterm/data"
-	"github.com/pabloduke/naviterm/data/color"
+	"github.com/pabloduke/naviterm/api"
 )
 
-var Jedi = data.MenuItem{Name: "JEDI", Color: color.BLUE}
-var Sith = data.MenuItem{Name: "SITH", Color: color.RED}
+var Jedi = api.MenuItem{Name: "JEDI", Color: api.BLUE}
+var Sith = api.MenuItem{Name: "SITH", Color: api.RED}

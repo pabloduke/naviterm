@@ -1,13 +1,11 @@
 package render
 
 import (
-	"github.com/nsf/termbox-go"
-	"github.com/pabloduke/naviterm/data/chart"
-	"github.com/pabloduke/naviterm/data/symbols"
+	"github.com/pabloduke/naviterm/api"
 	"github.com/pabloduke/naviterm/internal/terminal"
 )
 
-func DrawBarChart(x int, y int, barChart chart.BarChart) {
+func DrawBarChart(x int, y int, barChart api.BarChart) {
 	height := calcChartHeight(barChart.Items)
 	drawBorder(x, y-1, barChart)
 	drawTitle(x, y, height, barChart)
@@ -19,11 +17,11 @@ func DrawBarChart(x int, y int, barChart chart.BarChart) {
 	terminal.Flush()
 }
 
-func calcChartWidth(barChart chart.BarChart) int {
+func calcChartWidth(barChart api.BarChart) int {
 	return len(barChart.Items) * barChart.Spacing
 }
 
-func calcChartHeight(items []chart.BarChartItem) int {
+func calcChartHeight(items []api.BarChartItem) int {
 	height := items[0].Value
 	for _, i := range items {
 		if i.Value > height {
@@ -34,22 +32,22 @@ func calcChartHeight(items []chart.BarChartItem) int {
 	return height
 }
 
-func drawBorder(x int, y int, barChart chart.BarChart) {
+func drawBorder(x int, y int, barChart api.BarChart) {
 	width := calcChartWidth(barChart)
 	height := calcChartHeight(barChart.Items)
 
 	var XPos = x - 2
 
 	for ; XPos < width+x+5; XPos++ {
-		DrawText(XPos, y, symbols.Hbar, termbox.ColorRed, termbox.ColorDefault)
-		DrawText(XPos, y-height-1, symbols.Hbar, termbox.ColorLightCyan, termbox.ColorDefault)
+		DrawText(XPos, y, api.Hbar, terminal.Attribute(api.ColorRed), terminal.Attribute(api.ColorDefault))
+		DrawText(XPos, y-height-1, api.Hbar, terminal.Attribute(api.ColorLightCya), terminal.Attribute(api.ColorDefault))
 	}
 }
 
-func drawTitle(x int, y int, height int, barChart chart.BarChart) {
-	DrawText(x, y-height-2, barChart.Title, termbox.ColorWhite, termbox.ColorDefault)
+func drawTitle(x int, y int, height int, barChart api.BarChart) {
+	DrawText(x, y-height-2, barChart.Title, terminal.Attribute(api.ColorWhite), terminal.Attribute(api.ColorDefault))
 }
 
-func drawXLabel(x int, y int, height int, barChart chart.BarChart) {
-	DrawText(x-10, y-(height/2), barChart.XLabel, termbox.ColorWhite, termbox.ColorDefault)
+func drawXLabel(x int, y int, height int, barChart api.BarChart) {
+	DrawText(x-10, y-(height/2), barChart.XLabel, terminal.Attribute(api.ColorWhite), terminal.Attribute(api.ColorDefault))
 }

@@ -1,6 +1,4 @@
-package chart
-
-import "github.com/pabloduke/naviterm/data/color"
+package api
 
 type BarChart struct {
 	Title   string
@@ -13,5 +11,5 @@ type BarChart struct {
 type BarChartItem struct {
 	Label string
 	Value int
-	Color color.NaviTermColor
+	Color NaviTermColor
 }

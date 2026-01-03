@@ -1,14 +1,14 @@
 package input
 
 import (
-	"github.com/nsf/termbox-go"
-	"github.com/pabloduke/naviterm/data"
+	"github.com/pabloduke/naviterm/api"
+	"github.com/pabloduke/naviterm/internal/terminal"
 	"github.com/pabloduke/naviterm/internal/types"
 )
 
-func GetMenuInput(menu data.Menu, menuCursor types.MenuCursor) types.MenuCursor {
+func GetMenuInput(menu api.Menu, menuCursor types.MenuCursor) types.MenuCursor {
 	for {
-		event := termbox.PollEvent()
+		event := terminal.PollEvent()
 
 		if event.Ch >= '1' && event.Ch <= '9' {
 			index := int(event.Ch - '1')
@@ -34,7 +34,7 @@ func GetMenuInput(menu data.Menu, menuCursor types.MenuCursor) types.MenuCursor 
 			}
 		}
 
-		if event.Key == termbox.KeyArrowDown {
+		if event.Key == terminal.KeyArrowDown {
 			if len(menu.MenuItems) == 0 {
 				return menuCursor
 			}
@@ -64,7 +64,7 @@ func GetMenuInput(menu data.Menu, menuCursor types.MenuCursor) types.MenuCursor 
 			return types.MenuCursor{Position: newPos, Offset: newOffset, Selected: false}
 		}
 
-		if event.Key == termbox.KeyArrowUp {
+		if event.Key == terminal.KeyArrowUp {
 			if len(menu.MenuItems) == 0 {
 				return menuCursor
 			}
@@ -93,7 +93,7 @@ func GetMenuInput(menu data.Menu, menuCursor types.MenuCursor) types.MenuCursor 
 			return types.MenuCursor{Position: newPos, Offset: newOffset, Selected: false}
 		}
 
-		if event.Key == termbox.KeyEnter {
+		if event.Key == terminal.KeyEnter {
 			return types.MenuCursor{
 				Position: menuCursor.Position,
 				Offset:   menuCursor.Offset,

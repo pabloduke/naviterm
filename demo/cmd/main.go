@@ -5,9 +5,7 @@ package main
 
 import (
 	"github.com/pabloduke/naviterm"
-	"github.com/pabloduke/naviterm/data"
-	"github.com/pabloduke/naviterm/data/chart"
-	"github.com/pabloduke/naviterm/data/color"
+	"github.com/pabloduke/naviterm/api"
 	"github.com/pabloduke/naviterm/demo/menus/forceuser"
 	"github.com/pabloduke/naviterm/demo/menus/menuitems"
 	"github.com/pabloduke/naviterm/internal/render"
@@ -29,83 +27,84 @@ func main() {
 	// Use arrow keys to move or enter a numbered selection (works even when numbers are not shown),
 	//Enter to confirm
 
-	factionSelection := naviterm.GetMenuInput(10, 10, forceuser.FactionSelectMenu())
+	factionSelection := naviterm.GetMenuInput(10, 5, forceuser.FactionSelectMenu())
 
-	var saberSelection data.MenuItem
+	var saberSelection api.MenuItem
 
 	// Based on the first choice, present a second menu
 	if factionSelection == menuitems.Jedi {
-		saberSelection = naviterm.GetMenuInput(40, 10, forceuser.JediSaberMenu())
+		saberSelection = naviterm.GetMenuInput(40, 5, forceuser.JediSaberMenu())
 	} else {
-		saberSelection = naviterm.GetMenuInput(40, 10, forceuser.SithSaberMenu())
+		saberSelection = naviterm.GetMenuInput(40, 5, forceuser.SithSaberMenu())
 	}
 
-	speciesSelection := naviterm.GetMenuInput(10, 20, forceuser.SpeciesMenu())
-	homeworldSelection := naviterm.GetMenuInput(40, 20, forceuser.HomeworldMenu())
+	speciesSelection := naviterm.GetMenuInput(10, 15, forceuser.SpeciesMenu())
+	homeworldSelection := naviterm.GetMenuInput(40, 15, forceuser.HomeworldMenu())
 
 	naviterm.ResetColor()
 
-	userName := naviterm.GetTextInput(10, 30, "Enter your name: ")
+	userName := naviterm.GetTextInput(10, 25, "Enter your name: ")
 
 	if factionSelection == menuitems.Jedi {
 		userName = "Master " + userName
-		naviterm.PrintText(10, 35, "Welcome, "+userName+"! You are a Jedi Knight!")
+		naviterm.PrintText(10, 30, "Welcome, "+userName+"! You are a Jedi Knight!")
 	} else {
 		userName = "Darth " + userName
-		naviterm.PrintText(10, 36, "Welcome, "+userName+"! You are a Sith Lord!")
+		naviterm.PrintText(10, 30, "Welcome, "+userName+"! You are a Sith Lord!")
 	}
 
-	selectionsViewMenu := data.Menu{
+	selectionsViewMenu := api.Menu{
 		Title:       "Your Character:",
-		TitleColor:  color.WHITE,
-		BorderColor: color.WHITE,
+		TitleColor:  api.WHITE,
+		BorderColor: api.WHITE,
 		MaxHeight:   5,
 		Vpad:        1,
 		Hpad:        4,
 		IsNumbered:  false,
 		Prefix:      "",
-		MenuItems: []data.MenuItem{
-			{Name: "Name: " + userName, Color: color.WHITE},
-			{Name: "Faction: " + factionSelection.Name, Color: color.WHITE},
-			{Name: "Saber: " + saberSelection.Name, Color: color.WHITE},
-			{Name: "Species: " + speciesSelection.Name, Color: color.WHITE},
-			{Name: "HomeWorld: " + homeworldSelection.Name, Color: color.WHITE},
+		MenuItems: []api.MenuItem{
+			{Name: "Name: " + userName, Color: api.WHITE},
+			{Name: "Faction: " + factionSelection.Name, Color: api.WHITE},
+			{Name: "Saber: " + saberSelection.Name, Color: api.WHITE},
+			{Name: "Species: " + speciesSelection.Name, Color: api.WHITE},
+			{Name: "HomeWorld: " + homeworldSelection.Name, Color: api.WHITE},
 		},
 	}
-	naviterm.DrawMenuAsView(75, 15, selectionsViewMenu)
+	naviterm.DrawMenuAsView(75, 10, selectionsViewMenu)
 
-	naviterm.PrintTextWithSpinner(10, 38, "Press any key to continue...")
-	naviterm.ClearArea(0, 0, 200, 200)
+	naviterm.PrintTextWithSpinner(10, 35, "Press any key to continue...")
+	naviterm.ClearArea(0, 0, naviterm.Width()-1, naviterm.Width()-1)
 }
 
 func testBarChart() {
-	bcItem := chart.BarChartItem{
+	bcItem := api.BarChartItem{
 		Label: "Test",
 		Value: 3,
-		Color: color.MAGENTA,
+		Color: api.MAGENTA,
 	}
 
-	bcItem2 := chart.BarChartItem{
+	bcItem2 := api.BarChartItem{
 		Label: "Test",
 		Value: 10,
-		Color: color.GREEN,
+		Color: api.GREEN,
 	}
 
-	bcItem3 := chart.BarChartItem{
+	bcItem3 := api.BarChartItem{
 		Label: "Test",
 		Value: 6,
-		Color: color.BLUE,
+		Color: api.BLUE,
 	}
 
-	bChart := chart.BarChart{
+	bChart := api.BarChart{
 		Title:   "CHART",
 		XLabel:  "Amount",
 		YLabel:  "ITEM NAME",
-		Items:   []chart.BarChartItem{bcItem, bcItem2, bcItem3},
+		Items:   []api.BarChartItem{bcItem, bcItem2, bcItem3},
 		Spacing: 2,
 	}
-	naviterm.ClearScreen()
-	render.DrawBarChart(50, 30, bChart)
 
-	naviterm.PrintTextWithSpinner(10, 40, "Press any key to exit...")
+	render.DrawBarChart(50, 20, bChart)
+
+	naviterm.PrintTextWithSpinner(10, 30, "Press any key to continue...")
+	naviterm.ClearScreen()
 }

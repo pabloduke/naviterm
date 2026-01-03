@@ -1,10 +1,7 @@
 package naviterm
 
 import (
-	"github.com/nsf/termbox-go"
-	"github.com/pabloduke/naviterm/data"
-	"github.com/pabloduke/naviterm/data/borders"
-	"github.com/pabloduke/naviterm/data/color"
+	"github.com/pabloduke/naviterm/api"
 	"github.com/pabloduke/naviterm/internal/input"
 	"github.com/pabloduke/naviterm/internal/render"
 	"github.com/pabloduke/naviterm/internal/terminal"
@@ -28,23 +25,40 @@ func Close() {
 	terminal.Close()
 }
 
+func Width() int {
+	return terminal.Width()
+}
+
+func Height() int {
+	return terminal.Height()
+}
+
 func PrintText(x int, y int, text string) {
-	render.DrawText(x, y, text, termbox.ColorWhite, termbox.ColorDefault)
+	render.DrawText(x, y, text, terminal.Attribute(api.ColorWhite), terminal.Attribute(api.ColorDefault))
+	terminal.Flush()
 }
 
 func PrintTextWithSpinner(x int, y int, text string) {
 	done := make(chan struct{})
 	go render.Spinner(x-1, y, done)
-	render.DrawText(x, y, text, termbox.ColorWhite, termbox.ColorDefault)
-	termbox.PollEvent()
-	render.DrawText(x-1, y, " ", termbox.ColorWhite, termbox.ColorDefault)
+	render.DrawText(x, y, text, terminal.Attribute(api.ColorWhite), terminal.Attribute(api.ColorDefault))
+	terminal.Flush()
+	// Wait for an actual key press; ignore other events (including queued leftovers).
+	for {
+		ev := terminal.PollEvent()
+		if ev.Key != 0 || ev.Ch != 0 {
+			break
+		}
+	}
+	render.DrawText(x-1, y, " ", terminal.Attribute(api.ColorWhite), terminal.Attribute(api.ColorDefault))
+	terminal.Flush()
 	close(done)
 }
 
 func ClearArea(x int, y int, w int, h int) {
 	for i := 0; i < h; i++ {
 		for j := 0; j < w; j++ {
-			render.DrawText(x+j, y+i, " ", termbox.ColorDefault, termbox.ColorDefault)
+			render.DrawText(x+j, y+i, " ", terminal.Attribute(api.ColorDefault), terminal.Attribute(api.ColorDefault))
 		}
 	}
 
@@ -56,14 +70,14 @@ func ClearScreen() {
 }
 
 func PollEvent() {
-	termbox.PollEvent()
+	terminal.PollEvent()
 }
 
 func ResetColor() {
 	print("\033[0m")
 }
 
-func GetMenuInput(x int, y int, menu data.Menu) data.MenuItem {
+func GetMenuInput(x int, y int, menu api.Menu) api.MenuItem {
 	menu = defaultMenu(menu)
 	menuCursor := types.MenuCursor{
 		Position: 0,
@@ -83,22 +97,22 @@ func GetMenuInput(x int, y int, menu data.Menu) data.MenuItem {
 	}
 }
 
-func DrawMenuAsView(x int, y int, menu data.Menu) {
+func DrawMenuAsView(x int, y int, menu api.Menu) {
 	menu = defaultMenu(menu)
 	render.DrawMenu(x, y, menu)
 }
 
 // Sets defaults for menu values not passed in by user
-func defaultMenu(menu data.Menu) data.Menu {
-	if termbox.Attribute(menu.TitleColor.Attr()) == 0 {
-		menu.TitleColor = color.WHITE
+func defaultMenu(menu api.Menu) api.Menu {
+	if menu.TitleColor.Attr() == 0 {
+		menu.TitleColor = api.WHITE
 	}
-	if termbox.Attribute(menu.BorderColor.Attr()) == 0 {
-		menu.BorderColor = color.WHITE
+	if menu.BorderColor.Attr() == 0 {
+		menu.BorderColor = api.WHITE
 	}
 
 	if menu.MenuBorder.TopLeftCorner == "" {
-		menu.MenuBorder = borders.RoundedBorder
+		menu.MenuBorder = api.RoundedBorder
 	}
 
 	if menu.MaxHeight < 1 {
@@ -118,8 +132,8 @@ func defaultMenu(menu data.Menu) data.Menu {
 	}
 
 	for i := 0; i < len(menu.MenuItems); i++ {
-		if termbox.Attribute(menu.MenuItems[i].Color.Attr()) == 0 {
-			menu.MenuItems[i].Color = color.WHITE
+		if menu.MenuItems[i].Color.Attr() == 0 {
+			menu.MenuItems[i].Color = api.WHITE
 		}
 
 		if menu.MenuItems[i].Name == "" {
@@ -131,5 +145,6 @@ func defaultMenu(menu data.Menu) data.Menu {
 }
 
 func GetTextInput(x int, y int, prompt string) string {
-	return input.GetTextInput(x, y, prompt)
+	events, renderer, termInfo, spinner := input.NewDefaultDependencies()
+	return input.GetTextInput(x, y, prompt, events, renderer, termInfo, spinner)
 }

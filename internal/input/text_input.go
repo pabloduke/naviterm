@@ -3,28 +3,28 @@ package input
 import (
 	"strings"
 
-	"github.com/nsf/termbox-go"
-	"github.com/pabloduke/naviterm/internal/render"
+	"github.com/pabloduke/naviterm/api"
 	"github.com/pabloduke/naviterm/internal/terminal"
 )
 
 var Cursor = "█"
 
-func GetTextInput(x int, y int, prompt string) string {
-	render.DrawText(x, y, prompt+Cursor, termbox.ColorWhite, termbox.ColorDefault)
+// GetTextInput reads user text input using injected dependencies
+func GetTextInput(x int, y int, prompt string, events EventSource, renderer Renderer, termInfo TerminalInfo, spinner SpinnerRunner) string {
+	renderer.DrawText(x, y, prompt+Cursor, terminal.Attribute(api.ColorWhite), terminal.Attribute(api.ColorDefault))
 	input := ""
 	done := make(chan struct{})
-	go render.Spinner(x-1, y, done)
+	spinner.RunSpinner(x-1, y, done)
 
 	for {
-		event := termbox.PollEvent()
+		event := events.PollEvent()
 
-		if event.Key == termbox.KeyEnter {
-			render.DrawText(x-1, y, " ", termbox.ColorWhite, termbox.ColorDefault)
-			render.DrawText(x+len(prompt), y, getBlankLine(), termbox.ColorWhite, termbox.ColorDefault)
-			render.DrawText(x+len(prompt), y, input, termbox.ColorWhite, termbox.ColorDefault)
+		if event.Key == terminal.KeyEnter {
+			renderer.DrawText(x-1, y, " ", terminal.Attribute(api.ColorWhite), terminal.Attribute(api.ColorDefault))
+			renderer.DrawText(x+len(prompt), y, getBlankLine(termInfo), terminal.Attribute(api.ColorWhite), terminal.Attribute(api.ColorDefault))
+			renderer.DrawText(x+len(prompt), y, input, terminal.Attribute(api.ColorWhite), terminal.Attribute(api.ColorDefault))
 			close(done)
-			terminal.Flush()
+			renderer.Flush()
 			return input
 		}
 
@@ -32,23 +32,23 @@ func GetTextInput(x int, y int, prompt string) string {
 			input += string(event.Ch)
 		}
 
-		if event.Key == termbox.KeyBackspace2 || event.Key == termbox.KeyBackspace {
+		if event.Key == terminal.KeyBackspace2 || event.Key == terminal.KeyBackspace {
 			input = chopLast(input)
 		}
 
-		if event.Key == termbox.KeySpace {
+		if event.Key == terminal.KeySpace {
 			input += " "
 		}
 
-		render.DrawText(x+len(prompt), y, getBlankLine(), termbox.ColorWhite, termbox.ColorDefault)
-		render.DrawText(x+len(prompt), y, input+Cursor, termbox.ColorWhite, termbox.ColorDefault)
-		terminal.Flush()
+		renderer.DrawText(x+len(prompt), y, getBlankLine(termInfo), terminal.Attribute(api.ColorWhite), terminal.Attribute(api.ColorDefault))
+		renderer.DrawText(x+len(prompt), y, input+Cursor, terminal.Attribute(api.ColorWhite), terminal.Attribute(api.ColorDefault))
+		renderer.Flush()
 	}
 
 }
 
-func getBlankLine() string {
-	return strings.Repeat(" ", terminal.Width())
+func getBlankLine(termInfo TerminalInfo) string {
+	return strings.Repeat(" ", termInfo.Width())
 }
 
 func chopLast(s string) string {

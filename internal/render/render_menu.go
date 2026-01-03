@@ -1,15 +1,15 @@
 package render
 
 import (
-	"github.com/nsf/termbox-go"
-	"github.com/pabloduke/naviterm/data"
+	"github.com/pabloduke/naviterm/api"
 	"github.com/pabloduke/naviterm/internal/terminal"
 	"github.com/pabloduke/naviterm/internal/types"
 )
 
-func DrawMenu(x int, y int, menu data.Menu) {
+func DrawMenu(x int, y int, menu api.Menu) {
 	drawMenuBorder(x+menu.Hpad, y+menu.Vpad, menu)
-	drawMenuTitle(x+menu.Hpad, y+menu.Vpad, menu)
+	//drawMenuTitle(x+menu.Hpad, y+menu.Vpad, menu)
+	drawStyledMenuTitle(x+menu.Hpad, y+menu.Vpad, menu)
 	DrawMenuItems(
 		x+menu.Hpad,
 		y+menu.Vpad,
@@ -24,12 +24,16 @@ func DrawMenu(x int, y int, menu data.Menu) {
 	terminal.Flush()
 }
 
-func drawMenuTitle(x int, y int, menu data.Menu) {
-	DrawText(x, y-menu.Vpad, menu.Title, termbox.Attribute(menu.TitleColor.Attr()), termbox.ColorDefault)
+func drawMenuTitle(x int, y int, menu api.Menu) {
+	DrawText(x, y-menu.Vpad, menu.Title, terminal.Attribute(menu.TitleColor.Attr()), terminal.Attribute(api.ColorDefault))
+}
+
+func drawStyledMenuTitle(x int, y int, menu api.Menu) {
+	DrawTextStyled(x, y-menu.Vpad, menu.Title, menu.TitleStyle)
 }
 
 // TODO: Render single and double borders
-func drawMenuBorder(x int, y int, menu data.Menu) {
+func drawMenuBorder(x int, y int, menu api.Menu) {
 	//Determine longest name
 
 	width := CalculateMenuWidth(menu)
@@ -40,8 +44,8 @@ func drawMenuBorder(x int, y int, menu data.Menu) {
 			ix+x,
 			y-menu.Vpad,
 			menu.MenuBorder.TopBorder,
-			termbox.Attribute(menu.BorderColor.Attr()),
-			termbox.ColorDefault,
+			terminal.Attribute(menu.BorderColor.Attr()),
+			terminal.Attribute(api.ColorDefault),
 		)
 
 		//bottom
@@ -49,8 +53,8 @@ func drawMenuBorder(x int, y int, menu data.Menu) {
 			ix+x,
 			y+menu.MaxHeight+menu.Vpad,
 			menu.MenuBorder.BottomBorder,
-			termbox.Attribute(menu.BorderColor.Attr()),
-			termbox.ColorDefault,
+			terminal.Attribute(menu.BorderColor.Attr()),
+			terminal.Attribute(api.ColorDefault),
 		)
 	}
 
@@ -61,8 +65,8 @@ func drawMenuBorder(x int, y int, menu data.Menu) {
 			x-menu.Hpad,
 			jy+y,
 			menu.MenuBorder.LeftBorder,
-			termbox.Attribute(menu.BorderColor.Attr()),
-			termbox.ColorDefault,
+			terminal.Attribute(menu.BorderColor.Attr()),
+			terminal.Attribute(api.ColorDefault),
 		)
 
 		//right
@@ -70,14 +74,14 @@ func drawMenuBorder(x int, y int, menu data.Menu) {
 			x+width,
 			jy+y,
 			menu.MenuBorder.RightBorder,
-			termbox.Attribute(menu.BorderColor.Attr()),
-			termbox.ColorDefault,
+			terminal.Attribute(menu.BorderColor.Attr()),
+			terminal.Attribute(api.ColorDefault),
 		)
 	}
 
 	//Draw Corners
-	DrawText(x-menu.Hpad, y-menu.Vpad, menu.MenuBorder.TopLeftCorner, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
-	DrawText(x+width, y-menu.Vpad, menu.MenuBorder.TopRightCorner, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
-	DrawText(x+width, y+menu.MaxHeight+menu.Vpad, menu.MenuBorder.BottomRightCorner, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
-	DrawText(x-menu.Hpad, y+menu.MaxHeight+menu.Vpad, menu.MenuBorder.BottomLeftCorner, termbox.Attribute(menu.BorderColor.Attr()), termbox.ColorDefault)
+	DrawText(x-menu.Hpad, y-menu.Vpad, menu.MenuBorder.TopLeftCorner, terminal.Attribute(menu.BorderColor.Attr()), terminal.Attribute(api.ColorDefault))
+	DrawText(x+width, y-menu.Vpad, menu.MenuBorder.TopRightCorner, terminal.Attribute(menu.BorderColor.Attr()), terminal.Attribute(api.ColorDefault))
+	DrawText(x+width, y+menu.MaxHeight+menu.Vpad, menu.MenuBorder.BottomRightCorner, terminal.Attribute(menu.BorderColor.Attr()), terminal.Attribute(api.ColorDefault))
+	DrawText(x-menu.Hpad, y+menu.MaxHeight+menu.Vpad, menu.MenuBorder.BottomLeftCorner, terminal.Attribute(menu.BorderColor.Attr()), terminal.Attribute(api.ColorDefault))
 }
