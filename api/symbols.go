@@ -1,4 +1,4 @@
-package symbols
+package api
 
 const (
 	// Classic bullets
@@ -45,7 +45,7 @@ const (
 	BoxChecked = "☑"
 	BoxCrossed = "☒"
 
-	// Cards/Misc
+	// Cards/MiscK
 	CardDiamond = "♦"
 	CardSpade   = "♠"
 	CardClub    = "♣"

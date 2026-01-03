@@ -1,83 +1,86 @@
 package forceuser
 
 import (
-	"github.com/pabloduke/naviterm/data"
-	"github.com/pabloduke/naviterm/data/borders"
-	"github.com/pabloduke/naviterm/data/color"
-	"github.com/pabloduke/naviterm/data/symbols"
+	"github.com/pabloduke/naviterm/api"
 	"github.com/pabloduke/naviterm/demo/menus/menuitems"
 )
 
-func FactionSelectMenu() data.Menu {
-	return data.Menu{
+func FactionSelectMenu() api.Menu {
+	return api.Menu{
 		Title:      "Choose your faction:",
-		TitleColor: color.MAGENTA,
-		MenuItems: []data.MenuItem{
+		TitleColor: api.MAGENTA,
+		TitleStyle: api.NavitermStyle{
+			FgColor: api.RED,
+			Bold:    true,
+			Italic:  true,
+		},
+		MenuItems: []api.MenuItem{
 			menuitems.Jedi,
 			menuitems.Sith,
 		},
-		BorderColor: color.WHITE,
+		BorderColor: api.WHITE,
 		Vpad:        1,
 		Hpad:        4,
 		IsNumbered:  false,
-		MenuBorder:  borders.HeavySquareBorder,
+		MenuBorder:  api.HeavySquareBorder,
 	}
 }
 
-func SithSaberMenu() data.Menu {
-	return data.Menu{
+func SithSaberMenu() api.Menu {
+	return api.Menu{
 		Title:       "Choose your lightsaber:",
-		TitleColor:  color.MAGENTA,
+		TitleColor:  api.MAGENTA,
 		MenuItems:   menuitems.GetSithSabers(),
-		BorderColor: color.RED,
+		BorderColor: api.RED,
 		Vpad:        1,
 		Hpad:        4,
 		IsNumbered:  true,
 		Prefix:      "⚔ ",
-		MenuBorder:  borders.BlockBorder,
+		MenuBorder:  api.BlockBorder,
 	}
 }
 
-func JediSaberMenu() data.Menu {
-	return data.Menu{
+func JediSaberMenu() api.Menu {
+	return api.Menu{
 		Title:       "Choose your lightsaber:",
-		TitleColor:  color.MAGENTA,
+		TitleColor:  api.MAGENTA,
+		TitleStyle:  menuitems.JediTextStyle,
 		MenuItems:   menuitems.GetJediSabers(),
-		BorderColor: color.BLUE,
+		BorderColor: api.BLUE,
 		Vpad:        1,
 		Hpad:        4,
 		IsNumbered:  true,
 		Prefix:      "⚔ ",
-		MenuBorder:  borders.BlockBorder,
+		MenuBorder:  api.BlockBorder,
 	}
 }
 
-func HomeworldMenu() data.Menu {
-	return data.Menu{
+func HomeworldMenu() api.Menu {
+	return api.Menu{
 		Title:       "Choose Your Homeworld:",
-		TitleColor:  color.MAGENTA,
-		BorderColor: color.GREEN,
+		TitleColor:  api.MAGENTA,
+		BorderColor: api.GREEN,
 		MaxHeight:   5,
 		Vpad:        2,
 		Hpad:        4,
 		MenuItems:   menuitems.GetHomeworlds(),
 		IsNumbered:  true,
 		Prefix:      "●",
-		MenuBorder:  borders.RoundedBorder,
+		MenuBorder:  api.RoundedBorder,
 	}
 }
 
-func SpeciesMenu() data.Menu {
-	return data.Menu{
+func SpeciesMenu() api.Menu {
+	return api.Menu{
 		Title:       "Choose Your Species:",
-		TitleColor:  color.YELLOW,
-		BorderColor: color.WHITE,
+		TitleColor:  api.YELLOW,
+		BorderColor: api.WHITE,
 		MaxHeight:   5,
 		Vpad:        2,
 		Hpad:        4,
 		MenuItems:   menuitems.GetSpecies(),
 		IsNumbered:  true,
-		Prefix:      symbols.Lozenge,
-		MenuBorder:  borders.DoubleBorder,
+		Prefix:      api.Lozenge,
+		MenuBorder:  api.DoubleBorder,
 	}
 }

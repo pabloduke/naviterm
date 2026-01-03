@@ -3,6 +3,7 @@ package input
 import (
 	"strings"
 
+	"github.com/pabloduke/naviterm/api"
 	"github.com/pabloduke/naviterm/internal/terminal"
 )
 
@@ -10,7 +11,7 @@ var Cursor = "█"
 
 // GetTextInput reads user text input using injected dependencies
 func GetTextInput(x int, y int, prompt string, events EventSource, renderer Renderer, termInfo TerminalInfo, spinner SpinnerRunner) string {
-	renderer.DrawText(x, y, prompt+Cursor, terminal.ColorWhite, terminal.ColorDefault)
+	renderer.DrawText(x, y, prompt+Cursor, terminal.Attribute(api.ColorWhite), terminal.Attribute(api.ColorDefault))
 	input := ""
 	done := make(chan struct{})
 	spinner.RunSpinner(x-1, y, done)
@@ -19,9 +20,9 @@ func GetTextInput(x int, y int, prompt string, events EventSource, renderer Rend
 		event := events.PollEvent()
 
 		if event.Key == terminal.KeyEnter {
-			renderer.DrawText(x-1, y, " ", terminal.ColorWhite, terminal.ColorDefault)
-			renderer.DrawText(x+len(prompt), y, getBlankLine(termInfo), terminal.ColorWhite, terminal.ColorDefault)
-			renderer.DrawText(x+len(prompt), y, input, terminal.ColorWhite, terminal.ColorDefault)
+			renderer.DrawText(x-1, y, " ", terminal.Attribute(api.ColorWhite), terminal.Attribute(api.ColorDefault))
+			renderer.DrawText(x+len(prompt), y, getBlankLine(termInfo), terminal.Attribute(api.ColorWhite), terminal.Attribute(api.ColorDefault))
+			renderer.DrawText(x+len(prompt), y, input, terminal.Attribute(api.ColorWhite), terminal.Attribute(api.ColorDefault))
 			close(done)
 			renderer.Flush()
 			return input
@@ -39,8 +40,8 @@ func GetTextInput(x int, y int, prompt string, events EventSource, renderer Rend
 			input += " "
 		}
 
-		renderer.DrawText(x+len(prompt), y, getBlankLine(termInfo), terminal.ColorWhite, terminal.ColorDefault)
-		renderer.DrawText(x+len(prompt), y, input+Cursor, terminal.ColorWhite, terminal.ColorDefault)
+		renderer.DrawText(x+len(prompt), y, getBlankLine(termInfo), terminal.Attribute(api.ColorWhite), terminal.Attribute(api.ColorDefault))
+		renderer.DrawText(x+len(prompt), y, input+Cursor, terminal.Attribute(api.ColorWhite), terminal.Attribute(api.ColorDefault))
 		renderer.Flush()
 	}
 

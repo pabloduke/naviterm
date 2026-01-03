@@ -38,6 +38,8 @@ func (s *TcellScreen) Flush() {
 	s.screen.Show()
 }
 
+//type Attribute uint16
+
 func (s *TcellScreen) Size() (int, int) {
 	return s.screen.Size()
 }
@@ -46,6 +48,10 @@ func (s *TcellScreen) SetCell(x, y int, ch rune, fg, bg Attribute) {
 	style := tcell.StyleDefault.
 		Foreground(convertToTcellColor(fg)).
 		Background(convertToTcellColor(bg))
+	s.screen.SetContent(x, y, ch, nil, style)
+}
+
+func (s *TcellScreen) SetStyledCell(x, y int, ch rune, style tcell.Style) {
 	s.screen.SetContent(x, y, ch, nil, style)
 }
 

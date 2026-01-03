@@ -3,12 +3,12 @@ package render
 import (
 	"strconv"
 
-	"github.com/pabloduke/naviterm/data"
+	"github.com/pabloduke/naviterm/api"
 	"github.com/pabloduke/naviterm/internal/terminal"
 	"github.com/pabloduke/naviterm/internal/types"
 )
 
-func DrawMenuItems(x int, y int, menu data.Menu, menuCursor types.MenuCursor) {
+func DrawMenuItems(x int, y int, menu api.Menu, menuCursor types.MenuCursor) {
 	// Clear the menu content area to avoid leftover characters from longer names
 	// Determine interior width based on longest name (title or items)
 	width := CalculateMenuWidth(menu)
@@ -37,11 +37,11 @@ func DrawMenuItems(x int, y int, menu data.Menu, menuCursor types.MenuCursor) {
 	terminal.Flush()
 }
 
-func drawMenuItem(x int, y int, i int, menuCursor types.MenuCursor, item data.MenuItem, prefix string) {
+func drawMenuItem(x int, y int, i int, menuCursor types.MenuCursor, item api.MenuItem, prefix string) {
 	drawY := y + (i - menuCursor.Offset)
 	if i == menuCursor.Position {
-		DrawText(x, drawY, prefix+item.Name, terminal.ColorBlack, terminal.ColorWhite)
+		DrawText(x, drawY, prefix+item.Name, terminal.Attribute(api.ColorBlack), terminal.Attribute(api.ColorWhite))
 	} else {
-		DrawText(x, drawY, prefix+item.Name, item.Color.Attr(), terminal.ColorDefault)
+		DrawText(x, drawY, prefix+item.Name, terminal.Attribute(item.Color.Attr()), terminal.Attribute(api.ColorDefault))
 	}
 }

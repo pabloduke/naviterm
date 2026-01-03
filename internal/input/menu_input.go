@@ -1,12 +1,12 @@
 package input
 
 import (
-	"github.com/pabloduke/naviterm/data"
+	"github.com/pabloduke/naviterm/api"
 	"github.com/pabloduke/naviterm/internal/terminal"
 	"github.com/pabloduke/naviterm/internal/types"
 )
 
-func GetMenuInput(menu data.Menu, menuCursor types.MenuCursor) types.MenuCursor {
+func GetMenuInput(menu api.Menu, menuCursor types.MenuCursor) types.MenuCursor {
 	for {
 		event := terminal.PollEvent()
 

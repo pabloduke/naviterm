@@ -1,9 +1,7 @@
 package naviterm
 
 import (
-	"github.com/pabloduke/naviterm/data"
-	"github.com/pabloduke/naviterm/data/borders"
-	"github.com/pabloduke/naviterm/data/color"
+	"github.com/pabloduke/naviterm/api"
 	"github.com/pabloduke/naviterm/internal/input"
 	"github.com/pabloduke/naviterm/internal/render"
 	"github.com/pabloduke/naviterm/internal/terminal"
@@ -36,14 +34,14 @@ func Height() int {
 }
 
 func PrintText(x int, y int, text string) {
-	render.DrawText(x, y, text, terminal.ColorWhite, terminal.ColorDefault)
+	render.DrawText(x, y, text, terminal.Attribute(api.ColorWhite), terminal.Attribute(api.ColorDefault))
 	terminal.Flush()
 }
 
 func PrintTextWithSpinner(x int, y int, text string) {
 	done := make(chan struct{})
 	go render.Spinner(x-1, y, done)
-	render.DrawText(x, y, text, terminal.ColorWhite, terminal.ColorDefault)
+	render.DrawText(x, y, text, terminal.Attribute(api.ColorWhite), terminal.Attribute(api.ColorDefault))
 	terminal.Flush()
 	// Wait for an actual key press; ignore other events (including queued leftovers).
 	for {
@@ -52,7 +50,7 @@ func PrintTextWithSpinner(x int, y int, text string) {
 			break
 		}
 	}
-	render.DrawText(x-1, y, " ", terminal.ColorWhite, terminal.ColorDefault)
+	render.DrawText(x-1, y, " ", terminal.Attribute(api.ColorWhite), terminal.Attribute(api.ColorDefault))
 	terminal.Flush()
 	close(done)
 }
@@ -60,7 +58,7 @@ func PrintTextWithSpinner(x int, y int, text string) {
 func ClearArea(x int, y int, w int, h int) {
 	for i := 0; i < h; i++ {
 		for j := 0; j < w; j++ {
-			render.DrawText(x+j, y+i, " ", terminal.ColorDefault, terminal.ColorDefault)
+			render.DrawText(x+j, y+i, " ", terminal.Attribute(api.ColorDefault), terminal.Attribute(api.ColorDefault))
 		}
 	}
 
@@ -79,7 +77,7 @@ func ResetColor() {
 	print("\033[0m")
 }
 
-func GetMenuInput(x int, y int, menu data.Menu) data.MenuItem {
+func GetMenuInput(x int, y int, menu api.Menu) api.MenuItem {
 	menu = defaultMenu(menu)
 	menuCursor := types.MenuCursor{
 		Position: 0,
@@ -99,22 +97,22 @@ func GetMenuInput(x int, y int, menu data.Menu) data.MenuItem {
 	}
 }
 
-func DrawMenuAsView(x int, y int, menu data.Menu) {
+func DrawMenuAsView(x int, y int, menu api.Menu) {
 	menu = defaultMenu(menu)
 	render.DrawMenu(x, y, menu)
 }
 
 // Sets defaults for menu values not passed in by user
-func defaultMenu(menu data.Menu) data.Menu {
+func defaultMenu(menu api.Menu) api.Menu {
 	if menu.TitleColor.Attr() == 0 {
-		menu.TitleColor = color.WHITE
+		menu.TitleColor = api.WHITE
 	}
 	if menu.BorderColor.Attr() == 0 {
-		menu.BorderColor = color.WHITE
+		menu.BorderColor = api.WHITE
 	}
 
 	if menu.MenuBorder.TopLeftCorner == "" {
-		menu.MenuBorder = borders.RoundedBorder
+		menu.MenuBorder = api.RoundedBorder
 	}
 
 	if menu.MaxHeight < 1 {
@@ -135,7 +133,7 @@ func defaultMenu(menu data.Menu) data.Menu {
 
 	for i := 0; i < len(menu.MenuItems); i++ {
 		if menu.MenuItems[i].Color.Attr() == 0 {
-			menu.MenuItems[i].Color = color.WHITE
+			menu.MenuItems[i].Color = api.WHITE
 		}
 
 		if menu.MenuItems[i].Name == "" {

@@ -1,5 +1,10 @@
 package terminal
 
+import (
+	//"github.com/pabloduke/naviterm/internal/render"
+	"github.com/pabloduke/naviterm/api"
+)
+
 // Package-level screen instance
 var screen Screen
 
@@ -38,6 +43,11 @@ func Height() int {
 // SetCell sets a cell at the specified position
 func SetCell(x, y int, ch rune, fg, bg Attribute) {
 	screen.SetCell(x, y, ch, fg, bg)
+}
+
+func SetStyledCell(x int, y int, ch rune, style api.NavitermStyle) {
+	tcellStyle := TransformToTcell(style)
+	screen.SetStyledCell(x, y, ch, tcellStyle)
 }
 
 // PollEvent polls for a terminal event

@@ -1,4 +1,4 @@
-package symbols
+package api
 
 //Horizontal: ━ (U+2501)
 //Vertical: ┃ (U+2503)

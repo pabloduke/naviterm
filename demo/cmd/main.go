@@ -5,9 +5,7 @@ package main
 
 import (
 	"github.com/pabloduke/naviterm"
-	"github.com/pabloduke/naviterm/data"
-	"github.com/pabloduke/naviterm/data/chart"
-	"github.com/pabloduke/naviterm/data/color"
+	"github.com/pabloduke/naviterm/api"
 	"github.com/pabloduke/naviterm/demo/menus/forceuser"
 	"github.com/pabloduke/naviterm/demo/menus/menuitems"
 	"github.com/pabloduke/naviterm/internal/render"
@@ -31,7 +29,7 @@ func main() {
 
 	factionSelection := naviterm.GetMenuInput(10, 5, forceuser.FactionSelectMenu())
 
-	var saberSelection data.MenuItem
+	var saberSelection api.MenuItem
 
 	// Based on the first choice, present a second menu
 	if factionSelection == menuitems.Jedi {
@@ -55,21 +53,21 @@ func main() {
 		naviterm.PrintText(10, 30, "Welcome, "+userName+"! You are a Sith Lord!")
 	}
 
-	selectionsViewMenu := data.Menu{
+	selectionsViewMenu := api.Menu{
 		Title:       "Your Character:",
-		TitleColor:  color.WHITE,
-		BorderColor: color.WHITE,
+		TitleColor:  api.WHITE,
+		BorderColor: api.WHITE,
 		MaxHeight:   5,
 		Vpad:        1,
 		Hpad:        4,
 		IsNumbered:  false,
 		Prefix:      "",
-		MenuItems: []data.MenuItem{
-			{Name: "Name: " + userName, Color: color.WHITE},
-			{Name: "Faction: " + factionSelection.Name, Color: color.WHITE},
-			{Name: "Saber: " + saberSelection.Name, Color: color.WHITE},
-			{Name: "Species: " + speciesSelection.Name, Color: color.WHITE},
-			{Name: "HomeWorld: " + homeworldSelection.Name, Color: color.WHITE},
+		MenuItems: []api.MenuItem{
+			{Name: "Name: " + userName, Color: api.WHITE},
+			{Name: "Faction: " + factionSelection.Name, Color: api.WHITE},
+			{Name: "Saber: " + saberSelection.Name, Color: api.WHITE},
+			{Name: "Species: " + speciesSelection.Name, Color: api.WHITE},
+			{Name: "HomeWorld: " + homeworldSelection.Name, Color: api.WHITE},
 		},
 	}
 	naviterm.DrawMenuAsView(75, 10, selectionsViewMenu)
@@ -79,29 +77,29 @@ func main() {
 }
 
 func testBarChart() {
-	bcItem := chart.BarChartItem{
+	bcItem := api.BarChartItem{
 		Label: "Test",
 		Value: 3,
-		Color: color.MAGENTA,
+		Color: api.MAGENTA,
 	}
 
-	bcItem2 := chart.BarChartItem{
+	bcItem2 := api.BarChartItem{
 		Label: "Test",
 		Value: 10,
-		Color: color.GREEN,
+		Color: api.GREEN,
 	}
 
-	bcItem3 := chart.BarChartItem{
+	bcItem3 := api.BarChartItem{
 		Label: "Test",
 		Value: 6,
-		Color: color.BLUE,
+		Color: api.BLUE,
 	}
 
-	bChart := chart.BarChart{
+	bChart := api.BarChart{
 		Title:   "CHART",
 		XLabel:  "Amount",
 		YLabel:  "ITEM NAME",
-		Items:   []chart.BarChartItem{bcItem, bcItem2, bcItem3},
+		Items:   []api.BarChartItem{bcItem, bcItem2, bcItem3},
 		Spacing: 2,
 	}
 

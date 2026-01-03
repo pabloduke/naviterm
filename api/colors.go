@@ -1,29 +1,41 @@
-package color
-
-import "github.com/pabloduke/naviterm/internal/terminal"
+package api
 
 // Attribute is naviterm's internal representation of a terminal color/style.
 // Now uses terminal.Attribute which abstracts backend-specific color types.
-type Attribute = terminal.Attribute
 
 type NaviTermColor struct {
 	attr Attribute
 }
+
+type Attribute uint16
 
 func (c NaviTermColor) Attr() Attribute { return c.attr }
 func (c NaviTermColor) IsZero() bool    { return c.attr == 0 }
 
 // Basic colors (values match terminal constants).
 const (
-	Default Attribute = terminal.ColorDefault
-	Black   Attribute = terminal.ColorBlack
-	Red     Attribute = terminal.ColorRed
-	Green   Attribute = terminal.ColorGreen
-	Yellow  Attribute = terminal.ColorYellow
-	Blue    Attribute = terminal.ColorBlue
-	Magenta Attribute = terminal.ColorMagenta
-	Cyan    Attribute = terminal.ColorCyan
-	White   Attribute = terminal.ColorWhite
+	Default Attribute = ColorDefault
+	Black   Attribute = ColorBlack
+	Red     Attribute = ColorRed
+	Green   Attribute = ColorGreen
+	Yellow  Attribute = ColorYellow
+	Blue    Attribute = ColorBlue
+	Magenta Attribute = ColorMagenta
+	Cyan    Attribute = ColorCyan
+	White   Attribute = ColorWhite
+)
+
+const (
+	ColorDefault  Attribute = 0
+	ColorBlack    Attribute = 1
+	ColorRed      Attribute = 2
+	ColorGreen    Attribute = 3
+	ColorYellow   Attribute = 4
+	ColorBlue     Attribute = 5
+	ColorMagenta  Attribute = 6
+	ColorCyan     Attribute = 7
+	ColorWhite    Attribute = 8
+	ColorLightCya Attribute = 14
 )
 
 var RED = NaviTermColor{attr: Red}
